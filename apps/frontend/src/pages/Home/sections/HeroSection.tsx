@@ -5,7 +5,6 @@ import {
   featureIcon,
   featureTitle,
   heroContent,
-  heroDescription,
   heroSection,
   heroSubtitle,
   heroTitle,
@@ -16,12 +15,10 @@ import {
 } from '../Home.css.ts';
 import { TanStackLogo } from '@/components/Logos/TanStackLogo.tsx';
 import { SanityLogo } from '@/components/Logos/SanityLogo.tsx';
-import PortableText from '@/components/PortableText/PortableText.tsx';
 
 interface HeroSectionProps {
   title?: string | null;
   subTitle?: string | null;
-  description?: any | null; // PortableText eller null
 }
 
 const FEATURES = [
@@ -31,17 +28,12 @@ const FEATURES = [
   { icon: '📱', title: 'Fully Responsive', desc: 'Perfect experience on any device, any screen size' },
 ];
 
-export function HeroSection({ title, subTitle, description }: HeroSectionProps) {
+export function HeroSection({ title, subTitle }: HeroSectionProps) {
   return (
     <section className={heroSection}>
       <div className={heroContent}>
         <h1 className={heroTitle}>{title}</h1>
         {subTitle && <p className={heroSubtitle}>{subTitle}</p>}
-        {description && (
-          <div className={heroDescription}>
-            <PortableText value={description} />
-          </div>
-        )}
         <div className={logoContainer}>
           <div className={logosRow}>
             <TanStackLogo height={40} className={logo} />
