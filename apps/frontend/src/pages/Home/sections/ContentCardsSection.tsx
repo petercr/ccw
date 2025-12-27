@@ -1,5 +1,6 @@
 import {
   buttonLink,
+  cardPair,
   cardRow,
   cardText,
   contentCard,
@@ -25,28 +26,14 @@ export function ContentCardsSection({ homeData }: ContentCardsSectionProps) {
 
   return (
     <section className={contentCardsSection}>
-      {hasHeadings && (
-        <div className={cardRow}>
+      <div className={cardRow}>
+        {/* Pair 1: Header + Card */}
+        <div className={cardPair}>
           {headingCard1 && (
             <div className={headingCard}>
               <h3 className={headingText}>{headingCard1}</h3>
             </div>
           )}
-          {headingCard2 && (
-            <div className={headingCard}>
-              <h3 className={headingText}>{headingCard2}</h3>
-            </div>
-          )}
-          {headingCard3 && (
-            <div className={headingCard}>
-              <h3 className={headingText}>{headingCard3}</h3>
-            </div>
-          )}
-        </div>
-      )}
-
-      {hasContentCards && (
-        <div className={cardRow}>
           {card1 && (
             <div className={contentCard}>
               {card1.links && card1.links.length > 0 && (
@@ -61,9 +48,27 @@ export function ContentCardsSection({ homeData }: ContentCardsSectionProps) {
               {card1.text && <p className={cardText}>{card1.text}</p>}
             </div>
           )}
+        </div>
+
+        {/* Pair 2: Header + Card */}
+        <div className={cardPair}>
+          {headingCard2 && (
+            <div className={headingCard}>
+              <h3 className={headingText}>{headingCard2}</h3>
+            </div>
+          )}
           {card2 && (
             <div className={contentCard}>
               {card2.text && <p className={cardText}>{card2.text}</p>}
+            </div>
+          )}
+        </div>
+
+        {/* Pair 3: Header + Card */}
+        <div className={cardPair}>
+          {headingCard3 && (
+            <div className={headingCard}>
+              <h3 className={headingText}>{headingCard3}</h3>
             </div>
           )}
           {card3 && (
@@ -86,7 +91,7 @@ export function ContentCardsSection({ homeData }: ContentCardsSectionProps) {
             </div>
           )}
         </div>
-      )}
+      </div>
     </section>
   );
 }

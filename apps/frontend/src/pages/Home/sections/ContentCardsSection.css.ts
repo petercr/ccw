@@ -25,11 +25,12 @@ export const cardRow = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(1, 1fr)',
   gap: '2.5rem',
-  '@media': {
-    'screen and (min-width: 768px)': {
-      gridTemplateColumns: 'repeat(3, 1fr)',
-    },
-  },
+});
+
+export const cardPair = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.5rem',
 });
 
 export const headingCard = style({
