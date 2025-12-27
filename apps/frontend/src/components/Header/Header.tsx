@@ -86,7 +86,7 @@ export default function Header() {
     <>
       <header className={header}>
         <Link to="/" className={brand}>
-          SanTan
+          Cape Cod World
         </Link>
         <nav className={desktopNav} aria-label="Main navigation">
           {NAV_ITEMS.map(({ to, label }) => (
