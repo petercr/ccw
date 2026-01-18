@@ -5,6 +5,7 @@ export const container = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(12, 1fr)',
   minHeight: '100vh',
+  gridAutoRows: 'auto',
   background: `linear-gradient(180deg, ${vars.color.bg} 0%, ${vars.color.bgAlt} 50%, ${vars.color.bgSoft} 100%)`,
   paddingTop: '3rem',
   paddingBottom: '7rem',
@@ -16,11 +17,24 @@ export const container = style({
   },
 });
 
+export const header = style({
+  gridColumn: '3 / 11',
+  gridRow: 1,
+  marginBottom: '2rem',
+  '@media': {
+    'screen and (max-width: 768px)': {
+      gridColumn: '1 / -1',
+      marginBottom: '1.5rem',
+    },
+  },
+});
+
 export const textContainer = style({
   gridColumn: '3 / 11',
   width: '100%',
   display: 'grid',
   gridTemplateColumns: 'subgrid',
+  gridRow: 2,
   '@media': {
     'screen and (max-width: 768px)': {
       gridColumn: '1 / -1',

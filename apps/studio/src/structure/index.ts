@@ -1,5 +1,5 @@
 import { sanityTypeLiterals } from '@santan/shared/types';
-import { Home, Tags, Users } from 'lucide-react';
+import { Briefcase, Home, Quote, Tags, Users } from 'lucide-react';
 import type { DefaultDocumentNodeResolver, StructureBuilder, StructureResolver } from 'sanity/structure';
 import DocumentsPane from 'sanity-plugin-documents-pane';
 
@@ -16,6 +16,8 @@ export const structure: StructureResolver = (S) =>
       // Document lists
       S.documentTypeListItem('post').title('Articles'),
       S.documentTypeListItem('category').title('Categories').icon(Tags), //Plural
+      S.documentTypeListItem('testimonial').title('Testimonials').icon(Quote),
+      S.documentTypeListItem('workProject').title('Our Work').icon(Briefcase),
       S.divider(),
       S.documentTypeListItem('person').title('Persons').icon(Users), //Plural
     ]);
