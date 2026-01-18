@@ -9,11 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPreviewRouteImport } from './routes/api.preview'
 import { Route as ApiDraftTokenRouteImport } from './routes/api.draft-token'
 
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurWorkRoute = OurWorkRouteImport.update({
+  id: '/our-work',
+  path: '/our-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
@@ -38,12 +50,16 @@ const ApiDraftTokenRoute = ApiDraftTokenRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/our-work': typeof OurWorkRoute
+  '/testimonials': typeof TestimonialsRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/our-work': typeof OurWorkRoute
+  '/testimonials': typeof TestimonialsRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
 }
@@ -51,26 +67,63 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/our-work': typeof OurWorkRoute
+  '/testimonials': typeof TestimonialsRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/api/draft-token' | '/api/preview'
+  fullPaths:
+    | '/'
+    | '/$'
+    | '/our-work'
+    | '/testimonials'
+    | '/api/draft-token'
+    | '/api/preview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/api/draft-token' | '/api/preview'
-  id: '__root__' | '/' | '/$' | '/api/draft-token' | '/api/preview'
+  to:
+    | '/'
+    | '/$'
+    | '/our-work'
+    | '/testimonials'
+    | '/api/draft-token'
+    | '/api/preview'
+  id:
+    | '__root__'
+    | '/'
+    | '/$'
+    | '/our-work'
+    | '/testimonials'
+    | '/api/draft-token'
+    | '/api/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  OurWorkRoute: typeof OurWorkRoute
+  TestimonialsRoute: typeof TestimonialsRoute
   ApiDraftTokenRoute: typeof ApiDraftTokenRoute
   ApiPreviewRoute: typeof ApiPreviewRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-work': {
+      id: '/our-work'
+      path: '/our-work'
+      fullPath: '/our-work'
+      preLoaderRoute: typeof OurWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$': {
       id: '/$'
       path: '/$'
@@ -105,6 +158,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  OurWorkRoute: OurWorkRoute,
+  TestimonialsRoute: TestimonialsRoute,
   ApiDraftTokenRoute: ApiDraftTokenRoute,
   ApiPreviewRoute: ApiPreviewRoute,
 }
