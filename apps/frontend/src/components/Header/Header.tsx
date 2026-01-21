@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Home, Menu, Moon, Sun, X } from 'lucide-react';
+import { Briefcase, Home, Menu, Moon, Quote, Sun, X } from 'lucide-react';
 import {
   brand,
   closeButton,
@@ -25,7 +25,11 @@ import {
 } from './Header.css.ts';
 import { darkTheme, lightTheme } from '@/styles/theme.css.ts';
 
-const NAV_ITEMS = [{ to: '/', label: 'Home', icon: Home }];
+const NAV_ITEMS = [
+  { to: '/', label: 'Home', icon: Home },
+  { to: '/testimonials', label: 'Testimonials', icon: Quote },
+  { to: '/our-work', label: 'Our Work', icon: Briefcase },
+];
 
 export default function Header() {
   const [open, setOpen] = useState(false);

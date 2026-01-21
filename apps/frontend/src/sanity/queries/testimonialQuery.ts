@@ -24,13 +24,8 @@ export const testimonialsQuery = (options: UnfilteredResponseQueryOptions) =>
       client
         .withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: true })
         .fetch<Array<Testimonial>>(TESTIMONIALS_QUERY, {}, options)
-        .then((res) => {
-          if (!res.result) {
-            return { data: [], sourceMap: undefined };
-          }
-          return {
-            data: testimonialsZ.parse(res.result),
-            sourceMap: res.resultSourceMap,
-          };
-        }),
+        .then((res) => ({
+          data: testimonialsZ.parse(res.result),
+          sourceMap: res.resultSourceMap,
+        })),
   });
