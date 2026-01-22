@@ -28,11 +28,11 @@
     "clean": "rm -rf dist .turbo"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "prettier": "^3.7.4",
+    "@types/node": "^24.10.9",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "zod": "^4.1.13"
+    "zod": "^4.3.5"
   }
 }

@@ -14,7 +14,7 @@
     "clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean"
   },
   "devDependencies": {
-    "turbo": "^2.6.3"
+    "turbo": "^2.7.5"
   },
   "workspaces": [
     "apps/*",
@@ -24,8 +24,8 @@
     "node": ">=24"
   },
   "dependencies": {
-    "@sanity/vision": "^4.20.3",
-    "diff": "^8.0.2",
-    "sanity": "^4.20.3"
+    "@sanity/vision": "^4.22.0",
+    "diff": "^8.0.3",
+    "sanity": "^4.22.0"
   }
 }

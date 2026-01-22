@@ -32,7 +32,7 @@ export const documentQuery = (fullSlug: string, options: UnfilteredResponseQuery
     gcTime: 1000 * 60 * 10, // Keep in cache for 10 minutes
     queryFn: () =>
       client
-        .withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: true })
+        .withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
         .fetch<DocumentType>(DOCUMENT_QUERY, { fullSlug }, options)
         .then((res) => {
           // Handle case where document doesn't exist

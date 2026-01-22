@@ -31,8 +31,13 @@ export async function detectPreviewMode(request: Request | null): Promise<boolea
       if (previewParam === 'true' || isInIframe || hasPerspectiveParam) {
         isPreviewMode = true;
       } else {
-        const previewSession = await getSession(request);
-        isPreviewMode = previewSession.projectId === client.config().projectId;
+        try {
+          const previewSession = await getSession(request);
+          isPreviewMode = previewSession.projectId === client.config().projectId;
+        } catch (error) {
+          console.error('[PreviewMode] Error checking session:', error);
+          isPreviewMode = false;
+        }
       }
     }
   } else {
