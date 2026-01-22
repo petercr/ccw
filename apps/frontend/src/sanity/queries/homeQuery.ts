@@ -14,7 +14,16 @@ import { CATEGORIES_PER_PAGE, POSTS_PER_PAGE } from '@/constants/config.ts';
 
 // Groq query
 export const HOME_QUERY = groq`{
-  "homeData": *[_type == "home"][0]{ title, subTitle, description },
+  "homeData": *[_type == "home"][0]{ 
+    title, 
+    subTitle, 
+    headingCard1, 
+    headingCard2, 
+    headingCard3, 
+    card1, 
+    card2, 
+    card3 
+  },
   "postsData": ${getPostsQuery(POSTS_PER_PAGE)},
   "categoriesData": *[_type == "category"] | order(_createdAt desc)[0..${CATEGORIES_PER_PAGE}] { title, fullSlug, mainImage, description, _createdAt }
 }`;
@@ -45,7 +54,16 @@ export const homeQuery = (options: UnfilteredResponseQueryOptions) =>
           // Using ?? to handle both null and undefined at runtime
           const homeData = res.result.homeData
             ? homeZ.parse(res.result.homeData)
-            : { title: null, subTitle: null, description: null };
+            : {
+                title: null,
+                subTitle: null,
+                headingCard1: null,
+                headingCard2: null,
+                headingCard3: null,
+                card1: null,
+                card2: null,
+                card3: null,
+              };
           const postsData = res.result.postsData ? postsZ.parse(res.result.postsData) : [];
           const categoriesData = res.result.categoriesData ? categoriesZ.parse(res.result.categoriesData) : [];
 

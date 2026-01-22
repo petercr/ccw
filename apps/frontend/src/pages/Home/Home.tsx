@@ -4,6 +4,7 @@ import { useStore } from '@tanstack/react-store';
 import { divider, homeContainer } from './Home.css.ts';
 // Typer
 import { HeroSection } from './sections/HeroSection.tsx';
+import { ContentCardsSection } from './sections/ContentCardsSection.tsx';
 import { ArchitectureSection } from './sections/ArchitectureSection.tsx';
 import { DevExpSection } from './sections/DevExpSection.tsx';
 import { CategoriesSection } from './sections/CategoriesSection.tsx';
@@ -91,15 +92,22 @@ const Home = ({ data }: PageProps<HomePagePayload>) => {
   // In production, use infinite query data (which has pagination)
   const posts: Array<PostStub> = isPreview ? (data?.postsData ?? []) : (listData.pages.flat() as Array<PostStub>);
   const categories: Array<CategoryStub> = data?.categoriesData ?? [];
-  const homeData = data?.homeData ?? { title: null, subTitle: null, description: null };
+  const homeData = data?.homeData ?? {
+    title: null,
+    subTitle: null,
+    headingCard1: null,
+    headingCard2: null,
+    headingCard3: null,
+    card1: null,
+    card2: null,
+    card3: null,
+  };
 
   return (
     <div className={homeContainer}>
-      <HeroSection
-        title={homeData.title}
-        subTitle={homeData.subTitle}
-        description={homeData.description || undefined}
-      />
+      <HeroSection title={homeData.title} subTitle={homeData.subTitle} />
+      <div className={divider} />
+      <ContentCardsSection homeData={homeData} />
       <div className={divider} />
       <CategoriesSection categories={categories} />
       <div className={divider} />

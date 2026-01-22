@@ -1,5 +1,6 @@
 import {
   container,
+  header as headerStyle,
   ingress as ingressStyle,
   keywordItem,
   keywordsList,
@@ -21,14 +22,14 @@ export const CategoryPage = ({ data, encodeDataAttribute }: PageProps<CategoryDo
 
   return (
     <article className={container}>
-      {typeof mainImage !== 'undefined' ? (
-        <MainImage
-          image={mainImage}
-          encodeDataAttribute={encodeDataAttribute ? encodeDataAttribute(['mainImage']) : undefined}
-        />
-      ) : null}
+      <header className={headerStyle}>{title ? <Title>{title}</Title> : null}</header>
       <div className={textContainer}>
-        <header>{title ? <Title>{title}</Title> : null}</header>
+        {typeof mainImage !== 'undefined' ? (
+          <MainImage
+            image={mainImage}
+            encodeDataAttribute={encodeDataAttribute ? encodeDataAttribute(['mainImage']) : undefined}
+          />
+        ) : null}
         {description ? <p className={ingressStyle}>{description}</p> : null}
         {seo?.keywords && seo.keywords.length > 0 ? (
           <div className={keywordsSection}>
