@@ -1,7 +1,7 @@
+import { exitButton, exitButtonInner, warningText } from '@/components/ExitPreviewButton/ExitPreviewButton.css.ts';
+import { PREVIEW_SESSION_NAME } from '@/sessions';
 import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { PREVIEW_SESSION_NAME } from '@/sessions';
-import { exitButton, exitButtonInner, warningText } from '@/components/ExitPreviewButton/ExitPreviewButton.css.ts';
 
 export function ExitPreviewButton() {
   const [showButton, setShowButton] = useState(false);

@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import type { AccordionBlock } from '@/types/sanitySchemas.ts';
 import { PortableText } from '@portabletext/react';
+import type { PortableTextTypeComponentProps } from '@portabletext/react';
+import type React from 'react';
+import { useState } from 'react';
 import {
   accordionButton,
   accordionContainer,
@@ -7,8 +10,6 @@ import {
   accordionIcon,
   accordionItem,
 } from './AccordionSerializer.css.ts';
-import type { PortableTextTypeComponentProps } from '@portabletext/react';
-import type { AccordionBlock } from '@/types/sanitySchemas.ts';
 
 export const AccordionSerializer: React.FC<PortableTextTypeComponentProps<AccordionBlock>> = ({
   value: { content },

@@ -1,5 +1,5 @@
-import { globalStyle, style } from '@vanilla-extract/css';
 import { vars } from '@/styles/theme.css.ts';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const container = style({
   display: 'grid',

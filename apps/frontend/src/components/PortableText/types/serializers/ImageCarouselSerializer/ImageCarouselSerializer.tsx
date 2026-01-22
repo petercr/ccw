@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
-import Slider from 'react-slick';
+import type { PortableTextTypeComponentProps } from '@portabletext/react';
 import urlBuilder from '@sanity/image-url';
+import { useEffect, useState } from 'react';
+import type { FC } from 'react';
+import Slider from 'react-slick';
 import {
   captionText,
   container,
@@ -10,12 +12,10 @@ import {
   image,
   sliderContainer,
 } from './ImageCarouselSerializer.css.ts';
-import type { FC } from 'react';
-import type { PortableTextTypeComponentProps } from '@portabletext/react';
 
-import type { ImageCarouselBlock } from '@/types/sanitySchemas.ts';
 import { dataset, projectId } from '@/sanity/projectDetails';
 import { fullWidthSection } from '@/styles/shared/fullWidthSection.css.ts';
+import type { ImageCarouselBlock } from '@/types/sanitySchemas.ts';
 
 export const ImageCarouselSerializer: FC<PortableTextTypeComponentProps<ImageCarouselBlock>> = ({
   value: { images, numberOfImagesToShow },

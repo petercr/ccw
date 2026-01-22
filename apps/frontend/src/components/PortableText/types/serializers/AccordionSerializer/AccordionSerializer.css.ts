@@ -1,6 +1,6 @@
-import { keyframes, style } from '@vanilla-extract/css';
-import { vars } from '@/styles/theme.css.ts';
 import { textContent } from '@/styles/shared/textContent.css.ts';
+import { vars } from '@/styles/theme.css.ts';
+import { keyframes, style } from '@vanilla-extract/css';
 
 // Animation for content slide down
 const slideDown = keyframes({

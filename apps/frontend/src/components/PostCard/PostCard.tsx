@@ -1,6 +1,9 @@
-import { Link } from '@tanstack/react-router';
+import { Route as FullSlugRoute } from '@/routes/$.tsx';
+import { dataset, projectId } from '@/sanity/projectDetails.ts';
+import type { SanityImageType } from '@/types/image.ts';
 import { stegaClean } from '@sanity/client/stega';
 import { createImageUrlBuilder } from '@sanity/image-url';
+import { Link } from '@tanstack/react-router';
 import {
   image,
   imageContainer,
@@ -10,9 +13,6 @@ import {
   postCardIngress,
   postCardTitle,
 } from './PostCard.css.ts';
-import type { SanityImageType } from '@/types/image.ts';
-import { dataset, projectId } from '@/sanity/projectDetails.ts';
-import { Route as FullSlugRoute } from '@/routes/$.tsx';
 
 type PostCardProps = {
   fullSlug: string | null | undefined;

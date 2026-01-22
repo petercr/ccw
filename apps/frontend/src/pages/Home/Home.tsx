@@ -1,29 +1,29 @@
+import { CTA } from '@/components/CTA/CTA.tsx';
+import { withPreviewData, withPublishedData } from '@/components/withDocument.tsx';
+import { POSTS_PER_PAGE } from '@/constants/config.ts';
+// Interne utilities
+import { Route } from '@/routes/index.tsx';
+import { client } from '@/sanity/client.ts';
+import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
+import { homeQuery } from '@/sanity/queries/homeQuery.ts';
+import { getPostsQuery } from '@/sanity/queries/postQuery.ts';
+import { previewStore } from '@/stores/previewStore.ts';
+import type { PageProps } from '@/types/PageProps.ts';
+import type { CategoryStub } from '@/types/category.ts';
+import type { HomeDocument } from '@/types/home.ts';
+import type { PostStub } from '@/types/post.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useStore } from '@tanstack/react-store';
 // Stiler
 import { divider, homeContainer } from './Home.css.ts';
+import { ArchitectureSection } from './sections/ArchitectureSection.tsx';
+import { CategoriesSection } from './sections/CategoriesSection.tsx';
+import { ContentCardsSection } from './sections/ContentCardsSection.tsx';
+import { DevExpSection } from './sections/DevExpSection.tsx';
 // Typer
 import { HeroSection } from './sections/HeroSection.tsx';
-import { ContentCardsSection } from './sections/ContentCardsSection.tsx';
-import { ArchitectureSection } from './sections/ArchitectureSection.tsx';
-import { DevExpSection } from './sections/DevExpSection.tsx';
-import { CategoriesSection } from './sections/CategoriesSection.tsx';
-import { PostsSection } from './sections/PostsSection.tsx';
 import { HighlightsSection } from './sections/HighlightsSection.tsx';
-import type { PageProps } from '@/types/PageProps.ts';
-import type { HomeDocument } from '@/types/home.ts';
-import type { CategoryStub } from '@/types/category.ts';
-import type { PostStub } from '@/types/post.ts';
-// Interne utilities
-import { Route } from '@/routes/index.tsx';
-import { withPreviewData, withPublishedData } from '@/components/withDocument.tsx';
-import { homeQuery } from '@/sanity/queries/homeQuery.ts';
-import { getPostsQuery } from '@/sanity/queries/postQuery.ts';
-import { client } from '@/sanity/client.ts';
-import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
-import { POSTS_PER_PAGE } from '@/constants/config.ts';
-import { previewStore } from '@/stores/previewStore.ts';
-import { CTA } from '@/components/CTA/CTA.tsx';
+import { PostsSection } from './sections/PostsSection.tsx';
 
 type HomePagePayload = {
   categoriesData: Array<CategoryStub>;

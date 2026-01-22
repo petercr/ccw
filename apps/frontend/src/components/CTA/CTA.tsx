@@ -13,12 +13,7 @@ export function CTA() {
           </p>
         </div>
         <div className={ctaActions}>
-          <a
-            className={ctaPrimary}
-            href="https://github.com/MagneH/santan"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a className={ctaPrimary} href="https://github.com/MagneH/santan" target="_blank" rel="noopener noreferrer">
             View on GitHub
           </a>
           <a

@@ -1,6 +1,7 @@
+import { darkTheme, lightTheme } from '@/styles/theme.css.ts';
 import { Link } from '@tanstack/react-router';
-import { useCallback, useEffect, useState } from 'react';
 import { Briefcase, Home, Menu, Moon, Quote, Sun, X } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   brand,
   closeButton,
@@ -23,7 +24,6 @@ import {
   themeIconWrapper,
   themeToggle,
 } from './Header.css.ts';
-import { darkTheme, lightTheme } from '@/styles/theme.css.ts';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home', icon: Home },

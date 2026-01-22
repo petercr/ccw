@@ -1,3 +1,9 @@
+import { MainImage } from '@/components/MainImage/MainImage.tsx';
+import PortableText from '@/components/PortableText/PortableText.tsx';
+import { Title } from '@/components/Title/Title.tsx';
+import { sanityImageSrcBuilder } from '@/sanity/sanityImageSrcBuilder.ts';
+import type { PageProps } from '@/types/PageProps.ts';
+import type { PostDocument } from '@/types/post.ts';
 import {
   authorAvatar,
   authorAvatarImg,
@@ -10,12 +16,6 @@ import {
   portableTextContainer,
   textContainer,
 } from './Post.css.ts';
-import type { PostDocument } from '@/types/post.ts';
-import type { PageProps } from '@/types/PageProps.ts';
-import { MainImage } from '@/components/MainImage/MainImage.tsx';
-import { Title } from '@/components/Title/Title.tsx';
-import PortableText from '@/components/PortableText/PortableText.tsx';
-import { sanityImageSrcBuilder } from '@/sanity/sanityImageSrcBuilder.ts';
 
 export const PostPage = ({ data, encodeDataAttribute }: PageProps<PostDocument>) => {
   if (!data) {

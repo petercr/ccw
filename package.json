@@ -8,18 +8,20 @@
     "dev:stream": "echo '📺 Starting development servers in stream mode...' && turbo run dev --ui=stream",
     "dev:tui": "echo '🖥️  Starting development servers in TUI mode...' && turbo run dev --ui=tui",
     "build": "echo '🏗️  Building all packages...' && turbo run build",
-    "lint": "echo '🔍 Linting code...' && turbo run lint",
+    "lint": "echo '🔍 Linting code...' && biome lint .",
+    "lint:fix": "echo '🔧 Fixing lint issues...' && biome lint --write .",
     "type-check": "echo '✅ Type checking...' && turbo run type-check",
-    "format": "echo '✨ Formatting code...' && turbo run format",
+    "format": "echo '✨ Formatting code...' && biome format --write .",
+    "format:check": "echo '🔍 Checking formatting...' && biome format .",
+    "check": "echo '🔍 Running all checks...' && biome check .",
+    "check:fix": "echo '🔧 Fixing all issues...' && biome check --write .",
     "clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "turbo": "^2.7.5"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "engines": {
     "node": ">=24"
   },

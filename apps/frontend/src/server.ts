@@ -1,6 +1,6 @@
+import { sanityLoaderServer } from '@/functions/sanity.loader.server.ts';
 import handler from '@tanstack/react-start/server-entry';
 import { config } from 'dotenv'; //
-import { sanityLoaderServer } from '@/functions/sanity.loader.server.ts';
 
 type MyRequestContext = {
   request: Request;

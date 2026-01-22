@@ -1,6 +1,8 @@
-import * as React from 'react';
-import { Link } from '@tanstack/react-router';
+import { Route as FullSlugRoute } from '@/routes/$.tsx';
+import type { CategoryStub } from '@/types/category.ts';
 import { stegaClean } from '@sanity/client/stega';
+import { Link } from '@tanstack/react-router';
+import type * as React from 'react';
 import {
   allLink,
   card,
@@ -14,8 +16,6 @@ import {
   title,
   wrapper,
 } from './CategoryShowcase.css.ts';
-import type { CategoryStub } from '@/types/category.ts';
-import { Route as FullSlugRoute } from '@/routes/$.tsx';
 
 function emojiForCategory(categoryTitle?: string | null) {
   if (!categoryTitle) return '📂';

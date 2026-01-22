@@ -6,9 +6,9 @@
  * Usage: node scripts/create-proper-preview-secret.js
  */
 
+import crypto from 'crypto';
 import { createClient } from '@sanity/client';
 import { config } from 'dotenv';
-import crypto from 'crypto';
 
 config();
 

@@ -1,8 +1,8 @@
-import { card, cardBody, cardGrid, cardImage, cardLink, cardName, container, header } from './WorkProjects.css.ts';
-import type { WorkProject } from '@/types/workProject.ts';
 import { MainImage } from '@/components/MainImage/MainImage.tsx';
 import { Title } from '@/components/Title/Title.tsx';
 import { Route } from '@/routes/our-work.tsx';
+import type { WorkProject } from '@/types/workProject.ts';
+import { card, cardBody, cardGrid, cardImage, cardLink, cardName, container, header } from './WorkProjects.css.ts';
 
 export const WorkProjectsPage = () => {
   const { initial } = Route.useLoaderData();

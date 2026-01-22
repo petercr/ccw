@@ -1,6 +1,6 @@
 import { PhoneOutgoing } from 'lucide-react';
-import { link } from './PhoneNumberLinkSerializer.css.ts';
 import type { ReactNode } from 'react';
+import { link } from './PhoneNumberLinkSerializer.css.ts';
 
 interface Props {
   value?: {

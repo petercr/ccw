@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
 import { createClient } from '@sanity/client';
-import { enableVisualEditing } from '@sanity/visual-editing';
-import { useRouter } from '@tanstack/react-router';
 import type { SanityClient } from '@sanity/client';
+import { enableVisualEditing } from '@sanity/visual-editing';
 import type { HistoryAdapter, HistoryAdapterNavigate } from '@sanity/visual-editing';
+import { useRouter } from '@tanstack/react-router';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { useLiveMode } from '@/sanity/sanity.loader';
-import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { env } from '@/lib/env';
+import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
+import { useLiveMode } from '@/sanity/sanity.loader';
 
 /**
  * Inner component that activates live mode and visual editing.

@@ -1,5 +1,5 @@
-import type { HomeDocument } from '@/types/home.ts';
 import { seo } from '@/lib/seo.ts';
+import type { HomeDocument } from '@/types/home.ts';
 
 export const homeMeta = (document?: HomeDocument, relativeUrl?: string) => {
   return {

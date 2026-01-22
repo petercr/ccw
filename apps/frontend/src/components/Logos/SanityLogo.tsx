@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 /** SanityLogo – simplified theme-aware wordmark */
 export const SanityLogo: React.FC<{ height?: number; className?: string }> = ({ height = 40, className }) => {

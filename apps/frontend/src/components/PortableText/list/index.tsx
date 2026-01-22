@@ -1,5 +1,5 @@
-import { li, ol, ul } from './list.css.ts';
 import type { ReactNode } from 'react';
+import { li, ol, ul } from './list.css.ts';
 
 export const list = ({ type, children }: { type?: 'number' | 'bullet'; children?: ReactNode }) => {
   if (type === 'number') return <ol className={ol}>{children}</ol>;

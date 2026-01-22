@@ -1,8 +1,8 @@
-import type { QueryClient } from '@tanstack/react-query';
-import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
-import { TESTIMONIALS_QUERY, testimonialsQuery } from '@/sanity/queries/testimonialQuery.ts';
-import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { detectPreviewMode, validatePreviewToken } from '@/lib/previewMode';
+import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
+import { TESTIMONIALS_QUERY, testimonialsQuery } from '@/sanity/queries/testimonialQuery.ts';
+import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
+import type { QueryClient } from '@tanstack/react-query';
 
 export const testimonialsLoader = async ({
   context,

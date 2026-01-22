@@ -1,7 +1,7 @@
-import { getImageDimensions } from '@sanity/asset-utils';
-import { createImageUrlBuilder } from '@sanity/image-url';
 import type { PortableTextComponentProps } from '@portabletext/react';
+import { getImageDimensions } from '@sanity/asset-utils';
 import type { SanityImageSource } from '@sanity/asset-utils';
+import { createImageUrlBuilder } from '@sanity/image-url';
 
 import { dataset, projectId } from '@/sanity/projectDetails';
 

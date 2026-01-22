@@ -1,7 +1,7 @@
 import { createMiddleware } from '@tanstack/react-start';
 
-import { getResponseHeaders, setResponseHeaders } from '@tanstack/react-start/server';
 import { getSanityStudioUrl } from '@/constants/config.ts';
+import { getResponseHeaders, setResponseHeaders } from '@tanstack/react-start/server';
 
 export const securityMiddleware = createMiddleware().server(({ next }) => {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');

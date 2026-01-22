@@ -1,5 +1,4 @@
 import { Stack, Text, TextInput } from '@sanity/ui';
-import React from 'react';
 import type { StringInputProps, StringSchemaType } from 'sanity';
 
 import { useFullSlugComputation } from '../hooks/useFullSlugComputation';

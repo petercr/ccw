@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { sanityImageZ, seoZ } from '@/types/sanitySchemas.ts';
+import { z } from 'zod';
 
 // This is a Zod schema
 // https://zod.dev/

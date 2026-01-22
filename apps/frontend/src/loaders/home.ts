@@ -1,8 +1,8 @@
-import type { QueryClient } from '@tanstack/react-query';
-import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
-import { HOME_QUERY, homeQuery } from '@/sanity/queries/homeQuery.ts';
-import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { detectPreviewMode, validatePreviewToken } from '@/lib/previewMode';
+import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
+import { HOME_QUERY, homeQuery } from '@/sanity/queries/homeQuery.ts';
+import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
+import type { QueryClient } from '@tanstack/react-query';
 
 export const homeLoader = async ({
   context,

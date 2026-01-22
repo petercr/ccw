@@ -1,19 +1,19 @@
-import { ClientOnly, HeadContent, Outlet, Scripts } from '@tanstack/react-router';
-import { TanStackDevtools } from '@tanstack/react-devtools';
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
-import { Suspense, lazy, useEffect, useState } from 'react';
-import { useStore } from '@tanstack/react-store';
-import TanStackQueryDevtools from '@/integrations/tanstack-query/devtools.tsx';
-import Header from '@/components/Header/Header.tsx';
-import { Footer } from '@/components/Footer/Footer.tsx';
-import { Route } from '@/routes/__root.tsx';
-import { FavIcons } from '@/components/GlobalLayout/FavIcons.tsx';
-import { previewStore, setPreviewMode, setPreviewPerspective } from '@/stores/previewStore.ts';
 import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
-import { PREVIEW_SESSION_NAME } from '@/sessions.ts';
-import { darkTheme, lightTheme } from '@/styles/theme.css.ts';
 import { ExitPreviewButton } from '@/components/ExitPreviewButton/ExitPreviewButton.tsx';
+import { Footer } from '@/components/Footer/Footer.tsx';
+import { FavIcons } from '@/components/GlobalLayout/FavIcons.tsx';
+import Header from '@/components/Header/Header.tsx';
 import { getCspNonce } from '@/functions/getCspNonce.ts';
+import TanStackQueryDevtools from '@/integrations/tanstack-query/devtools.tsx';
+import { Route } from '@/routes/__root.tsx';
+import { PREVIEW_SESSION_NAME } from '@/sessions.ts';
+import { previewStore, setPreviewMode, setPreviewPerspective } from '@/stores/previewStore.ts';
+import { darkTheme, lightTheme } from '@/styles/theme.css.ts';
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import { ClientOnly, HeadContent, Outlet, Scripts } from '@tanstack/react-router';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { useStore } from '@tanstack/react-store';
+import { Suspense, lazy, useEffect, useState } from 'react';
 
 const VisualEditing = lazy(() => import('@/sanity/VisualEditing.tsx'));
 

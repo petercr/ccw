@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { sanityTypeLiterals } from '@santan/shared/types';
 import { portableTextZ, sanityImageZ, seoZ } from '@/types/sanitySchemas.ts';
+import { sanityTypeLiterals } from '@santan/shared/types';
+import { z } from 'zod';
 
 // This is a Zod schema
 // https://zod.dev/

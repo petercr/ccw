@@ -1,16 +1,16 @@
-import groq from 'groq';
-import { queryOptions } from '@tanstack/react-query';
-import type { UnfilteredResponseQueryOptions } from '@sanity/client';
-import type { HomeDocument } from '@/types/home.ts';
-import type { PostStub } from '@/types/post.ts';
-import type { CategoryStub } from '@/types/category.ts';
-import { homeZ } from '@/types/home.ts';
+import { CATEGORIES_PER_PAGE, POSTS_PER_PAGE } from '@/constants/config.ts';
 import { client } from '@/sanity/client.ts';
 import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
-import { postsZ } from '@/types/post.ts';
-import { categoriesZ } from '@/types/category.ts';
 import { getPostsQuery } from '@/sanity/queries/postQuery.ts';
-import { CATEGORIES_PER_PAGE, POSTS_PER_PAGE } from '@/constants/config.ts';
+import type { CategoryStub } from '@/types/category.ts';
+import { categoriesZ } from '@/types/category.ts';
+import type { HomeDocument } from '@/types/home.ts';
+import { homeZ } from '@/types/home.ts';
+import type { PostStub } from '@/types/post.ts';
+import { postsZ } from '@/types/post.ts';
+import type { UnfilteredResponseQueryOptions } from '@sanity/client';
+import { queryOptions } from '@tanstack/react-query';
+import groq from 'groq';
 
 // Groq query
 export const HOME_QUERY = groq`{

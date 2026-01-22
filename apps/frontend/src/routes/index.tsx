@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { HomePage } from '@/pages/Home/Home.tsx';
-import { homeLoader } from '@/loaders/home.ts';
-import { homeMeta } from '@/pages/Home/meta.ts';
 import { LoadingSpinner } from '@/components/LoadingSpinner/LoadingSpinner.tsx';
+import { homeLoader } from '@/loaders/home.ts';
+import { HomePage } from '@/pages/Home/Home.tsx';
+import { homeMeta } from '@/pages/Home/meta.ts';
+import { createFileRoute } from '@tanstack/react-router';
 
 // Index Route
 export const Route = createFileRoute('/')({

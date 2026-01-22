@@ -1,3 +1,4 @@
+import type { HomeDocument } from '@/types/home.ts';
 import {
   buttonLink,
   cardPair,
@@ -10,7 +11,6 @@ import {
   linkList,
   simpleLink,
 } from './ContentCardsSection.css.ts';
-import type { HomeDocument } from '@/types/home.ts';
 
 interface ContentCardsSectionProps {
   homeData: HomeDocument;
@@ -57,11 +57,7 @@ export function ContentCardsSection({ homeData }: ContentCardsSectionProps) {
               <h3 className={headingText}>{headingCard2}</h3>
             </div>
           )}
-          {card2 && (
-            <div className={contentCard}>
-              {card2.text && <p className={cardText}>{card2.text}</p>}
-            </div>
-          )}
+          {card2 && <div className={contentCard}>{card2.text && <p className={cardText}>{card2.text}</p>}</div>}
         </div>
 
         {/* Pair 3: Header + Card */}
@@ -75,7 +71,11 @@ export function ContentCardsSection({ homeData }: ContentCardsSectionProps) {
             <div className={contentCard}>
               {card3.content?.map((block, i) => {
                 if (block._type === 'textContent' && block.text) {
-                  return <p key={i} className={cardText}>{block.text}</p>;
+                  return (
+                    <p key={i} className={cardText}>
+                      {block.text}
+                    </p>
+                  );
                 }
                 if (block._type === 'buttonContent') {
                   return (

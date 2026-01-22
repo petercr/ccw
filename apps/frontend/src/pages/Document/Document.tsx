@@ -1,15 +1,15 @@
-// Imports types, route, HOCs, constants, and page components
-import { useStore } from '@tanstack/react-store';
-import { sanityTypeLiterals } from '@santan/shared/types';
-import type { PageProps } from '@/types/PageProps.ts';
-import type { DocumentType } from '@/types/documentType.ts';
-import { Route } from '@/routes/$.tsx';
 import { withPreviewData, withPublishedData } from '@/components/withDocument.tsx';
-import { documentQuery } from '@/sanity/queries/documentQuery.ts';
-import { PostPage } from '@/pages/Post/Post.tsx';
 import { CategoryPage } from '@/pages/Category/Category.tsx';
 import { NotFoundPage } from '@/pages/NotFound/NotFound.tsx';
+import { PostPage } from '@/pages/Post/Post.tsx';
+import { Route } from '@/routes/$.tsx';
+import { documentQuery } from '@/sanity/queries/documentQuery.ts';
 import { previewStore } from '@/stores/previewStore.ts';
+import type { PageProps } from '@/types/PageProps.ts';
+import type { DocumentType } from '@/types/documentType.ts';
+import { sanityTypeLiterals } from '@santan/shared/types';
+// Imports types, route, HOCs, constants, and page components
+import { useStore } from '@tanstack/react-store';
 
 // Renders the correct page based on the document type
 export const Document = ({ data, encodeDataAttribute }: PageProps<DocumentType>) => {

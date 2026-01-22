@@ -1,5 +1,5 @@
-import groq from 'groq';
 import { portableTextProjection } from '@/sanity/projections/portableText.ts';
+import groq from 'groq';
 
 export const POST_QUERY_FIELDS = `
   _id,

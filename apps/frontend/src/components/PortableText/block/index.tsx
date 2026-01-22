@@ -1,5 +1,5 @@
-import { blockquote, h2, h3, h4, p, pre } from './block.css.ts';
 import type { ReactNode } from 'react';
+import { blockquote, h2, h3, h4, p, pre } from './block.css.ts';
 
 // Example block serializer for Portable Text
 export const block = {

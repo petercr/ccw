@@ -1,10 +1,10 @@
-// Write a tanstack server function that loads query options from request headers
-import { createServerFn } from '@tanstack/react-start';
-import type { ClientPerspective } from '@sanity/client';
 import { client } from '@/sanity/client.ts';
-import { getSession } from '@/sessions';
 import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { apiVersion, dataset, projectId } from '@/sanity/projectDetails.ts';
+import { getSession } from '@/sessions';
+import type { ClientPerspective } from '@sanity/client';
+// Write a tanstack server function that loads query options from request headers
+import { createServerFn } from '@tanstack/react-start';
 
 export const loadQueryOptions = createServerFn({
   method: 'GET',

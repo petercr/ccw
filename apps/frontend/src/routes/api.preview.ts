@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { validatePreviewUrl } from '@sanity/preview-url-secret';
-import type { RouteMethodResult } from '@tanstack/react-start';
-import { commitSession, destroySession, getSession } from '@/sessions';
 import { client } from '@/sanity/client';
+import { commitSession, destroySession, getSession } from '@/sessions';
+import { validatePreviewUrl } from '@sanity/preview-url-secret';
+import { createFileRoute } from '@tanstack/react-router';
+import type { RouteMethodResult } from '@tanstack/react-start';
 
 // Defines the /api/preview route with server-side handlers
 export const Route = createFileRoute('/api/preview')({

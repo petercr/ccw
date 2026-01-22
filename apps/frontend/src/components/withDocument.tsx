@@ -1,7 +1,7 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
-import type { ContentSourceMap } from '@sanity/client';
-import type { ReactNode } from 'react';
 import { useQuery } from '@/sanity/sanity.loader.ts';
+import type { ContentSourceMap } from '@sanity/client';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
 
 interface PreviewProps<T> {
   query: string;

@@ -6,9 +6,9 @@ import '@/styles/globals.css.ts';
 import { createRootRouteWithContext } from '@tanstack/react-router';
 import appCss from '../styles.css?url';
 
-import type { QueryClient } from '@tanstack/react-query';
-import { globalLayout as globalLayoutLoader } from '@/loaders/globalLayout.ts';
 import { GlobalLayout } from '@/components/GlobalLayout/GlobalLayout.tsx';
+import { globalLayout as globalLayoutLoader } from '@/loaders/globalLayout.ts';
+import type { QueryClient } from '@tanstack/react-query';
 
 interface MyRouterContext {
   queryClient: QueryClient;

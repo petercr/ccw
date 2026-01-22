@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 /**
  * TanStackLogo – theme-aware SVG logo that adapts to light/dark (marine) modes.

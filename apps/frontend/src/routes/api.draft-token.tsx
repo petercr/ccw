@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { getSession } from '@/sessions';
 import { client } from '@/sanity/client';
+import { getSession } from '@/sessions';
+import { createFileRoute } from '@tanstack/react-router';
 
 // Provides a draft token for live mode on the client
 export const Route = createFileRoute('/api/draft-token')({

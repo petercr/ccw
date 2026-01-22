@@ -1,8 +1,8 @@
-import type { QueryClient } from '@tanstack/react-query';
-import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
-import { DOCUMENT_QUERY, documentQuery } from '@/sanity/queries/documentQuery.ts';
-import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { detectPreviewMode, validatePreviewToken } from '@/lib/previewMode';
+import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
+import { DOCUMENT_QUERY, documentQuery } from '@/sanity/queries/documentQuery.ts';
+import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
+import type { QueryClient } from '@tanstack/react-query';
 
 export const documentLoader = async ({
   context,

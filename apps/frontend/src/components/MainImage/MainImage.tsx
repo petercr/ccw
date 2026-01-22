@@ -11,8 +11,8 @@ import {
   skeleton,
 } from './MainImage.css.ts';
 
-import type { SanityImageType } from '@/types/image.ts';
 import { dataset, projectId } from '@/sanity/projectDetails.ts';
+import type { SanityImageType } from '@/types/image.ts';
 
 type MainImageProps = {
   image?: SanityImageType;
@@ -66,8 +66,8 @@ export function MainImage({ image, encodeDataAttribute }: MainImageProps) {
     const dimsPart = parts.find((p) => /x/.test(p));
     if (dimsPart) {
       const [wStr, hStr] = dimsPart.split('x');
-      const w = parseInt(wStr, 10);
-      const h = parseInt(hStr, 10);
+      const w = Number.parseInt(wStr, 10);
+      const h = Number.parseInt(hStr, 10);
       if (!isNaN(w) && !isNaN(h)) {
         originalWidth = w;
         originalHeight = h;

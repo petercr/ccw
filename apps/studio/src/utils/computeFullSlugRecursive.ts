@@ -243,7 +243,7 @@ async function computeFullSlugIterative(
   let currentId: string | undefined = docId;
   let depth = 0;
   let isFirst = true;
-  let nextParentRef: string | undefined | null = initialParentRef;
+  const nextParentRef: string | undefined | null = initialParentRef;
 
   while (currentId && depth < maxDepth) {
     if (visited.has(currentId)) break;

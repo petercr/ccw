@@ -1,6 +1,6 @@
-import { PREVIEW_SESSION_NAME, getSession } from '@/sessions';
-import { client } from '@/sanity/client';
 import { isServer } from '@/lib/isServer';
+import { client } from '@/sanity/client';
+import { PREVIEW_SESSION_NAME, getSession } from '@/sessions';
 
 /**
  * Detects if the current request is in preview mode.

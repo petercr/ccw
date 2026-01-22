@@ -1,3 +1,7 @@
+import { MainImage } from '@/components/MainImage/MainImage.tsx';
+import { Title } from '@/components/Title/Title.tsx';
+import type { PageProps } from '@/types/PageProps.ts';
+import type { CategoryDocument } from '@/types/category.ts';
 import {
   container,
   header as headerStyle,
@@ -8,10 +12,6 @@ import {
   keywordsTitle,
   textContainer,
 } from './Category.css.ts';
-import type { PageProps } from '@/types/PageProps.ts';
-import type { CategoryDocument } from '@/types/category.ts';
-import { MainImage } from '@/components/MainImage/MainImage.tsx';
-import { Title } from '@/components/Title/Title.tsx';
 
 export const CategoryPage = ({ data, encodeDataAttribute }: PageProps<CategoryDocument>) => {
   if (!data) {

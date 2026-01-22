@@ -1,22 +1,11 @@
 /* Tailwind v4 base imports MUST come first */
-@import 'tailwindcss/preflight';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 /* Google Fonts with preconnect hint */
 
 :root {
-  font-family:
-    'Source Sans 3',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    'Roboto',
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
+  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   color-scheme: light dark;
 }
 
@@ -32,11 +21,11 @@ body {
   color: rgba(29, 29, 31, 0.82);
 }
 
-[data-theme='dark'] body {
+[data-theme="dark"] body {
   background: #0f1214;
   color: rgba(255, 255, 255, 0.92);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

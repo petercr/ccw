@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { vars } from '@/styles/theme.css.ts';
 import { textContent } from '@/styles/shared/textContent.css.ts';
+import { vars } from '@/styles/theme.css.ts';
+import { style } from '@vanilla-extract/css';
 
 export const ul = style([
   textContent,

@@ -1,7 +1,7 @@
+import { PostCard } from '@/components/PostCard/PostCard.tsx';
+import type { PostStub } from '@/types/post.ts';
 import { ClientOnly } from '@tanstack/react-router';
 import { container, loadMoreButton, section, sectionTitle } from '../Home.css.ts';
-import type { PostStub } from '@/types/post.ts';
-import { PostCard } from '@/components/PostCard/PostCard.tsx';
 
 interface PostsSectionProps {
   posts: Array<PostStub>;

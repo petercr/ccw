@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { sanityImageZ } from '@/types/sanitySchemas.ts';
+import { z } from 'zod';
 
 export const workProjectLinkZ = z.object({
   label: z.string(),

@@ -1,6 +1,6 @@
-import { section, sectionTitle } from '../Home.css.ts';
-import type { CategoryStub } from '@/types/category.ts';
 import { CategoryShowcase } from '@/components/CategoryShowcase/CategoryShowcase.tsx';
+import type { CategoryStub } from '@/types/category.ts';
+import { section, sectionTitle } from '../Home.css.ts';
 
 interface CategoriesSectionProps {
   categories: Array<CategoryStub>;

@@ -1,3 +1,5 @@
+import { SanityLogo } from '@/components/Logos/SanityLogo.tsx';
+import { TanStackLogo } from '@/components/Logos/TanStackLogo.tsx';
 import {
   featureCard,
   featureDescription,
@@ -13,8 +15,6 @@ import {
   logoSeparator,
   logosRow,
 } from '../Home.css.ts';
-import { TanStackLogo } from '@/components/Logos/TanStackLogo.tsx';
-import { SanityLogo } from '@/components/Logos/SanityLogo.tsx';
 
 interface HeroSectionProps {
   title?: string | null;

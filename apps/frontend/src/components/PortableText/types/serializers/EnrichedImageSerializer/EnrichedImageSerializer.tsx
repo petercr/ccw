@@ -1,10 +1,10 @@
-import React from 'react';
+import { dataset, projectId } from '@/sanity/projectDetails';
+import type { EnrichedImageBlock } from '@/types/sanitySchemas.ts';
+import type { PortableTextTypeComponentProps } from '@portabletext/react';
 import { getImageDimensions } from '@sanity/asset-utils';
 import urlBuilder from '@sanity/image-url';
+import type React from 'react';
 import { caption, credits, figcaption, figure, image } from './EnrichedImageSerializer.css';
-import type { PortableTextTypeComponentProps } from '@portabletext/react';
-import type { EnrichedImageBlock } from '@/types/sanitySchemas.ts';
-import { dataset, projectId } from '@/sanity/projectDetails';
 
 export const EnrichedImageSerializer: React.FC<PortableTextTypeComponentProps<EnrichedImageBlock>> = ({ value }) => {
   if (!value.image?.asset) {

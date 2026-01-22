@@ -13,4 +13,3 @@ export * from './sanity.types';
 export * from './sanityTypeLiterals';
 
 // Add more shared types here as needed
-

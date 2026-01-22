@@ -27,12 +27,7 @@ export function Footer() {
         </div>
         <nav className={linkGroup} aria-label="Resources">
           <div className={groupTitle}>Resources</div>
-          <a
-            className={footerLink}
-            href="https://github.com/MagneH/santan"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a className={footerLink} href="https://github.com/MagneH/santan" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
           <a

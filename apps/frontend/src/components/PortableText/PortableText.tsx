@@ -1,10 +1,10 @@
-import React from 'react';
-import { PortableText } from '@portabletext/react';
-import type { PortableText as PortableTextType } from '@/types/sanitySchemas';
-import { types } from '@/components/PortableText/types';
 import { block } from '@/components/PortableText/block';
-import { marks } from '@/components/PortableText/marks';
 import { list, listItem } from '@/components/PortableText/list';
+import { marks } from '@/components/PortableText/marks';
+import { types } from '@/components/PortableText/types';
+import type { PortableText as PortableTextType } from '@/types/sanitySchemas';
+import { PortableText } from '@portabletext/react';
+import React from 'react';
 
 const BlockContent = ({ value }: { value?: PortableTextType }) => {
   const components = React.useMemo(

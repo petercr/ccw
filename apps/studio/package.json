@@ -11,16 +11,14 @@
     "deploy": "sanity deploy",
     "generate-types": "sanity schema extract && sanity typegen generate && npm run extract-zod-literals",
     "extract-zod-literals": "npx ts-node src/scripts/extractZodLiterals.ts",
-    "format": "prettier --write \"**/*.{css,less,sass,scss,html,md,graphql,gql,json,ts,tsx,js,jsx,yml,yaml}\"",
-    "lint": "eslint . --fix",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist .turbo",
     "import-posts": "ts-node src/scripts/importPosts.ts",
     "import-authors": "ts-node src/scripts/importAuthors.ts"
   },
-  "keywords": [
-    "sanity"
-  ],
+  "keywords": ["sanity"],
   "dependencies": {
     "@sanity/vision": "^4.22.0",
     "lucide-react": "^0.556.0",
@@ -33,15 +31,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
-    "@sanity/eslint-config-studio": "^5.0.2",
     "@types/react": "^19.2.9",
-    "@typescript-eslint/eslint-plugin": "^8.53.1",
-    "@typescript-eslint/parser": "^8.53.1",
-    "eslint": "^9.39.2",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.5",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }

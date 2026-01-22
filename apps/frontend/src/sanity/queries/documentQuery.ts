@@ -1,14 +1,14 @@
-import groq from 'groq';
-import { queryOptions } from '@tanstack/react-query';
-import { sanityTypeLiterals } from '@santan/shared/types';
-import type { UnfilteredResponseQueryOptions } from '@sanity/client';
-import type { DocumentType } from '@/types/documentType.ts';
-import { postZ } from '@/types/post.ts';
 import { client } from '@/sanity/client.ts';
 import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { CATEGORY_QUERY_FIELDS } from '@/sanity/queries/categoryQuery.ts';
 import { POST_QUERY_FIELDS } from '@/sanity/queries/postQuery.ts';
 import { categoryZ } from '@/types/category.ts';
+import type { DocumentType } from '@/types/documentType.ts';
+import { postZ } from '@/types/post.ts';
+import type { UnfilteredResponseQueryOptions } from '@sanity/client';
+import { sanityTypeLiterals } from '@santan/shared/types';
+import { queryOptions } from '@tanstack/react-query';
+import groq from 'groq';
 
 // GROQ query
 export const DOCUMENT_QUERY = groq`*[fullSlug == $fullSlug][0]{

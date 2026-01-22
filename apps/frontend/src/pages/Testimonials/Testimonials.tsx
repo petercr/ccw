@@ -1,9 +1,9 @@
-import { createImageUrlBuilder } from '@sanity/image-url';
-import { card, cardBody, cardGrid, cardImage, cardImg, cardName, container, header } from './Testimonials.css.ts';
-import type { Testimonial } from '@/types/testimonial.ts';
 import { Title } from '@/components/Title/Title.tsx';
 import { Route } from '@/routes/testimonials.tsx';
 import { dataset, projectId } from '@/sanity/projectDetails.ts';
+import type { Testimonial } from '@/types/testimonial.ts';
+import { createImageUrlBuilder } from '@sanity/image-url';
+import { card, cardBody, cardGrid, cardImage, cardImg, cardName, container, header } from './Testimonials.css.ts';
 
 export const TestimonialsPage = () => {
   const { initial } = Route.useLoaderData();

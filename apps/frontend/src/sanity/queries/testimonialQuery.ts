@@ -1,7 +1,7 @@
-import groq from 'groq';
-import { queryOptions } from '@tanstack/react-query';
-import type { UnfilteredResponseQueryOptions } from '@sanity/client';
 import { fetchTestimonials } from '@/sanity/serverFunctions.ts';
+import type { UnfilteredResponseQueryOptions } from '@sanity/client';
+import { queryOptions } from '@tanstack/react-query';
+import groq from 'groq';
 
 export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"] | order(_createdAt desc) {
   _id,

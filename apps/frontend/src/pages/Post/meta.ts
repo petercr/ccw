@@ -1,7 +1,7 @@
-import { createImageUrlBuilder } from '@sanity/image-url';
-import type { PostDocument } from '@/types/post.ts';
-import { dataset, projectId } from '@/sanity/projectDetails.ts';
 import { seo } from '@/lib/seo.ts';
+import { dataset, projectId } from '@/sanity/projectDetails.ts';
+import type { PostDocument } from '@/types/post.ts';
+import { createImageUrlBuilder } from '@sanity/image-url';
 
 export const postMeta = (document: PostDocument, relativeUrl?: string) => {
   const src = document.mainImage
