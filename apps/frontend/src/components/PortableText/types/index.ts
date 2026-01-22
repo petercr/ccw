@@ -3,7 +3,7 @@ import { AccordionSerializer } from './serializers/AccordionSerializer/Accordion
 import { EnrichedImageSerializer } from './serializers/EnrichedImageSerializer/EnrichedImageSerializer.tsx';
 
 export const types = {
-  accordion: AccordionSerializer,
-  enrichedImage: EnrichedImageSerializer,
-  imageCarousel: ImageCarouselSerializer,
+	accordion: AccordionSerializer,
+	enrichedImage: EnrichedImageSerializer,
+	imageCarousel: ImageCarouselSerializer,
 };

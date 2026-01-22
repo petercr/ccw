@@ -5,8 +5,8 @@ import { testimonialsMeta } from '@/pages/Testimonials/meta.ts';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/testimonials')({
-  component: TestimonialsPage,
-  loader: testimonialsLoader,
-  head: ({ match }) => testimonialsMeta(match.fullPath),
-  pendingComponent: LoadingSpinner,
+	component: TestimonialsPage,
+	loader: testimonialsLoader,
+	head: ({ match }) => testimonialsMeta(match.fullPath),
+	pendingComponent: LoadingSpinner,
 });

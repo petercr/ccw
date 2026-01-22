@@ -10,53 +10,53 @@ import { PREVIEW_SESSION_NAME, getSession } from '@/sessions';
  * @returns Promise<boolean> indicating if preview mode is active
  */
 export async function detectPreviewMode(request: Request | null): Promise<boolean> {
-  let isPreviewMode = false;
+	let isPreviewMode = false;
 
-  if (isServer) {
-    // Server-side: check request headers
-    if (request) {
-      // Check URL parameters for preview indicators
-      const url = new URL(request.url);
-      const previewParam = url.searchParams.get('preview');
-      const perspectiveParam = url.searchParams.get('perspective');
+	if (isServer) {
+		// Server-side: check request headers
+		if (request) {
+			// Check URL parameters for preview indicators
+			const url = new URL(request.url);
+			const previewParam = url.searchParams.get('preview');
+			const perspectiveParam = url.searchParams.get('perspective');
 
-      // Check if loaded in iframe from Sanity Studio (check referer or specific headers)
-      const referer = request.headers.get('referer') || '';
-      const secFetchDest = request.headers.get('sec-fetch-dest') || '';
-      const isInIframe = secFetchDest === 'iframe' || referer.includes('sanity.studio');
+			// Check if loaded in iframe from Sanity Studio (check referer or specific headers)
+			const referer = request.headers.get('referer') || '';
+			const secFetchDest = request.headers.get('sec-fetch-dest') || '';
+			const isInIframe = secFetchDest === 'iframe' || referer.includes('sanity.studio');
 
-      // Sanity Studio sends 'perspective' parameter (previewDrafts or published)
-      const hasPerspectiveParam = perspectiveParam === 'previewDrafts' || perspectiveParam === 'drafts';
+			// Sanity Studio sends 'perspective' parameter (previewDrafts or published)
+			const hasPerspectiveParam = perspectiveParam === 'previewDrafts' || perspectiveParam === 'drafts';
 
-      if (previewParam === 'true' || isInIframe || hasPerspectiveParam) {
-        isPreviewMode = true;
-      } else {
-        try {
-          const previewSession = await getSession(request);
-          isPreviewMode = previewSession.projectId === client.config().projectId;
-        } catch (error) {
-          console.error('[PreviewMode] Error checking session:', error);
-          isPreviewMode = false;
-        }
-      }
-    }
-  } else {
-    // Client-side: check document.cookie
-    if (typeof document !== 'undefined') {
-      isPreviewMode = document.cookie.includes(`${PREVIEW_SESSION_NAME}=`);
+			if (previewParam === 'true' || isInIframe || hasPerspectiveParam) {
+				isPreviewMode = true;
+			} else {
+				try {
+					const previewSession = await getSession(request);
+					isPreviewMode = previewSession.projectId === client.config().projectId;
+				} catch (error) {
+					console.error('[PreviewMode] Error checking session:', error);
+					isPreviewMode = false;
+				}
+			}
+		}
+	} else {
+		// Client-side: check document.cookie
+		if (typeof document !== 'undefined') {
+			isPreviewMode = document.cookie.includes(`${PREVIEW_SESSION_NAME}=`);
 
-      // Also check URL parameters on client side
-      const urlParams = new URLSearchParams(window.location.search);
-      const perspectiveParam = urlParams.get('perspective');
-      const hasPerspectiveParam = perspectiveParam === 'previewDrafts' || perspectiveParam === 'drafts';
+			// Also check URL parameters on client side
+			const urlParams = new URLSearchParams(window.location.search);
+			const perspectiveParam = urlParams.get('perspective');
+			const hasPerspectiveParam = perspectiveParam === 'previewDrafts' || perspectiveParam === 'drafts';
 
-      if (hasPerspectiveParam) {
-        isPreviewMode = true;
-      }
-    }
-  }
+			if (hasPerspectiveParam) {
+				isPreviewMode = true;
+			}
+		}
+	}
 
-  return isPreviewMode;
+	return isPreviewMode;
 }
 
 /**
@@ -67,7 +67,7 @@ export async function detectPreviewMode(request: Request | null): Promise<boolea
  * @throws Error if preview mode is active but token is missing
  */
 export function validatePreviewToken(isPreviewMode: boolean): void {
-  if (isServer && isPreviewMode && !process.env.SANITY_READ_TOKEN) {
-    throw new Error(`Cannot activate preview mode without a "SANITY_READ_TOKEN" token in your environment variables.`);
-  }
+	if (isServer && isPreviewMode && !process.env.SANITY_READ_TOKEN) {
+		throw new Error(`Cannot activate preview mode without a "SANITY_READ_TOKEN" token in your environment variables.`);
+	}
 }

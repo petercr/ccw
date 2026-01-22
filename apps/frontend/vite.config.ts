@@ -9,20 +9,20 @@ import type { ConfigEnv } from 'vite';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: ConfigEnv) => {
-  // Workaround to load secrets since it's broken in Tanstack RC0 (or similar versions)
-  Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
-  return defineConfig({
-    plugins: [
-      devtools(),
-      nitroV2Plugin({ preset: 'node-server' }),
-      // this is the plugin that enables path aliases
-      viteTsConfigPaths({
-        projects: ['./tsconfig.json'],
-      }),
-      tailwindcss(),
-      tanstackStart(),
-      viteReact(),
-      vanillaExtractPlugin(),
-    ],
-  });
+	// Workaround to load secrets since it's broken in Tanstack RC0 (or similar versions)
+	Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
+	return defineConfig({
+		plugins: [
+			devtools(),
+			nitroV2Plugin({ preset: 'node-server' }),
+			// this is the plugin that enables path aliases
+			viteTsConfigPaths({
+				projects: ['./tsconfig.json'],
+			}),
+			tailwindcss(),
+			tanstackStart(),
+			viteReact(),
+			vanillaExtractPlugin(),
+		],
+	});
 };

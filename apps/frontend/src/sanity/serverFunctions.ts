@@ -9,38 +9,38 @@ import { createServerFn } from '@tanstack/react-start';
 
 // Server function to fetch work projects
 export const fetchWorkProjects = createServerFn({
-  method: 'GET',
+	method: 'GET',
 }).handler(async () => {
-  const options: UnfilteredResponseQueryOptions = {
-    filterResponse: false,
-    perspective: 'published' as ClientPerspective,
-  };
+	const options: UnfilteredResponseQueryOptions = {
+		filterResponse: false,
+		perspective: 'published' as ClientPerspective,
+	};
 
-  const res = await client
-    .withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
-    .fetch(WORK_PROJECTS_QUERY, {}, options);
+	const res = await client
+		.withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
+		.fetch(WORK_PROJECTS_QUERY, {}, options);
 
-  return {
-    data: workProjectsZ.parse(res.result),
-    sourceMap: res.resultSourceMap,
-  };
+	return {
+		data: workProjectsZ.parse(res.result),
+		sourceMap: res.resultSourceMap,
+	};
 });
 
 // Server function to fetch testimonials
 export const fetchTestimonials = createServerFn({
-  method: 'GET',
+	method: 'GET',
 }).handler(async () => {
-  const options: UnfilteredResponseQueryOptions = {
-    filterResponse: false,
-    perspective: 'published' as ClientPerspective,
-  };
+	const options: UnfilteredResponseQueryOptions = {
+		filterResponse: false,
+		perspective: 'published' as ClientPerspective,
+	};
 
-  const res = await client
-    .withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
-    .fetch(TESTIMONIALS_QUERY, {}, options);
+	const res = await client
+		.withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
+		.fetch(TESTIMONIALS_QUERY, {}, options);
 
-  return {
-    data: testimonialsZ.parse(res.result),
-    sourceMap: res.resultSourceMap,
-  };
+	return {
+		data: testimonialsZ.parse(res.result),
+		sourceMap: res.resultSourceMap,
+	};
 });

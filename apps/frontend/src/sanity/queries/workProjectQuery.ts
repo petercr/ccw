@@ -14,9 +14,9 @@ export const WORK_PROJECTS_QUERY = groq`*[_type == "workProject"] | order(_creat
 }`;
 
 export const workProjectsQuery = (options: UnfilteredResponseQueryOptions) =>
-  queryOptions({
-    queryKey: ['workProjects', options.perspective || 'published'],
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-    queryFn: () => fetchWorkProjects(),
-  });
+	queryOptions({
+		queryKey: ['workProjects', options.perspective || 'published'],
+		staleTime: 1000 * 60 * 5,
+		gcTime: 1000 * 60 * 10,
+		queryFn: () => fetchWorkProjects(),
+	});

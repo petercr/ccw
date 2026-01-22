@@ -10,17 +10,17 @@ import '@/components/GlobalLayout/GlobalLayout.css.ts';
 const blockCssModules = import.meta.glob('../components/PortableText/**/*.css.ts', { eager: true });
 
 if (import.meta.env.DEV) {
-  console.group('[vanilla-extract] Global block CSS loaded');
+	console.group('[vanilla-extract] Global block CSS loaded');
 
-  const modulePaths = Object.keys(blockCssModules);
+	const modulePaths = Object.keys(blockCssModules);
 
-  if (modulePaths.length === 0) {
-    console.warn('⚠️ No block CSS modules found in ../components/PortableText/**/*.css.ts');
-  } else {
-    modulePaths.forEach((p) => console.log('✔️ Loaded:', p.replace(/\.{2}\//g, 'src/')));
-  }
+	if (modulePaths.length === 0) {
+		console.warn('⚠️ No block CSS modules found in ../components/PortableText/**/*.css.ts');
+	} else {
+		modulePaths.forEach((p) => console.log('✔️ Loaded:', p.replace(/\.{2}\//g, 'src/')));
+	}
 
-  console.groupEnd();
+	console.groupEnd();
 }
 
 void blockCssModules;

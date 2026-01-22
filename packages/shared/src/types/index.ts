@@ -1,10 +1,10 @@
 // Export shared types that can be used across frontend and studio
 export interface SanityDocument {
-  _id: string;
-  _type: string;
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
+	_id: string;
+	_type: string;
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
 }
 
 // Export generated Sanity types from studio

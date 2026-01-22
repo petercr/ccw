@@ -6,47 +6,47 @@ import type { DefaultDocumentNodeResolver, StructureBuilder, StructureResolver }
 import { JSONPreview } from './components/JSONPreview';
 
 export const structure: StructureResolver = (S) =>
-  S.list()
-    .id('root')
-    .title('Content')
-    .items([
-      // Singleton, home page curation
-      S.listItem()
-        .icon(Home)
-        .id('home')
-        .title('HomePage')
-        .child(defaultDocumentViews(S, sanityTypeLiterals.home)),
-      S.divider(),
-      // Document lists
-      S.documentTypeListItem('post').title('Articles'),
-      S.documentTypeListItem('category').title('Pages').icon(Tags),
-      S.documentTypeListItem('testimonial').title('Testimonials').icon(Quote),
-      S.documentTypeListItem('workProject').title('Our Work').icon(Briefcase),
-      S.divider(),
-      S.documentTypeListItem('person')
-        .title('Persons')
-        .icon(Users), //Plural
-    ]);
+	S.list()
+		.id('root')
+		.title('Content')
+		.items([
+			// Singleton, home page curation
+			S.listItem()
+				.icon(Home)
+				.id('home')
+				.title('HomePage')
+				.child(defaultDocumentViews(S, sanityTypeLiterals.home)),
+			S.divider(),
+			// Document lists
+			S.documentTypeListItem('post').title('Articles'),
+			S.documentTypeListItem('category').title('Pages').icon(Tags),
+			S.documentTypeListItem('testimonial').title('Testimonials').icon(Quote),
+			S.documentTypeListItem('workProject').title('Our Work').icon(Briefcase),
+			S.divider(),
+			S.documentTypeListItem('person')
+				.title('Persons')
+				.icon(Users), //Plural
+		]);
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, { schemaType, documentId }) => {
-  switch (schemaType) {
-    default:
-      return defaultDocumentViews(S, schemaType as sanityTypeLiterals);
-  }
+	switch (schemaType) {
+		default:
+			return defaultDocumentViews(S, schemaType as sanityTypeLiterals);
+	}
 };
 
 const defaultDocumentViews = (S: StructureBuilder, documentType: sanityTypeLiterals) =>
-  S.document()
-    .schemaType(documentType)
-    .views([
-      S.view.form(),
-      S.view.component(JSONPreview).title('JSON'),
-      S.view
-        .component(DocumentsPane)
-        .options({
-          query: `*[references($id)]`,
-          params: { id: `_id` },
-          options: { perspective: 'drafts' },
-        })
-        .title('Documents that reference this'),
-    ]);
+	S.document()
+		.schemaType(documentType)
+		.views([
+			S.view.form(),
+			S.view.component(JSONPreview).title('JSON'),
+			S.view
+				.component(DocumentsPane)
+				.options({
+					query: `*[references($id)]`,
+					params: { id: `_id` },
+					options: { perspective: 'drafts' },
+				})
+				.title('Documents that reference this'),
+		]);

@@ -12,35 +12,35 @@ import { defaultDocumentNode, structure } from './src/structure';
 const slugAwareTypes = ['category', 'post'];
 
 export default defineConfig({
-  name: 'default',
-  title: 'Santan Studio',
+	name: 'default',
+	title: 'Santan Studio',
 
-  projectId: projectDetails().projectId,
-  dataset: projectDetails().dataset,
-  apiVersion: projectDetails().apiVersion,
-  document: {
-    actions: (prev, context) =>
-      slugAwareTypes.includes(context.schemaType)
-        ? prev.map((a) => (a.action === 'publish' ? fullSlugPublishAction(a) : a))
-        : prev,
-  },
+	projectId: projectDetails().projectId,
+	dataset: projectDetails().dataset,
+	apiVersion: projectDetails().apiVersion,
+	document: {
+		actions: (prev, context) =>
+			slugAwareTypes.includes(context.schemaType)
+				? prev.map((a) => (a.action === 'publish' ? fullSlugPublishAction(a) : a))
+				: prev,
+	},
 
-  plugins: [
-    structureTool({ structure, defaultDocumentNode }),
-    visionTool(),
-    presentationTool({
-      resolve,
-      previewUrl: {
-        initial: 'http://localhost:3000',
-        previewMode: {
-          enable: 'http://localhost:3000/api/preview',
-        },
-      },
-      allowOrigins: ['http://localhost:*'],
-    }),
-  ],
+	plugins: [
+		structureTool({ structure, defaultDocumentNode }),
+		visionTool(),
+		presentationTool({
+			resolve,
+			previewUrl: {
+				initial: 'http://localhost:3000',
+				previewMode: {
+					enable: 'http://localhost:3000/api/preview',
+				},
+			},
+			allowOrigins: ['http://localhost:*'],
+		}),
+	],
 
-  schema: {
-    types: schemaTypes,
-  },
+	schema: {
+		types: schemaTypes,
+	},
 });

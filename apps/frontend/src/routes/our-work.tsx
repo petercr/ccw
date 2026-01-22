@@ -5,8 +5,8 @@ import { workProjectsMeta } from '@/pages/WorkProjects/meta.ts';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/our-work')({
-  component: WorkProjectsPage,
-  loader: workProjectsLoader,
-  head: ({ match }) => workProjectsMeta(match.fullPath),
-  pendingComponent: LoadingSpinner,
+	component: WorkProjectsPage,
+	loader: workProjectsLoader,
+	head: ({ match }) => workProjectsMeta(match.fullPath),
+	pendingComponent: LoadingSpinner,
 });

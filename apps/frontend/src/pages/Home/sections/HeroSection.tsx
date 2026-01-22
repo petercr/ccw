@@ -1,56 +1,56 @@
 import { SanityLogo } from '@/components/Logos/SanityLogo.tsx';
 import { TanStackLogo } from '@/components/Logos/TanStackLogo.tsx';
 import {
-  featureCard,
-  featureDescription,
-  featureGrid,
-  featureIcon,
-  featureTitle,
-  heroContent,
-  heroSection,
-  heroSubtitle,
-  heroTitle,
-  logo,
-  logoContainer,
-  logoSeparator,
-  logosRow,
+	featureCard,
+	featureDescription,
+	featureGrid,
+	featureIcon,
+	featureTitle,
+	heroContent,
+	heroSection,
+	heroSubtitle,
+	heroTitle,
+	logo,
+	logoContainer,
+	logoSeparator,
+	logosRow,
 } from '../Home.css.ts';
 
 interface HeroSectionProps {
-  title?: string | null;
-  subTitle?: string | null;
+	title?: string | null;
+	subTitle?: string | null;
 }
 
 const FEATURES = [
-  { icon: '⚡', title: 'Lightning Fast', desc: 'Server-side rendering with instant client-side navigation' },
-  { icon: '👁️', title: 'Live Preview', desc: "Real-time content updates with Sanity's visual editing" },
-  { icon: '🎨', title: 'Beautiful UI', desc: "Clean, modern design inspired by Apple's aesthetics" },
-  { icon: '📱', title: 'Fully Responsive', desc: 'Perfect experience on any device, any screen size' },
+	{ icon: '⚡', title: 'Lightning Fast', desc: 'Server-side rendering with instant client-side navigation' },
+	{ icon: '👁️', title: 'Live Preview', desc: "Real-time content updates with Sanity's visual editing" },
+	{ icon: '🎨', title: 'Beautiful UI', desc: "Clean, modern design inspired by Apple's aesthetics" },
+	{ icon: '📱', title: 'Fully Responsive', desc: 'Perfect experience on any device, any screen size' },
 ];
 
 export function HeroSection({ title, subTitle }: HeroSectionProps) {
-  return (
-    <section className={heroSection}>
-      <div className={heroContent}>
-        <h1 className={heroTitle}>{title}</h1>
-        {subTitle && <p className={heroSubtitle}>{subTitle}</p>}
-        <div className={logoContainer}>
-          <div className={logosRow}>
-            <TanStackLogo height={40} className={logo} />
-            <span className={logoSeparator}>×</span>
-            <SanityLogo height={40} className={logo} />
-          </div>
-        </div>
-        <div className={featureGrid}>
-          {FEATURES.map((f) => (
-            <div className={featureCard} key={f.title}>
-              <div className={featureIcon}>{f.icon}</div>
-              <h2 className={featureTitle}>{f.title}</h2>
-              <p className={featureDescription}>{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+	return (
+		<section className={heroSection}>
+			<div className={heroContent}>
+				<h1 className={heroTitle}>{title}</h1>
+				{subTitle && <p className={heroSubtitle}>{subTitle}</p>}
+				<div className={logoContainer}>
+					<div className={logosRow}>
+						<TanStackLogo height={40} className={logo} />
+						<span className={logoSeparator}>×</span>
+						<SanityLogo height={40} className={logo} />
+					</div>
+				</div>
+				<div className={featureGrid}>
+					{FEATURES.map((f) => (
+						<div className={featureCard} key={f.title}>
+							<div className={featureIcon}>{f.icon}</div>
+							<h2 className={featureTitle}>{f.title}</h2>
+							<p className={featureDescription}>{f.desc}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+	);
 }

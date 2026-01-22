@@ -5,7 +5,7 @@ const apiVersion = process.env.SANITY_STUDIO_API_VERSION!;
 export { apiVersion, dataset, projectId };
 
 export const projectDetails = () => ({
-  projectId,
-  dataset,
-  apiVersion,
+	projectId,
+	dataset,
+	apiVersion,
 });

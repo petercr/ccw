@@ -24,30 +24,30 @@ export const SANITY_API_VERSION = import.meta.env.VITE_SANITY_API_VERSION;
  * 4. Local development fallback
  */
 export function getSanityStudioUrl(): string {
-  const isServer = typeof window === 'undefined';
+	const isServer = typeof window === 'undefined';
 
-  if (isServer) {
-    // Server-side: Read from process.env (set by Cloud Run)
-    const serverStudioUrl = process.env.SANITY_STUDIO_URL || process.env.VITE_SANITY_STUDIO_URL;
+	if (isServer) {
+		// Server-side: Read from process.env (set by Cloud Run)
+		const serverStudioUrl = process.env.SANITY_STUDIO_URL || process.env.VITE_SANITY_STUDIO_URL;
 
-    if (serverStudioUrl) {
-      return serverStudioUrl;
-    }
-  } else {
-    // Client-side: Try runtime injected value first
-    if ((window as any).__SANITY_STUDIO_URL__) {
-      return (window as any).__SANITY_STUDIO_URL__;
-    }
+		if (serverStudioUrl) {
+			return serverStudioUrl;
+		}
+	} else {
+		// Client-side: Try runtime injected value first
+		if ((window as any).__SANITY_STUDIO_URL__) {
+			return (window as any).__SANITY_STUDIO_URL__;
+		}
 
-    // Then try build-time env var
-    const clientStudioUrl = import.meta.env.VITE_SANITY_STUDIO_URL;
-    if (clientStudioUrl) {
-      return clientStudioUrl;
-    }
-  }
+		// Then try build-time env var
+		const clientStudioUrl = import.meta.env.VITE_SANITY_STUDIO_URL;
+		if (clientStudioUrl) {
+			return clientStudioUrl;
+		}
+	}
 
-  // Fallback to localhost for development
-  return 'http://localhost:3333';
+	// Fallback to localhost for development
+	return 'http://localhost:3333';
 }
 
 export const SANITY_STUDIO_URL = getSanityStudioUrl();

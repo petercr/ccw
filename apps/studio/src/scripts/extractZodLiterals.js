@@ -10,7 +10,7 @@ const types = new Set();
 
 let match;
 while ((match = typeRegex.exec(file)) !== null) {
-  types.add(match[1]);
+	types.add(match[1]);
 }
 
 const output = `export const sanityTypeLiterals = ${JSON.stringify(Array.from(types), null, 2)};\n`;

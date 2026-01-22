@@ -6,8 +6,8 @@ import { createFileRoute } from '@tanstack/react-router';
 
 // Catch All Route - data is fetched based on the relative URL which should be maintained on all documents in Sanity.
 export const Route = createFileRoute('/$')({
-  component: DocumentPage,
-  loader: documentLoader,
-  head: ({ loaderData, match }) => head(loaderData?.initial.data || undefined, match.pathname),
-  pendingComponent: LoadingSpinner, // Show spinner during navigation to prevent flash of 404
+	component: DocumentPage,
+	loader: documentLoader,
+	head: ({ loaderData, match }) => head(loaderData?.initial.data || undefined, match.pathname),
+	pendingComponent: LoadingSpinner, // Show spinner during navigation to prevent flash of 404
 });

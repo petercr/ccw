@@ -30,51 +30,51 @@ export const HOME_QUERY = groq`{
 
 // Tanstack Query
 export const homeQuery = (options: UnfilteredResponseQueryOptions) =>
-  queryOptions({
-    queryKey: ['home', options.perspective || 'published'],
-    staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
-    gcTime: 1000 * 60 * 10, // Keep in cache for 10 minutes
-    queryFn: () => {
-      return client
-        .withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
-        .fetch<
-          | {
-              homeData?: HomeDocument | null;
-              postsData?: Array<PostStub> | null;
-              categoriesData?: Array<CategoryStub> | null;
-            }
-          | undefined
-        >(HOME_QUERY, { lastPublishedAt: null, lastId: null }, options)
-        .then((res) => {
-          if (!res.result) {
-            return undefined;
-          }
+	queryOptions({
+		queryKey: ['home', options.perspective || 'published'],
+		staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+		gcTime: 1000 * 60 * 10, // Keep in cache for 10 minutes
+		queryFn: () => {
+			return client
+				.withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
+				.fetch<
+					| {
+							homeData?: HomeDocument | null;
+							postsData?: Array<PostStub> | null;
+							categoriesData?: Array<CategoryStub> | null;
+					  }
+					| undefined
+				>(HOME_QUERY, { lastPublishedAt: null, lastId: null }, options)
+				.then((res) => {
+					if (!res.result) {
+						return undefined;
+					}
 
-          // Safely parse each field, providing defaults if null/undefined
-          // Using ?? to handle both null and undefined at runtime
-          const homeData = res.result.homeData
-            ? homeZ.parse(res.result.homeData)
-            : {
-                title: null,
-                subTitle: null,
-                headingCard1: null,
-                headingCard2: null,
-                headingCard3: null,
-                card1: null,
-                card2: null,
-                card3: null,
-              };
-          const postsData = res.result.postsData ? postsZ.parse(res.result.postsData) : [];
-          const categoriesData = res.result.categoriesData ? categoriesZ.parse(res.result.categoriesData) : [];
+					// Safely parse each field, providing defaults if null/undefined
+					// Using ?? to handle both null and undefined at runtime
+					const homeData = res.result.homeData
+						? homeZ.parse(res.result.homeData)
+						: {
+								title: null,
+								subTitle: null,
+								headingCard1: null,
+								headingCard2: null,
+								headingCard3: null,
+								card1: null,
+								card2: null,
+								card3: null,
+							};
+					const postsData = res.result.postsData ? postsZ.parse(res.result.postsData) : [];
+					const categoriesData = res.result.categoriesData ? categoriesZ.parse(res.result.categoriesData) : [];
 
-          return {
-            data: {
-              homeData,
-              postsData,
-              categoriesData,
-            },
-            sourceMap: res.resultSourceMap,
-          };
-        });
-    },
-  });
+					return {
+						data: {
+							homeData,
+							postsData,
+							categoriesData,
+						},
+						sourceMap: res.resultSourceMap,
+					};
+				});
+		},
+	});
