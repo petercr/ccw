@@ -54,7 +54,7 @@ function validateEnv(): Env {
         SANITY_SESSION_SECRET: serverVars.SANITY_SESSION_SECRET || '',
         NODE_ENV: serverVars.NODE_ENV,
       };
-    } else {
+    }
       // Client-side: validate client vars (from import.meta.env)
       const clientVars = clientEnvSchema.parse({
         VITE_SANITY_PROJECT_ID: import.meta.env.VITE_SANITY_PROJECT_ID,
@@ -78,7 +78,6 @@ function validateEnv(): Env {
         SANITY_SESSION_SECRET: '', // Not available on client
         NODE_ENV: (import.meta.env.MODE || 'production') as 'development' | 'production' | 'test',
       };
-    }
   } catch (error) {
     if (error instanceof z.ZodError) {
       const missingVars = error.issues.map((e) => `${e.path.join('.')}: ${e.message}`).join('\n  ');
