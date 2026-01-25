@@ -1,31 +1,33 @@
 {
-  "name": "santan-monorepo",
-  "private": true,
-  "packageManager": "npm@11.6.2",
-  "license": "MIT",
-  "scripts": {
-    "dev": "echo '🚀 Starting development servers...' && turbo run dev",
-    "dev:stream": "echo '📺 Starting development servers in stream mode...' && turbo run dev --ui=stream",
-    "dev:tui": "echo '🖥️  Starting development servers in TUI mode...' && turbo run dev --ui=tui",
-    "build": "echo '🏗️  Building all packages...' && turbo run build",
-    "lint": "echo '🔍 Linting code...' && turbo run lint",
-    "type-check": "echo '✅ Type checking...' && turbo run type-check",
-    "format": "echo '✨ Formatting code...' && turbo run format",
-    "clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean"
-  },
-  "devDependencies": {
-    "turbo": "^2.6.3"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "engines": {
-    "node": ">=24"
-  },
-  "dependencies": {
-    "@sanity/vision": "^4.20.3",
-    "diff": "^8.0.2",
-    "sanity": "^4.20.3"
-  }
+	"name": "santan-monorepo",
+	"private": true,
+	"packageManager": "npm@11.6.2",
+	"license": "MIT",
+	"scripts": {
+		"dev": "echo '🚀 Starting development servers...' && turbo run dev",
+		"dev:stream": "echo '📺 Starting development servers in stream mode...' && turbo run dev --ui=stream",
+		"dev:tui": "echo '🖥️  Starting development servers in TUI mode...' && turbo run dev --ui=tui",
+		"build": "echo '🏗️  Building all packages...' && turbo run build",
+		"lint": "echo '🔍 Linting code...' && biome lint .",
+		"lint:fix": "echo '🔧 Fixing lint issues...' && biome lint --write .",
+		"type-check": "echo '✅ Type checking...' && turbo run type-check",
+		"format": "echo '✨ Formatting code...' && biome format --write .",
+		"format:check": "echo '🔍 Checking formatting...' && biome format .",
+		"check": "echo '🔍 Running all checks...' && biome check .",
+		"check:fix": "echo '🔧 Fixing all issues...' && biome check --write .",
+		"clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"turbo": "^2.7.5"
+	},
+	"workspaces": ["apps/*", "packages/*"],
+	"engines": {
+		"node": ">=24"
+	},
+	"dependencies": {
+		"@sanity/vision": "^4.22.0",
+		"diff": "^8.0.3",
+		"sanity": "^4.22.0"
+	}
 }

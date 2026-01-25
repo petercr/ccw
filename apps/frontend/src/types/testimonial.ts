@@ -1,13 +1,13 @@
-import { z } from 'zod';
 import { sanityImageZ } from '@/types/sanitySchemas.ts';
+import { z } from 'zod';
 
 export const testimonialZ = z.object({
-  _id: z.string(),
-  _type: z.literal('testimonial'),
-  name: z.string(),
-  mainImage: sanityImageZ.nullable(),
-  body: z.string(),
-  _createdAt: z.string(),
+	_id: z.string(),
+	_type: z.literal('testimonial'),
+	name: z.string(),
+	mainImage: sanityImageZ.nullable(),
+	body: z.string(),
+	_createdAt: z.string(),
 });
 
 export type Testimonial = z.infer<typeof testimonialZ>;

@@ -1,0 +1,68 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"useButtonType": "warn",
+				"useSemanticElements": "warn",
+				"useKeyWithClickEvents": "warn"
+			},
+			"complexity": {
+				"noUselessFragments": "warn",
+				"noForEach": "warn"
+			},
+			"correctness": {
+				"noUnusedImports": "error",
+				"noUnusedVariables": "warn",
+				"useExhaustiveDependencies": "warn",
+				"useHookAtTopLevel": "error"
+			},
+			"style": {
+				"noNonNullAssertion": "warn",
+				"useConsistentArrayType": "off",
+				"useImportType": "error",
+				"noUnusedTemplateLiteral": "warn"
+			},
+			"suspicious": {
+				"noExplicitAny": "warn"
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 120
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"trailingCommas": "all",
+			"bracketSpacing": true,
+			"semicolons": "always"
+		}
+	},
+	"files": {
+		"ignore": [
+			"node_modules",
+			"dist",
+			".output",
+			".nitro",
+			".sanity",
+			".turbo",
+			"public",
+			"*.min.js",
+			"*.min.css",
+			"package-lock.json",
+			"apps/studio/types/sanity.types.ts",
+			"apps/studio/types/sanityTypeLiterals.ts",
+			"packages/shared/src/types/sanity.types.ts",
+			"apps/frontend/src/routeTree.gen.ts"
+		]
+	}
+}

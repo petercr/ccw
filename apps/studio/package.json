@@ -1,48 +1,38 @@
 {
-  "name": "@santan/studio",
-  "private": true,
-  "version": "1.0.0",
-  "main": "package.json",
-  "license": "MIT",
-  "scripts": {
-    "dev": "sanity dev",
-    "start": "sanity start",
-    "build": "sanity build",
-    "deploy": "sanity deploy",
-    "generate-types": "sanity schema extract && sanity typegen generate && npm run extract-zod-literals",
-    "extract-zod-literals": "npx ts-node src/scripts/extractZodLiterals.ts",
-    "format": "prettier --write \"**/*.{css,less,sass,scss,html,md,graphql,gql,json,ts,tsx,js,jsx,yml,yaml}\"",
-    "lint": "eslint . --fix",
-    "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist .turbo",
-    "import-posts": "ts-node src/scripts/importPosts.ts",
-    "import-authors": "ts-node src/scripts/importAuthors.ts"
-  },
-  "keywords": [
-    "sanity"
-  ],
-  "dependencies": {
-    "@sanity/vision": "^4.20.3",
-    "lucide-react": "^0.556.0",
-    "react": "^19.2",
-    "react-dom": "^19.2.1",
-    "sanity": "^4.20.3",
-    "sanity-plugin-documents-pane": "^3.0.1",
-    "styled-components": "^6.1.19"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^20.2.0",
-    "@commitlint/config-conventional": "^20.2.0",
-    "@sanity/eslint-config-studio": "^5.0.2",
-    "@types/react": "^19.2.7",
-    "@typescript-eslint/eslint-plugin": "^8.48.1",
-    "@typescript-eslint/parser": "^8.48.1",
-    "eslint": "^9.39.1",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "prettier": "^3.7.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
-  }
+	"name": "@santan/studio",
+	"private": true,
+	"version": "1.0.0",
+	"main": "package.json",
+	"license": "MIT",
+	"scripts": {
+		"dev": "sanity dev",
+		"start": "sanity start",
+		"build": "sanity build",
+		"deploy": "sanity deploy",
+		"generate-types": "sanity schema extract && sanity typegen generate && npm run extract-zod-literals",
+		"extract-zod-literals": "npx ts-node src/scripts/extractZodLiterals.ts",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"type-check": "tsc --noEmit",
+		"clean": "rm -rf dist .turbo",
+		"import-posts": "ts-node src/scripts/importPosts.ts",
+		"import-authors": "ts-node src/scripts/importAuthors.ts"
+	},
+	"keywords": ["sanity"],
+	"dependencies": {
+		"@sanity/vision": "^4.22.0",
+		"lucide-react": "^0.556.0",
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3",
+		"sanity": "^4.22.0",
+		"sanity-plugin-documents-pane": "^3.0.2",
+		"styled-components": "^6.3.8"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^20.3.1",
+		"@commitlint/config-conventional": "^20.3.1",
+		"@types/react": "^19.2.9",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.9.3"
+	}
 }

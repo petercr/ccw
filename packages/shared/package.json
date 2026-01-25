@@ -1,38 +1,35 @@
 {
-  "name": "@santan/shared",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
-    "./types": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/types/index.js",
-      "default": "./dist/types/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc",
-    "type-check": "tsc --noEmit",
-    "lint": "echo 'No lint configured'",
-    "format": "prettier --write \"**/*.{ts,tsx,json}\"",
-    "clean": "rm -rf dist .turbo"
-  },
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "prettier": "^3.7.4",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "zod": "^4.1.13"
-  }
+	"name": "@santan/shared",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./types": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/types/index.js",
+			"default": "./dist/types/index.js"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"dev": "tsc --watch",
+		"build": "tsc",
+		"type-check": "tsc --noEmit",
+		"lint": "biome lint .",
+		"format": "biome format --write .",
+		"clean": "rm -rf dist .turbo"
+	},
+	"devDependencies": {
+		"@types/node": "^24.10.9",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"zod": "^4.3.5"
+	}
 }

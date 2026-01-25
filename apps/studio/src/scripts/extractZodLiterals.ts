@@ -15,16 +15,16 @@ const typeRegex = /_type:\s*["']([^"']+)["']/g;
 const types = new Set<string>();
 let match;
 while ((match = typeRegex.exec(file)) !== null) {
-  types.add(match[1]);
+	types.add(match[1]);
 }
 
 const enumMembers = Array.from(types)
-  .map((type) => {
-    // Replace dots and other invalid characters with underscores
-    const enumKey = type.replace(/[^a-zA-Z0-9_]/g, '_');
-    return `  ${enumKey} = '${type}',`;
-  })
-  .join('\n');
+	.map((type) => {
+		// Replace dots and other invalid characters with underscores
+		const enumKey = type.replace(/[^a-zA-Z0-9_]/g, '_');
+		return `  ${enumKey} = '${type}',`;
+	})
+	.join('\n');
 
 const output = `export enum sanityTypeLiterals {\n${enumMembers}\n}\n`;
 

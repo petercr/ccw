@@ -1,5 +1,5 @@
-import groq from 'groq';
 import { portableTextProjection } from '@/sanity/projections/portableText.ts';
+import groq from 'groq';
 
 export const POST_QUERY_FIELDS = `
   _id,
@@ -31,7 +31,7 @@ export const POST_STUB_QUERY_FIELDS = `
 `;
 
 export function getPostsQuery(limit = 6) {
-  return groq`
+	return groq`
     *[
       _type == "post" &&
       (
