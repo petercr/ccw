@@ -1,7 +1,7 @@
 {
 	"name": "santan-monorepo",
 	"private": true,
-	"packageManager": "npm@11.6.2",
+	"packageManager": "npm@11.8.0",
 	"license": "MIT",
 	"scripts": {
 		"dev": "echo '🚀 Starting development servers...' && turbo run dev",
@@ -18,16 +18,19 @@
 		"clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"turbo": "^2.7.5"
+		"@biomejs/biome": "^2.3.13",
+		"turbo": "^2.7.6"
 	},
-	"workspaces": ["apps/*", "packages/*"],
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
 	"engines": {
 		"node": ">=24"
 	},
 	"dependencies": {
-		"@sanity/vision": "^4.22.0",
+		"@sanity/vision": "^5.6.0",
 		"diff": "^8.0.3",
-		"sanity": "^4.22.0"
+		"sanity": "^5.6.0"
 	}
 }
