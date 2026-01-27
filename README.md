@@ -1,10 +1,14 @@
-# Santan Monorepo
+# Cape Cod World Monorepo
 
-A production-ready monorepo combining a React frontend with Sanity Studio, powered by Turborepo.
+> Please Note this project is currently in development and still has some rough edges. Use at your own risk.
+
+A production-ready monorepo combining a TanStackReact frontend with Sanity Studio, powered by Turborepo.
+
+This project is a custom fork of the original Santan Monorepo, [which can be found here](https://github.com/MagneH/SanTan).
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 [![Turborepo](https://img.shields.io/badge/Turborepo-2.3-red)](https://turbo.build/repo)
-[![Node.js](https://img.shields.io/badge/Node.js-≥18-green)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-≥24-green)](https://nodejs.org/)
 
 ---
 
@@ -30,11 +34,12 @@ This monorepo combines a React frontend and Sanity Studio into a single, optimiz
 ✅ **Turborepo caching** - Lightning-fast builds with intelligent caching  
 ✅ **Production-ready** - Properly configured for deployment  
 ✅ **Type-safe** - Full TypeScript support throughout  
-✅ **Hot reloading** - Fast development experience  
+✅ **Hot reloading** - Fast development experience
 
 ### Tech Stack
 
 **Frontend (`apps/frontend`)**
+
 - React 19
 - TanStack Router & Query
 - Vite 7
@@ -42,11 +47,13 @@ This monorepo combines a React frontend and Sanity Studio into a single, optimiz
 - Tailwind CSS
 
 **Studio (`apps/studio`)**
-- Sanity Studio 4
+
+- Sanity Studio 5
 - Custom schema types
 - Document preview
 
 **Shared (`packages/shared`)**
+
 - Auto-generated Sanity types
 - Shared utilities
 - Type-safe enums
@@ -57,7 +64,7 @@ This monorepo combines a React frontend and Sanity Studio into a single, optimiz
 
 ### Prerequisites
 
-- **Node.js** ≥ 18
+- **Node.js** ≥ 24
 - **npm** (comes with Node.js)
 - **Sanity account** with a configured project
 
@@ -71,11 +78,13 @@ npm install
 ### 2. Configure Environment
 
 **Frontend:**
+
 ```bash
 cp apps/frontend/.env.example apps/frontend/.env.local
 ```
 
 Edit `apps/frontend/.env.local`:
+
 ```env
 VITE_SANITY_PROJECT_ID=your_project_id
 VITE_SANITY_DATASET=production
@@ -84,11 +93,13 @@ SESSION_SECRET=generate_a_random_secret_here
 ```
 
 **Studio:**
+
 ```bash
 cp apps/studio/.env.example apps/studio/.env.local
 ```
 
 Edit `apps/studio/.env.local`:
+
 ```env
 SANITY_STUDIO_PROJECT_ID=your_project_id
 SANITY_STUDIO_DATASET=production
@@ -101,6 +112,7 @@ npm run dev
 ```
 
 This starts:
+
 - 🌐 **Frontend** at [http://localhost:3000](http://localhost:3000)
 - 🎨 **Studio** at [http://localhost:3333](http://localhost:3333)
 - 🔧 **Shared package** in watch mode (auto-recompiles on changes)
@@ -158,8 +170,9 @@ npm run dev
 ```
 
 Starts all workspaces with hot reloading:
+
 - Frontend dev server
-- Studio dev server  
+- Studio dev server
 - Shared package in watch mode (auto-rebuilds on changes)
 
 ### Run Individual Apps
@@ -181,12 +194,12 @@ The `@santan/shared` package contains auto-generated Sanity types:
 
 ```typescript
 // Import in Frontend or Studio
-import { 
-  Post, 
-  Category, 
+import {
+  Post,
+  Category,
   Author,
-  sanityTypeLiterals 
-} from '@santan/shared/types';
+  sanityTypeLiterals,
+} from "@santan/shared/types";
 
 // Type-safe document checking
 if (doc._type === sanityTypeLiterals.post) {
@@ -206,6 +219,7 @@ npm run build
 ```
 
 This builds all packages in the correct order:
+
 1. **Shared package** → Compiles TypeScript to JavaScript
 2. **Studio** → Builds Sanity Studio (using shared types)
 3. **Frontend** → Builds React app (using shared types)
@@ -219,17 +233,20 @@ This builds all packages in the correct order:
 ### Deployment
 
 **Frontend (Vercel/Netlify):**
+
 - Root directory: `apps/frontend`
 - Build command: `npm run build`
 - Output directory: `apps/frontend/.output` or `apps/frontend/dist`
 
 **Studio (Sanity):**
+
 ```bash
 cd apps/studio
 npm run deploy
 ```
 
 Or from root:
+
 ```bash
 npm run deploy --workspace=@santan/studio
 ```
@@ -243,6 +260,7 @@ npm run deploy --workspace=@santan/studio
 ### When to Regenerate Types
 
 Run type generation whenever you:
+
 - Add a new document type in Sanity Studio
 - Modify existing schemas
 - Change field definitions
@@ -256,6 +274,7 @@ npm run generate-types
 ```
 
 **What this does:**
+
 1. Extracts Sanity schema → `schema.json`
 2. Generates TypeScript types → `packages/shared/src/types/sanity.types.ts`
 3. Extracts type literals → `packages/shared/src/types/sanityTypeLiterals.ts`
@@ -270,14 +289,14 @@ The shared package automatically rebuilds (if dev mode is running), making types
 
 ### Root Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start all apps in development mode |
-| `npm run build` | Build all apps for production |
-| `npm run type-check` | Type check all packages |
-| `npm run lint` | Lint all packages |
-| `npm run format` | Format code with Prettier |
-| `npm run clean` | Clean build artifacts |
+| Command              | Description                        |
+| -------------------- | ---------------------------------- |
+| `npm run dev`        | Start all apps in development mode |
+| `npm run build`      | Build all apps for production      |
+| `npm run type-check` | Type check all packages            |
+| `npm run lint`       | Lint all packages                  |
+| `npm run format`     | Format code with Prettier          |
+| `npm run clean`      | Clean build artifacts              |
 
 ### Workspace Commands
 
@@ -324,6 +343,7 @@ pkill -f "npm run dev"
 ### Frontend Can't Connect to Sanity
 
 Check your `.env.local` files:
+
 - ✅ `VITE_SANITY_PROJECT_ID` matches your Sanity project
 - ✅ `VITE_SANITY_DATASET` is correct (usually "production")
 - ✅ `VITE_SANITY_API_VERSION` is valid
@@ -331,6 +351,7 @@ Check your `.env.local` files:
 ### Types Not Updating
 
 1. Regenerate types:
+
    ```bash
    cd apps/studio
    npm run generate-types
@@ -338,6 +359,7 @@ Check your `.env.local` files:
 
 2. If dev mode is running, shared package should auto-rebuild
 3. Otherwise, manually build:
+
    ```bash
    cd packages/shared
    npm run build
@@ -350,11 +372,13 @@ Check your `.env.local` files:
 ### "Cannot find module" Errors
 
 Ensure dependencies are installed:
+
 ```bash
 npm install
 ```
 
 If issues persist, clean and reinstall:
+
 ```bash
 npm run clean
 rm -rf node_modules apps/*/node_modules packages/*/node_modules
@@ -364,6 +388,7 @@ npm install
 ### Build Errors in Production
 
 Ensure the shared package is built before other packages:
+
 ```bash
 cd packages/shared && npm run build
 cd ../..
@@ -377,23 +402,26 @@ Turborepo should handle this automatically with the `^build` dependency.
 ## Benefits of This Monorepo
 
 ### For Development
+
 ✅ **Single clone** - Get frontend and studio together  
 ✅ **Shared types** - Auto-generated, always in sync  
 ✅ **Fast builds** - Turborepo caches everything  
 ✅ **Hot reloading** - Changes reflect immediately  
-✅ **Type safety** - Full TypeScript support  
+✅ **Type safety** - Full TypeScript support
 
 ### For Production
+
 ✅ **Optimized builds** - Only rebuild what changed  
 ✅ **Type-safe deployments** - Compile-time type checking  
 ✅ **Atomic commits** - Change frontend and studio together  
-✅ **Single source of truth** - One repo, one package.json  
+✅ **Single source of truth** - One repo, one package.json
 
 ### For Teams
+
 ✅ **Easier onboarding** - Clone once, everything works  
 ✅ **Consistent tooling** - Same linting, formatting, testing  
 ✅ **Simplified CI/CD** - One pipeline for everything  
-✅ **Better collaboration** - See all changes in one place  
+✅ **Better collaboration** - See all changes in one place
 
 ---
 
@@ -414,4 +442,3 @@ MIT
 
 **Status**: ✅ Production Ready  
 **Last Updated**: October 30, 2025
-
