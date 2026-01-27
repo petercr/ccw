@@ -18,13 +18,15 @@
 		"import-posts": "ts-node src/scripts/importPosts.ts",
 		"import-authors": "ts-node src/scripts/importAuthors.ts"
 	},
-	"keywords": ["sanity"],
+	"keywords": [
+		"sanity"
+	],
 	"dependencies": {
-		"@sanity/vision": "^4.22.0",
-		"lucide-react": "^0.556.0",
-		"react": "^19.2.3",
-		"react-dom": "^19.2.3",
-		"sanity": "^4.22.0",
+		"@sanity/vision": "^5.6.0",
+		"lucide-react": "^0.563.0",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"sanity": "^5.6.0",
 		"sanity-plugin-documents-pane": "^3.0.2",
 		"styled-components": "^6.3.8"
 	},
