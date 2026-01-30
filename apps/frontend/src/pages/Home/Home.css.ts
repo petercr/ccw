@@ -3,10 +3,11 @@ import { style } from '@vanilla-extract/css';
 
 export const homeContainer = style({
 	minHeight: '100vh',
-	background: `linear-gradient(180deg, ${vars.color.bg} 0%, ${vars.color.bgAlt} 50%, ${vars.color.bgSoft} 100%)`,
+	background: 'transparent',
 });
 
 export const heroSection = style({
+
 	paddingTop: '7.5rem',
 	paddingBottom: '8.5rem',
 	paddingLeft: '2rem',
@@ -29,43 +30,58 @@ export const heroContent = style({
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
-	gap: '2.5rem',
+	gap: '1.5rem',
+	background: '#F5F5F0',
+	border: '2px solid rgba(0, 0, 0, 0.9)',
+	borderRadius: '1.25rem',
+	padding: '2.5rem 2rem',
+	boxShadow: vars.shadow.subtle,
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: '#0a1628',
+			border: '2px solid rgba(210 201 201 / 0.63)',
+			boxShadow: vars.shadow.subtle,
+		},
+	},
 });
 
 export const heroTitle = style({
-	fontSize: '5.5rem',
-	fontWeight: 600,
-	background: `linear-gradient(135deg, ${vars.color.primary} 0%, ${vars.color.primaryAlt} 50%, ${vars.color.primaryDeep} 100%)`,
-	WebkitBackgroundClip: 'text',
-	WebkitTextFillColor: 'transparent',
-	backgroundClip: 'text',
-	letterSpacing: '-0.04em',
-	marginBottom: '1rem',
+	color: '#1a1a1a',
+	fontSize: '3rem',
+	fontWeight: 700,
+	letterSpacing: '-0.02em',
+	marginBottom: '0.5rem',
+	lineHeight: 1.1,
 	'@media': {
 		'screen and (max-width: 768px)': {
-			fontSize: '2.75rem',
+			fontSize: '2.5rem',
 			letterSpacing: '-0.02em',
 		},
 	},
 	selectors: {
 		'[data-theme="dark"] &': {
-			background: 'none',
-			WebkitBackgroundClip: 'initial',
-			WebkitTextFillColor: 'initial',
 			color: '#F5F9FC',
 		},
 	},
 });
 
 export const heroSubtitle = style({
-	fontSize: '1.875rem',
+	fontSize: '1.25rem',
 	fontWeight: 400,
-	color: vars.color.textDim,
-	marginBottom: '1.5rem',
-	letterSpacing: '-0.015em',
+	fontStyle: 'italic',
+	color: '#4a4a4a',
+	marginBottom: '0.5rem',
+	letterSpacing: '-0.01em',
+	lineHeight: 1.5,
+	textAlign: 'center',
 	'@media': {
 		'screen and (max-width: 768px)': {
-			fontSize: '1.375rem',
+			fontSize: '1.125rem',
+		},
+	},
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#ffffff',
 		},
 	},
 });
@@ -157,7 +173,7 @@ export const featureGrid = style({
 
 export const featureCard = style({
 	background: vars.color.surfaceElevated,
-	border: `1px solid ${vars.color.borderSoft}`,
+	border: `2px solid ${vars.color.borderSoft}`,
 	borderRadius: '1.25rem',
 	padding: '2.1rem',
 	textAlign: 'center',

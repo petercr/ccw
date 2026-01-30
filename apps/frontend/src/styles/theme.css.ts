@@ -64,9 +64,9 @@ export const lightTheme = createTheme(themeContract, {
 		bgAlt: '#ffffff',
 		bgSoft: '#f0f4f8',
 		text: 'rgba(29,29,31,0.82)',
-		textDim: 'rgba(29,29,31,0.6)',
-		border: 'rgba(0,102,204,0.12)',
-		borderSoft: 'rgba(0,102,204,0.08)',
+		textDim: 'rgba(0,0,0,0.1)',
+		border: 'rgba(0,102,204,0.8)',
+		borderSoft: 'rgba(0, 0, 0, 0.9)',
 		primary: '#0066cc',
 		primaryAlt: '#005bb5',
 		primaryDeep: '#00447d',
@@ -76,7 +76,7 @@ export const lightTheme = createTheme(themeContract, {
 		overlay: 'rgba(0,0,0,0.25)',
 		glass: 'rgba(255,255,255,0.65)',
 		// New tokens light
-		surfaceElevated: '#ffffff',
+		surfaceElevated: 'linear-gradient(90deg, #fef5ff 0%, #f0e5ff 100%)',
 		surfaceHover: '#f9fbfd',
 		interactiveBg: '#0066cc',
 		interactiveBgHover: '#005bb5',
@@ -93,7 +93,7 @@ export const lightTheme = createTheme(themeContract, {
 		pill: '624px',
 	},
 	shadow: {
-		subtle: '0 1px 2px rgba(0,0,0,0.06)',
+		subtle: '8px 7px 8px 0px #0000004A;',
 		float: '0 8px 24px rgba(0,0,0,0.08)',
 		focus: '0 0 0 3px rgba(0,102,204,0.35)',
 	},
@@ -117,25 +117,25 @@ export const lightTheme = createTheme(themeContract, {
 // Dark theme
 export const darkTheme = createTheme(themeContract, {
 	color: {
-		bg: '#0B1A2A', // Marineblå grunnbakgrunn
-		bgAlt: '#112B42', // Løftet panelbakgrunn
-		bgSoft: '#15354D', // Myk seksjonsbakgrunn
-		text: '#F5F9FC', // Nesten helt hvit tekst for optimal lesbarhet
-		textDim: '#C2D4E2', // Dempet tekst (metadata)
-		border: '#2F5470', // Kontrastkant
-		borderSoft: '#1E3A52', // Mykere kant
-		primary: '#4DB8FF', // Hovedaksent (lys azur på mørk blå)
-		primaryAlt: '#33A4F0', // Mellomtonelys
-		primaryDeep: '#33A4F0', // Dyp aksent
-		accentTint: 'rgba(77,184,255,0.18)', // Subtil aksent bakgrunn (hover/etiketter)
-		accentSoft: 'rgba(77,184,255,0.10)', // Ekstra svak bakgrunn
-		codeBg: '#102638', // Kodeblokkbakgrunn
+		bg: '#000000', // Marine blue base background
+		bgAlt: '#112B42', // Raised panel background
+		bgSoft: '#15354D', // Soft section background
+		text: '#F5F9FC', // Near-white text for optimal readability
+		textDim: '#C2D4E2', // Muted text (metadata)
+		border: '#2F5470', // Contrast border
+		borderSoft: '#1E3A52', // Softer border
+		primary: '#4DB8FF', // Primary accent (light azure on dark blue)
+		primaryAlt: '#33A4F0', // Mid-tone highlight
+		primaryDeep: '#33A4F0', // Deep accent
+		accentTint: 'rgba(77,184,255,0.18)', // Subtle accent background (hover/labels)
+		accentSoft: 'rgba(77,184,255,0.10)', // Extra soft background
+		codeBg: '#102638', // Code block background
 		overlay: 'rgba(0,0,0,0.55)',
 		glass: 'rgba(17,43,66,0.64)',
-		surfaceElevated: '#142F45', // Kort / løftede flater
-		surfaceHover: '#1A3A53', // Hover over løftede flater
-		interactiveBg: '#1E6FB8', // Primær interaktiv
-		interactiveBgHover: '#2480D1', // Hover for interaktiv
+		surfaceElevated: '#000000', // Cards / elevated surfaces
+		surfaceHover: '#1A3A53', // Hover for elevated surfaces
+		interactiveBg: '#1E6FB8', // Primary interactive
+		interactiveBgHover: '#2480D1', // Hover for interactive
 		danger: '#FF5F5F',
 		warning: '#FFC94D',
 		success: '#2FB573',

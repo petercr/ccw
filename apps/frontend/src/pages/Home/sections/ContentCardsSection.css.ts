@@ -41,7 +41,7 @@ export const headingCard = style({
 	alignItems: 'center',
 	padding: '2rem',
 	background: vars.color.surfaceElevated,
-	border: `1px solid ${vars.color.borderSoft}`,
+	border: `2px solid ${vars.color.borderSoft}`,
 	borderRadius: '1.25rem',
 	boxShadow: vars.shadow.subtle,
 });
@@ -55,8 +55,8 @@ export const headingText = style({
 });
 
 export const contentCard = style({
-	background: vars.color.surfaceElevated,
-	border: `1px solid ${vars.color.borderSoft}`,
+	background: vars.color.bg,
+	border: `2px solid ${vars.color.borderSoft}`,
 	borderRadius: '1.5rem',
 	padding: '2.5rem',
 	display: 'flex',
