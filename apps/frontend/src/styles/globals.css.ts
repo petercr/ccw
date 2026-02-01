@@ -3,6 +3,9 @@
 // This prevents vanilla-extract CSS from being tree-shaken during code splitting.
 // See: https://github.com/vercel/next.js/issues/53858
 
+// Local fonts
+import '@/styles/fonts.css';
+
 // Theme and global vanilla-extract styles
 import '@/styles/theme.css.ts';
 import '@/components/GlobalLayout/GlobalLayout.css.ts';
