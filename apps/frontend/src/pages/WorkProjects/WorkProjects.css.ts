@@ -2,90 +2,126 @@ import { vars } from '@/styles/theme.css.ts';
 import { style } from '@vanilla-extract/css';
 
 export const container = style({
-	display: 'grid',
-	gridTemplateColumns: 'repeat(12, 1fr)',
 	minHeight: '100vh',
-	gridAutoRows: 'auto',
-	background: `linear-gradient(180deg, ${vars.color.bg} 0%, ${vars.color.bgAlt} 50%, ${vars.color.bgSoft} 100%)`,
-	paddingTop: '3rem',
-	paddingBottom: '7rem',
-	'@media': {
-		'screen and (max-width: 768px)': {
-			gridTemplateColumns: 'repeat(4, 1fr)',
-			paddingTop: '2rem',
+	paddingTop: 60,
+	paddingBottom: 72,
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	gap: 54,
+	background: 'transparent',
+});
+
+export const header = style({
+	width: 300,
+	borderRadius: 12,
+	background: '#ffffff',
+	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+	paddingTop: 16,
+	paddingBottom: 16,
+	paddingLeft: 16,
+	paddingRight: 16,
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: vars.color.surfaceElevated,
+			border: '2px solid rgba(210 201 201 / 0.63)',
+			boxShadow: vars.shadow.subtle,
 		},
 	},
 });
 
-export const header = style({
-	gridColumn: '3 / 11',
-	gridRow: 1,
-	marginBottom: '2rem',
-	'@media': {
-		'screen and (max-width: 768px)': {
-			gridColumn: '1 / -1',
-			marginBottom: '1.5rem',
-			paddingLeft: '1.25rem',
-			paddingRight: '1.25rem',
+export const headerTitle = style({
+	margin: 0,
+	textAlign: 'center',
+	color: '#000000',
+	fontFamily: 'Roboto Slab, serif',
+	fontWeight: 400,
+	fontSize: 41,
+	lineHeight: 1.2,
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#F5F9FC',
 		},
 	},
 });
 
 export const cardGrid = style({
-	gridColumn: '3 / 11',
-	gridRow: 2,
-	display: 'grid',
-	gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-	gap: '2rem',
-	'@media': {
-		'screen and (max-width: 768px)': {
-			gridColumn: '1 / -1',
-			paddingLeft: '1.25rem',
-			paddingRight: '1.25rem',
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	gap: 26,
+	width: '100%',
+});
+
+export const card = style({
+	width: 323,
+	borderRadius: 20,
+	background: 'rgba(255, 255, 255, 0.81)',
+	border: '1px solid #000000',
+	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+	paddingLeft: 18,
+	paddingRight: 18,
+	paddingTop: 18,
+	paddingBottom: 24,
+	display: 'flex',
+	flexDirection: 'column',
+	gap: 10,
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: vars.color.surfaceElevated,
+			border: '2px solid rgba(210 201 201 / 0.63)',
+			boxShadow: vars.shadow.subtle,
 		},
 	},
 });
 
-export const card = style({
-	background: vars.color.glass,
-	backdropFilter: 'blur(20px)',
-	border: `1px solid ${vars.color.borderSoft}`,
-	borderRadius: '1.5rem',
-	padding: '1.5rem',
-	boxShadow: vars.shadow.subtle,
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '1rem',
-});
-
 export const cardImage = style({
-	borderRadius: '1rem',
+	borderRadius: 12,
 	overflow: 'hidden',
 	aspectRatio: '16 / 9',
+	marginBottom: 8,
 });
 
 export const cardName = style({
-	fontSize: '1.25rem',
-	fontWeight: 600,
-	color: vars.color.primary,
-	margin: 0,
+	margin: '0.5em 0',
+	color: '#000000',
+	fontFamily: 'Roboto Mono, monospace',
+	fontWeight: 400,
+	fontSize: 24,
+	lineHeight: 1.4,
+	textAlign: 'left',
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#F5F9FC',
+		},
+	},
 });
 
 export const cardBody = style({
-	fontSize: '1rem',
-	lineHeight: 1.7,
-	color: vars.color.textDim,
 	margin: 0,
+	color: '#000000',
+	fontFamily: 'Roboto Mono, monospace',
+	fontWeight: 400,
+	fontSize: 18,
+	lineHeight: 1.2,
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#ffffff',
+		},
+	},
 });
 
 export const cardLink = style({
 	display: 'inline-block',
 	marginTop: 'auto',
 	padding: '0.75rem 1.5rem',
-	background: vars.color.accentSoft,
-	border: `1.5px solid ${vars.color.borderSoft}`,
+	background: '#0099ff',
+	border: 'none',
 	borderRadius: '624px',
-	color: vars.color.primary,
+	color: '#000000',
 	fontSize: '0.95rem',
 	fontWeight: 500,
 	textDecoration: 'none',
@@ -93,10 +129,19 @@ export const cardLink = style({
 	transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
 	selectors: {
 		'&:hover': {
-			background: vars.color.accentTint,
-			borderColor: vars.color.border,
+			background: '#0088dd',
 			transform: 'translateY(-2px)',
-			boxShadow: '0 2px 8px rgba(0, 102, 204, 0.08)',
+			boxShadow: '0 2px 8px rgba(0, 153, 255, 0.3)',
+		},
+		'[data-theme="dark"] &': {
+			background: vars.color.surfaceElevated,
+			color: '#F5F9FC',
+			border: `1.5px solid ${vars.color.borderSoft}`,
+		},
+		'[data-theme="dark"] &:hover': {
+			background: vars.color.surfaceHover,
+			color: vars.color.primary,
+			borderColor: vars.color.border,
 		},
 	},
 });

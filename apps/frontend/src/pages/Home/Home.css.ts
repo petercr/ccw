@@ -38,7 +38,7 @@ export const heroContent = style({
 	boxShadow: vars.shadow.subtle,
 	selectors: {
 		'[data-theme="dark"] &': {
-			background: '#0a1628',
+			background: vars.color.surfaceElevated,
 			border: '2px solid rgba(210 201 201 / 0.63)',
 			boxShadow: vars.shadow.subtle,
 		},
