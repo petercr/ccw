@@ -2,118 +2,152 @@ import { vars } from '@/styles/theme.css.ts';
 import { style } from '@vanilla-extract/css';
 
 export const container = style({
-	display: 'grid',
-	gridTemplateColumns: 'repeat(12, 1fr)',
 	minHeight: '100vh',
-	gridAutoRows: 'auto',
-	background: `linear-gradient(180deg, ${vars.color.bg} 0%, ${vars.color.bgAlt} 50%, ${vars.color.bgSoft} 100%)`,
-	paddingTop: '3rem',
-	paddingBottom: '7rem',
+	paddingTop: 60,
+	paddingBottom: 72,
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	gap: 26,
+	background: 'transparent',
+});
+
+export const headerPill = style({
+	width: '90%',
+	borderRadius: 12,
+	background: '#ffffff',
+	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+	paddingTop: 16,
+	paddingBottom: 16,
+	paddingLeft: 16,
+	paddingRight: 16,
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: vars.color.surfaceElevated,
+			border: '2px solid rgba(210 201 201 / 0.63)',
+			boxShadow: vars.shadow.subtle,
+		},
+	},
 	'@media': {
-		'screen and (max-width: 768px)': {
-			gridTemplateColumns: 'repeat(4, 1fr)',
-			paddingTop: '2rem',
+		'screen and (min-width: 768px)': {
+			width: '50%',
+			maxWidth: 600,
 		},
 	},
 });
 
-export const header = style({
-	gridColumn: '3 / 11',
-	gridRow: 1,
-	marginBottom: '2rem',
-	'@media': {
-		'screen and (max-width: 768px)': {
-			gridColumn: '1 / -1',
-			marginBottom: '1.5rem',
+export const headerTitle = style({
+	margin: 0,
+	textAlign: 'center',
+	color: '#000000',
+	fontFamily: 'Roboto Slab, serif',
+	fontWeight: 400,
+	fontSize: 41,
+	lineHeight: 1.2,
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#F5F9FC',
 		},
 	},
 });
 
 export const textContainer = style({
-	gridColumn: '3 / 11',
-	width: '100%',
-	display: 'grid',
-	gridTemplateColumns: 'subgrid',
-	gridRow: 2,
+	width: '90%',
+	borderRadius: 20,
+	background: 'rgba(255, 255, 255, 0.89)',
+	border: '1px solid #000000',
+	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+	paddingLeft: 18,
+	paddingRight: 18,
+	paddingTop: 18,
+	paddingBottom: 24,
+	display: 'flex',
+	flexDirection: 'column',
+	gap: 10,
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: vars.color.surfaceElevated,
+			border: '2px solid rgba(210 201 201 / 0.63)',
+			boxShadow: vars.shadow.subtle,
+		},
+	},
 	'@media': {
-		'screen and (max-width: 768px)': {
-			gridColumn: '1 / -1',
+		'screen and (min-width: 768px)': {
+			width: '50%',
+			maxWidth: 800,
 		},
 	},
 });
 
 export const ingress = style({
-	gridColumn: '1 / -1',
-	maxWidth: '42rem',
-	fontSize: '1.5rem',
-	fontWeight: 300,
-	lineHeight: 1.9,
-	color: vars.color.textDim,
-	marginBottom: '3.5rem',
-	marginTop: '1.5rem',
-	letterSpacing: '-0.01em',
-	'@media': {
-		'screen and (max-width: 768px)': {
-			fontSize: '1.25rem',
-			marginBottom: '2.5rem',
-			paddingLeft: '1.25rem',
-			paddingRight: '1.25rem',
+	width: '100%',
+	fontSize: 18,
+	fontWeight: 400,
+	lineHeight: 1.2,
+	color: '#000000',
+	marginBottom: '0.5rem',
+	marginTop: '0.5rem',
+	fontFamily: 'Roboto Mono, monospace',
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#ffffff',
 		},
 	},
 });
 
 export const keywordsSection = style({
-	gridColumn: '1 / -1',
-	marginTop: '3.5rem',
-	padding: '2.5rem',
-	background: vars.color.glass,
-	backdropFilter: 'blur(20px)',
-	border: `1px solid ${vars.color.borderSoft}`,
-	borderRadius: '1.5rem',
-	boxShadow: vars.shadow.subtle,
-	'@media': {
-		'screen and (max-width: 768px)': {
-			padding: '1.75rem',
-			marginLeft: '1.25rem',
-			marginRight: '1.25rem',
-		},
-	},
+	width: '100%',
+	marginTop: '1rem',
+	padding: '1rem',
+	background: 'transparent',
+	borderRadius: '0.75rem',
 });
 
 export const keywordsTitle = style({
-	fontSize: '1.375rem',
-	fontWeight: 600,
-	color: vars.color.primary,
-	marginBottom: '2rem',
+	fontSize: 18,
+	fontWeight: 400,
+	color: '#000000',
+	marginBottom: '0.75rem',
 	marginTop: 0,
-	letterSpacing: '-0.015em',
+	fontFamily: 'Roboto Mono, monospace',
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#ffffff',
+		},
+	},
 });
 
 export const keywordsList = style({
 	display: 'flex',
 	flexWrap: 'wrap',
-	gap: '1rem',
+	gap: '0.5rem',
 	listStyle: 'none',
 	padding: 0,
 	margin: 0,
 });
 
 export const keywordItem = style({
-	padding: '0.75rem 1.5rem',
-	background: vars.color.accentSoft,
-	border: `1.5px solid ${vars.color.borderSoft}`,
+	padding: '0.5rem 1rem',
+	background: '#0099ff',
+	border: 'none',
 	borderRadius: '624px',
-	color: vars.color.primary,
-	fontSize: '0.95rem',
-	fontWeight: 500,
+	color: '#000000',
+	fontSize: '0.85rem',
+	fontWeight: 400,
+	fontFamily: 'Roboto Mono, monospace',
 	transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
 	cursor: 'default',
 	selectors: {
 		'&:hover': {
-			background: vars.color.accentTint,
-			borderColor: vars.color.border,
+			background: '#00aaff',
 			transform: 'translateY(-2px)',
-			boxShadow: '0 2px 8px rgba(0, 102, 204, 0.08)',
+		},
+		'[data-theme="dark"] &': {
+			background: '#0099ff',
+			color: '#000000',
 		},
 	},
 });
