@@ -14,7 +14,7 @@ export default ({ mode }: ConfigEnv) => {
 	return defineConfig({
 		plugins: [
 			devtools(),
-			nitroV2Plugin({ preset: 'node-server' }),
+			nitroV2Plugin({ preset: 'vercel' }),
 			// this is the plugin that enables path aliases
 			viteTsConfigPaths({
 				projects: ['./tsconfig.json'],
