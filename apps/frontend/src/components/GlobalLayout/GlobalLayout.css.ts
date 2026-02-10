@@ -43,6 +43,30 @@ export const globalBackground = style({
 	},
 });
 
+globalStyle(`${globalBackground}::before`, {
+	content: '""',
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	width: '100%',
+	height: '100%',
+	backgroundImage: `linear-gradient(to bottom, transparent, transparent), url('/mobile_night.svg')`,
+	backgroundSize: 'cover',
+	backgroundPosition: 'top left',
+	backgroundRepeat: 'no-repeat',
+	opacity: 0,
+	transition: 'opacity 0.6s ease',
+	'@media': {
+		'(min-width: 1024px)': {
+			backgroundImage: `linear-gradient(to bottom, transparent, transparent), url('/night-backdrop.svg')`,
+		},
+	},
+});
+
+globalStyle(`[data-theme="dark"] ${globalBackground}::before`, {
+	opacity: 1,
+});
+
 globalStyle(`${globalBackground}::after`, {
 	content: '""',
 	position: 'absolute',

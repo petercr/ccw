@@ -44,6 +44,11 @@ export const headingCard = style({
 	border: `2px solid ${vars.color.borderSoft}`,
 	borderRadius: '1.25rem',
 	boxShadow: vars.shadow.subtle,
+	selectors: {
+		'[data-theme="dark"] &': {
+			border: '2px solid rgba(210 201 201 / 0.63)',
+		},
+	},
 });
 
 export const headingText = style({
@@ -68,6 +73,11 @@ export const contentCard = style({
 		transform: 'translateY(-4px)',
 		boxShadow: vars.shadow.float,
 		borderColor: vars.color.border,
+	},
+	selectors: {
+		'[data-theme="dark"] &': {
+			border: '2px solid rgba(210 201 201 / 0.63)',
+		},
 	},
 });
 
@@ -100,19 +110,39 @@ export const buttonLink = style({
 	display: 'inline-flex',
 	alignItems: 'center',
 	justifyContent: 'center',
-	padding: '0.75rem 1.5rem',
-	borderRadius: '0.75rem',
-	background: vars.color.primary,
-	color: '#fff',
+	padding: '0.875rem 1.5rem',
+	background: '#0099ff',
+	color: '#000000',
 	textDecoration: 'none',
-	fontWeight: 600,
-	fontSize: '0.95rem',
-	transition: 'background 0.2s ease, transform 0.2s ease',
+	fontWeight: 400,
+	fontSize: '1rem',
+	fontFamily: 'Roboto Mono, monospace',
+	border: '1px solid #000000',
+	borderRadius: '20px',
+	boxShadow: '-3px 4px 3px rgba(0, 0, 0, 0.53)',
+	transition: 'transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, border-color 0.35s ease, color 0.35s ease',
 	':hover': {
-		background: vars.color.primaryAlt,
-		transform: 'scale(1.02)',
+		transform: 'translateY(-2px)',
+		boxShadow: '-3px 6px 6px rgba(0, 0, 0, 0.53)',
 	},
 	':active': {
-		transform: 'scale(0.98)',
+		transform: 'translateY(0)',
+		boxShadow: '-2px 3px 2px rgba(0, 0, 0, 0.53)',
+	},
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 35%, transparent), #230939',
+			color: '#ffffff',
+			border: '2px solid #b9c1c9',
+			boxShadow: 'none',
+		},
+		'[data-theme="dark"] &:hover': {
+			transform: 'translateY(-2px)',
+			boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
+		},
+		'[data-theme="dark"] &:active': {
+			transform: 'translateY(0)',
+			boxShadow: 'none',
+		},
 	},
 });
