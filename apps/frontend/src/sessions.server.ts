@@ -7,8 +7,15 @@ type SessionData = {
 };
 
 // Iron session options
+const FALLBACK_SECRET = 'this-is-a-fallback-secret-for-dev-only-32chars!';
+const sessionSecret = process.env.SANITY_SESSION_SECRET || FALLBACK_SECRET;
+
+if (!process.env.SANITY_SESSION_SECRET) {
+	console.warn('[Session] SANITY_SESSION_SECRET is not set. Using fallback secret. Set this in production!');
+}
+
 const sessionOptions = {
-	password: process.env.SANITY_SESSION_SECRET || '',
+	password: sessionSecret,
 	ttl: 60 * 60 * 24 * 7, // 1 week
 };
 
