@@ -5,8 +5,8 @@ import { FavIcons } from "@/components/GlobalLayout/FavIcons.tsx";
 import Header from "@/components/Header/Header.tsx";
 import { getCspNonce } from "@/functions/getCspNonce.ts";
 import TanStackQueryDevtools from "@/integrations/tanstack-query/devtools.tsx";
+import { PREVIEW_SESSION_NAME } from "@/lib/previewSession";
 import { Route } from "@/routes/__root.tsx";
-import { PREVIEW_SESSION_NAME } from "@/sessions.ts";
 import {
   previewStore,
   setPreviewMode,

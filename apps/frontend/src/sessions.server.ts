@@ -1,4 +1,4 @@
-import { PREVIEW_SESSION_NAME } from './lib/previewSession';
+import { PREVIEW_SESSION_NAME } from '@/lib/previewSession';
 import { sealData, unsealData } from 'iron-session';
 
 // Session data type

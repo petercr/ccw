@@ -1,6 +1,6 @@
-import { isServer } from '@/lib/isServer';
+import { PREVIEW_SESSION_NAME } from '@/lib/previewSession';
 import { client } from '@/sanity/client';
-import { PREVIEW_SESSION_NAME, getSession } from '@/sessions';
+import { getSession } from '@/sessions.server';
 
 /**
  * Detects if the current request is in preview mode.
@@ -12,7 +12,7 @@ import { PREVIEW_SESSION_NAME, getSession } from '@/sessions';
 export async function detectPreviewMode(request: Request | null): Promise<boolean> {
 	let isPreviewMode = false;
 
-	if (isServer) {
+	if (import.meta.env.SSR) {
 		// Server-side: check request headers
 		if (request) {
 			// Check URL parameters for preview indicators
@@ -67,7 +67,7 @@ export async function detectPreviewMode(request: Request | null): Promise<boolea
  * @throws Error if preview mode is active but token is missing
  */
 export function validatePreviewToken(isPreviewMode: boolean): void {
-	if (isServer && isPreviewMode && !process.env.SANITY_READ_TOKEN) {
+	if (import.meta.env.SSR && isPreviewMode && !process.env.SANITY_READ_TOKEN) {
 		throw new Error(`Cannot activate preview mode without a "SANITY_READ_TOKEN" token in your environment variables.`);
 	}
 }

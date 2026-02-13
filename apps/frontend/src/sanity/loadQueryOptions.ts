@@ -1,7 +1,7 @@
 import { client } from '@/sanity/client.ts';
 import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { apiVersion, dataset, projectId } from '@/sanity/projectDetails.ts';
-import { getSession } from '@/sessions';
+import { getSession } from '@/sessions.server';
 import type { ClientPerspective } from '@sanity/client';
 // Write a tanstack server function that loads query options from request headers
 import { createServerFn } from '@tanstack/react-start';

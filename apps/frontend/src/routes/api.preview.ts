@@ -1,5 +1,5 @@
 import { client } from '@/sanity/client';
-import { commitSession, destroySession, getSession } from '@/sessions';
+import { commitSession, destroySession, getSession } from '@/sessions.server';
 import { validatePreviewUrl } from '@sanity/preview-url-secret';
 import { createFileRoute } from '@tanstack/react-router';
 import type { RouteMethodResult } from '@tanstack/react-start';

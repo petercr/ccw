@@ -11,11 +11,12 @@ export const workProjectsLoader = async ({
 }) => {
 	const isPreviewMode = await detectPreviewMode(context.request);
 	validatePreviewToken(isPreviewMode);
+	const previewToken = import.meta.env.SSR ? process.env.SANITY_READ_TOKEN : undefined;
 
 	const options = {
 		filterResponse: false,
 		perspective: isPreviewMode ? ('drafts' as ClientPerspective) : ('published' as ClientPerspective),
-		...(isPreviewMode && process.env.SANITY_READ_TOKEN ? { token: process.env.SANITY_READ_TOKEN } : {}),
+		...(isPreviewMode && previewToken ? { token: previewToken } : {}),
 		...(isPreviewMode ? { stega: { enabled: true, studioUrl: STUDIO_BASEPATH } } : {}),
 	} as UnfilteredResponseQueryOptions;
 
