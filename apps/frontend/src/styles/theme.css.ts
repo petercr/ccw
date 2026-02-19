@@ -67,7 +67,7 @@ export const lightTheme = createTheme(themeContract, {
 		textDim: 'rgba(0,0,0,0.1)',
 		border: 'rgba(0,102,204,0.8)',
 		borderSoft: 'rgba(0, 0, 0, 0.9)',
-		primary: '#0066cc',
+		primary: '#000000',
 		primaryAlt: '#005bb5',
 		primaryDeep: '#00447d',
 		accentTint: 'rgba(0,102,204,0.06)',

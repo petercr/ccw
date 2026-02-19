@@ -111,7 +111,7 @@ export const buttonLink = style({
 	alignItems: 'center',
 	justifyContent: 'center',
 	padding: '0.875rem 1.5rem',
-	background: '#0099ff',
+	background: '#86d0f5',
 	color: '#000000',
 	textDecoration: 'none',
 	fontWeight: 400,
