@@ -1,161 +1,177 @@
-import { darkTheme, lightTheme } from '@/styles/theme.css.ts';
-import { Link } from '@tanstack/react-router';
-import { Briefcase, Home, Menu, Moon, Quote, Sun, X } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { darkTheme, lightTheme } from "@/styles/theme.css.ts";
+import { Link } from "@tanstack/react-router";
+import { Briefcase, Home, Mail, Menu, Moon, Quote, Sun, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import {
-	brand,
-	closeButton,
-	desktopNav,
-	header,
-	mobileMenuButton,
-	mobileNavLink,
-	mobileNavLinkActive,
-	mobileNavList,
-	mobilePanel,
-	mobilePanelHeader,
-	mobilePanelHidden,
-	moonIcon,
-	navLink,
-	navLinkActive,
-	overlay,
-	overlayHidden,
-	spacer,
-	sunIcon,
-	themeIconWrapper,
-	themeToggle,
-} from './Header.css.ts';
+  brand,
+  closeButton,
+  desktopNav,
+  header,
+  mobileMenuButton,
+  mobileNavLink,
+  mobileNavLinkActive,
+  mobileNavList,
+  mobilePanel,
+  mobilePanelHeader,
+  mobilePanelHidden,
+  moonIcon,
+  navLink,
+  navLinkActive,
+  overlay,
+  overlayHidden,
+  spacer,
+  sunIcon,
+  themeIconWrapper,
+  themeToggle,
+} from "./Header.css.ts";
 
 const NAV_ITEMS = [
-	{ to: '/', label: 'Home', icon: Home },
-	{ to: '/testimonials', label: 'Testimonials', icon: Quote },
-	{ to: '/our-work', label: 'Our Work', icon: Briefcase },
+  { to: "/", label: "Home", icon: Home },
+  { to: "/testimonials", label: "Testimonials", icon: Quote },
+  { to: "/our-work", label: "Our Work", icon: Briefcase },
+  { to: "/contact", label: "Contact", icon: Mail },
 ];
 
 export default function Header() {
-	const [open, setOpen] = useState(false);
-	const [mounted, setMounted] = useState(false);
-	// Deterministic initial theme to avoid SSR/client mismatch. Real preference applied after mount.
-	const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  // Deterministic initial theme to avoid SSR/client mismatch. Real preference applied after mount.
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-	// On mount, determine preferred theme from existing data-theme attr or storage / media
-	useEffect(() => {
-		setMounted(true);
-		try {
-			let preferred: 'light' | 'dark' =
-				document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-			if (preferred === 'light') {
-				const stored = localStorage.getItem('theme');
-				if (stored === 'dark' || stored === 'light') preferred = stored;
-				else if (window.matchMedia('(prefers-color-scheme: dark)').matches) preferred = 'dark';
-			}
-			if (preferred !== theme) setTheme(preferred);
-		} catch {}
-	}, []);
+  // On mount, determine preferred theme from existing data-theme attr or storage / media
+  useEffect(() => {
+    setMounted(true);
+    try {
+      let preferred: "light" | "dark" =
+        document.documentElement.getAttribute("data-theme") === "dark"
+          ? "dark"
+          : "light";
+      if (preferred === "light") {
+        const stored = localStorage.getItem("theme");
+        if (stored === "dark" || stored === "light") preferred = stored;
+        else if (window.matchMedia("(prefers-color-scheme: dark)").matches)
+          preferred = "dark";
+      }
+      if (preferred !== theme) setTheme(preferred);
+    } catch {}
+  }, []);
 
-	// Prevent background scroll when mobile menu open
-	useEffect(() => {
-		if (!mounted) return;
-		if (open) {
-			const prev = document.body.style.overflow;
-			document.body.style.overflow = 'hidden';
-			return () => {
-				document.body.style.overflow = prev;
-			};
-		}
-	}, [open, mounted]);
+  // Prevent background scroll when mobile menu open
+  useEffect(() => {
+    if (!mounted) return;
+    if (open) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [open, mounted]);
 
-	// Apply theme to <html> when theme changes
-	useEffect(() => {
-		if (typeof document === 'undefined') return;
-		const root = document.documentElement;
-		if (theme === 'dark') {
-			root.setAttribute('data-theme', 'dark');
-			root.classList.remove(lightTheme);
-			root.classList.add(darkTheme);
-		} else {
-			root.removeAttribute('data-theme');
-			root.classList.remove(darkTheme);
-			root.classList.add(lightTheme);
-		}
-		try {
-			localStorage.setItem('theme', theme);
-		} catch {}
-	}, [theme]);
+  // Apply theme to <html> when theme changes
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.setAttribute("data-theme", "dark");
+      root.classList.remove(lightTheme);
+      root.classList.add(darkTheme);
+    } else {
+      root.removeAttribute("data-theme");
+      root.classList.remove(darkTheme);
+      root.classList.add(lightTheme);
+    }
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {}
+  }, [theme]);
 
-	const toggleTheme = useCallback(() => {
-		setTheme((t) => (t === 'light' ? 'dark' : 'light'));
-	}, []);
+  const toggleTheme = useCallback(() => {
+    setTheme((t) => (t === "light" ? "dark" : "light"));
+  }, []);
 
-	return (
-		<>
-			<header className={header}>
-				<Link to="/" className={brand}>
-					Cape Cod World
-				</Link>
-				<nav className={desktopNav} aria-label="Main navigation">
-					{NAV_ITEMS.map(({ to, label }) => (
-						<Link
-							key={to}
-							to={to}
-							activeProps={{ className: navLinkActive }}
-							activeOptions={{ exact: true }}
-							className={navLink}
-						>
-							{label}
-						</Link>
-					))}
-				</nav>
-				<div className={spacer} />
-				<button className={themeToggle} aria-label="Toggle color theme" onClick={toggleTheme}>
-					<span className={themeIconWrapper} aria-hidden>
-						<Sun size={18} className={sunIcon} />
-						<Moon size={18} className={moonIcon} />
-					</span>
-				</button>
-				<button
-					className={mobileMenuButton}
-					aria-label={open ? 'Close menu' : 'Open menu'}
-					aria-expanded={open}
-					aria-controls="mobile-nav"
-					onClick={() => setOpen((o) => !o)}
-				>
-					{open ? <X size={22} /> : <Menu size={22} />}
-				</button>
-			</header>
+  return (
+    <>
+      <header className={header}>
+        <Link to="/" className={brand}>
+          Cape Cod World
+        </Link>
+        <nav className={desktopNav} aria-label="Main navigation">
+          {NAV_ITEMS.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              activeProps={{ className: navLinkActive }}
+              activeOptions={{ exact: true }}
+              className={navLink}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <div className={spacer} />
+        <button
+          className={themeToggle}
+          aria-label="Toggle color theme"
+          onClick={toggleTheme}
+        >
+          <span className={themeIconWrapper} aria-hidden>
+            <Sun size={18} className={sunIcon} />
+            <Moon size={18} className={moonIcon} />
+          </span>
+        </button>
+        <button
+          className={mobileMenuButton}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          onClick={() => setOpen((o) => !o)}
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </header>
 
-			{/* Overlay */}
-			<div className={open ? overlay : overlayHidden} onClick={() => setOpen(false)} aria-hidden={!open} />
+      {/* Overlay */}
+      <div
+        className={open ? overlay : overlayHidden}
+        onClick={() => setOpen(false)}
+        aria-hidden={!open}
+      />
 
-			{/* Mobile Panel */}
-			<aside
-				id="mobile-nav"
-				className={open ? mobilePanel : mobilePanelHidden}
-				aria-hidden={!open}
-				aria-label="Mobile navigation"
-			>
-				<div className={mobilePanelHeader}>
-					<Link to="/" className={brand} onClick={() => setOpen(false)}>
-						SanTan
-					</Link>
-					<button className={closeButton} aria-label="Close menu" onClick={() => setOpen(false)}>
-						<X size={20} />
-					</button>
-				</div>
-				<nav className={mobileNavList}>
-					{NAV_ITEMS.map(({ to, label, icon: Icon }) => (
-						<Link
-							key={to}
-							to={to}
-							onClick={() => setOpen(false)}
-							activeProps={{ className: mobileNavLinkActive }}
-							activeOptions={{ exact: true }}
-							className={mobileNavLink}
-						>
-							<Icon size={18} /> {label}
-						</Link>
-					))}
-				</nav>
-			</aside>
-		</>
-	);
+      {/* Mobile Panel */}
+      <aside
+        id="mobile-nav"
+        className={open ? mobilePanel : mobilePanelHidden}
+        aria-hidden={!open}
+        aria-label="Mobile navigation"
+      >
+        <div className={mobilePanelHeader}>
+          <Link to="/" className={brand} onClick={() => setOpen(false)}>
+            SanTan
+          </Link>
+          <button
+            className={closeButton}
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+          >
+            <X size={20} />
+          </button>
+        </div>
+        <nav className={mobileNavList}>
+          {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
+            <Link
+              key={to}
+              to={to}
+              onClick={() => setOpen(false)}
+              activeProps={{ className: mobileNavLinkActive }}
+              activeOptions={{ exact: true }}
+              className={mobileNavLink}
+            >
+              <Icon size={18} /> {label}
+            </Link>
+          ))}
+        </nav>
+      </aside>
+    </>
+  );
 }
