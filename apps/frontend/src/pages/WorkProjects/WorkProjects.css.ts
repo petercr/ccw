@@ -39,7 +39,7 @@ export const headerTitle = style({
 	color: '#000000',
 	fontFamily: 'Roboto Slab, serif',
 	fontWeight: 400,
-	fontSize: 41,
+	fontSize: 'clamp(2rem, 6vw, 3rem)',
 	lineHeight: 1.2,
 	selectors: {
 		'[data-theme="dark"] &': {

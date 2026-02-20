@@ -20,6 +20,7 @@
 		"publish:preview-secret": "node scripts/publish-secret.js"
 	},
 	"dependencies": {
+		"@santan/shared": "*",
 		"@fontsource-variable/source-sans-3": "^5.2.9",
 		"@portabletext/react": "^6.0.2",
 		"@sanity/asset-utils": "^2.3.0",
