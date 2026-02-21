@@ -1,6 +1,7 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"ui": "tui",
+	"compatibilityDate": "2026-02-21",
 	"globalDependencies": ["**/.env.*local"],
 	"globalEnv": [
 		"NODE_ENV",
@@ -8,6 +9,7 @@
 		"VITE_SANITY_DATASET",
 		"VITE_SANITY_API_VERSION",
 		"VITE_SANITY_STUDIO_URL",
+		"VITE_WEB3FORMS_ACCESS_KEY",
 		"SANITY_PROJECT_ID",
 		"SANITY_DATASET",
 		"SANITY_API_VERSION",
