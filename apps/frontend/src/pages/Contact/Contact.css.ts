@@ -1,5 +1,5 @@
-import { vars } from '@/styles/theme.css.ts';
 import { style } from '@vanilla-extract/css';
+import { vars } from '@/styles/theme.css.ts';
 
 export const container = style({
 	minHeight: '100vh',
@@ -126,6 +126,10 @@ export const fieldInput = style({
 		'&:focus': {
 			boxShadow: '0 0 0 2px rgba(0, 153, 255, 0.6)',
 		},
+		'[data-theme="dark"] &': {
+			background: 'rgb(12 19 100)',
+			color: '#F5F9FC',
+		},
 	},
 });
 
@@ -153,6 +157,10 @@ export const fieldTextarea = style({
 		'&:focus': {
 			boxShadow: '0 0 0 2px rgba(0, 153, 255, 0.6)',
 		},
+		'[data-theme="dark"] &': {
+			background: 'rgb(12 19 100)',
+			color: '#F5F9FC',
+		},
 	},
 });
 
@@ -172,10 +180,10 @@ export const submitButton = style({
 	alignSelf: 'center',
 	width: 144,
 	height: 49,
-	borderRadius: 10,
-	background: '#0099ff',
+	borderRadius: 20,
+	background: '#86d0f5',
 	border: '1px solid #000000',
-	color: '#ffffff',
+	color: '#000000',
 	fontFamily: 'Roboto Mono, monospace',
 	fontWeight: 400,
 	fontSize: 18,
@@ -183,7 +191,7 @@ export const submitButton = style({
 	transition: 'background 0.2s ease, transform 0.1s ease',
 	selectors: {
 		'&:hover': {
-			background: '#0088dd',
+			background: '#86d0f5',
 			transform: 'translateY(-1px)',
 		},
 		'&:active': {
@@ -193,6 +201,11 @@ export const submitButton = style({
 			opacity: 0.6,
 			cursor: 'not-allowed',
 			transform: 'none',
+		},
+		'[data-theme="dark"] &': {
+			background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 35%, transparent), #230939;',
+			borderColor: '#ffffff',
+			color: '#ffffff',
 		},
 	},
 });
@@ -316,14 +329,14 @@ export const backHomeTitle = style({
 		'[data-theme="dark"] &': {
 			color: '#F5F9FC',
 		},
-	},
+ 	},
 });
 
 export const backHomeButton = style({
 	width: 147,
 	height: 56,
 	borderRadius: 20,
-	background: '#0099ff',
+	background: '#86d0f5',
 	border: '1px solid #000000',
 	color: '#000000',
 	fontFamily: 'Roboto Mono, monospace',
@@ -338,6 +351,11 @@ export const backHomeButton = style({
 	selectors: {
 		'&:hover': {
 			background: '#0088dd',
+		},
+		'[data-theme="dark"] &': {
+			background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 35%, transparent), #230939;',
+			borderColor: '#ffffff',
+			color: '#ffffff',
 		},
 	},
 });
