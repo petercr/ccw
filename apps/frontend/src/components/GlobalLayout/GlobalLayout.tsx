@@ -29,7 +29,10 @@ const VisualEditing = lazy(() => import("@/sanity/VisualEditing.tsx"));
 
 export const GlobalLayout = () => {
   const { sanity } = Route.useLoaderData();
-  const { isPreview, isDraftsPerspective } = useStore(previewStore);
+  const { isPreview, isDraftsPerspective } = useStore(
+    previewStore,
+    (state) => state,
+  );
   const [isEmbeddedStudio, setIsEmbeddedStudio] = useState(false);
   const cspNonce = getCspNonce();
 

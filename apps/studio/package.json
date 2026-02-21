@@ -22,18 +22,18 @@
 		"sanity"
 	],
 	"dependencies": {
-		"@sanity/vision": "^5.6.0",
-		"lucide-react": "^0.563.0",
+		"@sanity/vision": "^5.11.0",
+		"lucide-react": "^0.575.0",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"sanity": "^5.6.0",
+		"sanity": "^5.11.0",
 		"sanity-plugin-documents-pane": "^3.0.2",
-		"styled-components": "^6.3.8"
+		"styled-components": "^6.3.11"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^20.3.1",
-		"@commitlint/config-conventional": "^20.3.1",
-		"@types/react": "^19.2.9",
+		"@commitlint/cli": "^20.4.2",
+		"@commitlint/config-conventional": "^20.4.2",
+		"@types/react": "^19.2.14",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.9.3"
 	}
