@@ -18,7 +18,7 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**", "build/**", ".next/**", ".vinxi/**", ".output/**"]
+			"outputs": ["dist/**", "build/**", ".next/**", ".vinxi/**", ".output/**", ".vercel/output/**"]
 		},
 		"dev": {
 			"cache": false,
