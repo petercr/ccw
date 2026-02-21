@@ -20,7 +20,6 @@
 		"publish:preview-secret": "node scripts/publish-secret.js"
 	},
 	"dependencies": {
-		"@santan/shared": "*",
 		"@fontsource-variable/source-sans-3": "^5.2.9",
 		"@portabletext/react": "^6.0.2",
 		"@sanity/asset-utils": "^2.3.0",
@@ -29,6 +28,7 @@
 		"@sanity/preview-url-secret": "^4.0.3",
 		"@sanity/react-loader": "^2.0.7",
 		"@sanity/visual-editing": "^5.2.1",
+		"@santan/shared": "*",
 		"@tailwindcss/vite": "^4.2.0",
 		"@tanstack/nitro-v2-vite-plugin": "^1.154.7",
 		"@tanstack/react-devtools": "^0.9.6",
