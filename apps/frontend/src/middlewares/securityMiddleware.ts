@@ -1,7 +1,7 @@
 import { createMiddleware } from '@tanstack/react-start';
 
-import { getSanityStudioUrl } from '@/constants/config.ts';
 import { getResponseHeaders, setResponseHeaders } from '@tanstack/react-start/server';
+import { getSanityStudioUrl } from '@/constants/config.ts';
 
 export const securityMiddleware = createMiddleware().server(({ next }) => {
 	const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
@@ -17,7 +17,7 @@ export const securityMiddleware = createMiddleware().server(({ next }) => {
 		"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
 		"img-src 'self' data: https://cdn.sanity.io blob:",
 		"font-src 'self' data: https://fonts.gstatic.com",
-		"connect-src 'self' https://*.sanity.io wss://*.sanity.io ws://localhost:*",
+		"connect-src 'self' https://*.sanity.io wss://*.sanity.io ws://localhost:* https://api.web3forms.com",
 		"worker-src 'self' blob:", // Allow web workers from blob URLs
 		`frame-ancestors 'self' ${studioOrigin}`, // Allow Sanity Studio to embed the app
 		"base-uri 'self'",
