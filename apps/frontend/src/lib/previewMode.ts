@@ -1,6 +1,4 @@
 import { PREVIEW_SESSION_NAME } from '@/lib/previewSession';
-import { client } from '@/sanity/client';
-import { getSession } from '@/sessions.server';
 
 /**
  * Detects if the current request is in preview mode.
@@ -31,13 +29,8 @@ export async function detectPreviewMode(request: Request | null): Promise<boolea
 			if (previewParam === 'true' || isInIframe || hasPerspectiveParam) {
 				isPreviewMode = true;
 			} else {
-				try {
-					const previewSession = await getSession(request);
-					isPreviewMode = previewSession.projectId === client.config().projectId;
-				} catch (error) {
-					console.error('[PreviewMode] Error checking session:', error);
-					isPreviewMode = false;
-				}
+				const cookieHeader = request.headers.get('cookie') || '';
+				isPreviewMode = cookieHeader.includes(`${PREVIEW_SESSION_NAME}=`);
 			}
 		}
 	} else {

@@ -8,6 +8,7 @@
 		"VITE_SANITY_DATASET",
 		"VITE_SANITY_API_VERSION",
 		"VITE_SANITY_STUDIO_URL",
+		"VITE_WEB3FORMS_ACCESS_KEY",
 		"SANITY_PROJECT_ID",
 		"SANITY_DATASET",
 		"SANITY_API_VERSION",
@@ -18,7 +19,7 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**", "build/**", ".next/**", ".vinxi/**", ".output/**"]
+			"outputs": ["dist/**", "build/**", ".next/**", ".vinxi/**", ".output/**", ".vercel/output/**"]
 		},
 		"dev": {
 			"cache": false,

@@ -50,7 +50,10 @@ export function HomePage() {
 
   // Use the reactive preview store instead of only the loader's isPreview
   // This allows the component to switch when preview mode is detected client-side
-  const { isPreview: isPreviewFromStore } = useStore(previewStore);
+  const { isPreview: isPreviewFromStore } = useStore(
+    previewStore,
+    (state) => state,
+  );
 
   const {
     initial,
