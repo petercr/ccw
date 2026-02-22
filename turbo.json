@@ -1,7 +1,6 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"ui": "tui",
-	"compatibilityDate": "2026-02-21",
 	"globalDependencies": ["**/.env.*local"],
 	"globalEnv": [
 		"NODE_ENV",
