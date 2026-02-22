@@ -55,7 +55,7 @@ export const category = defineType({
 		defineField({
 			name: 'description',
 			title: 'Description',
-			type: 'text',
+			type: 'blockContent',
 		}),
 		defineField({
 			name: 'seo',

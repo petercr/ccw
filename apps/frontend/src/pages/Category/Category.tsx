@@ -1,4 +1,5 @@
 import { MainImage } from "@/components/MainImage/MainImage.tsx";
+import PortableText from "@/components/PortableText/PortableText.tsx";
 import type { PageProps } from "@/types/PageProps.ts";
 import type { CategoryDocument } from "@/types/category.ts";
 import {
@@ -39,18 +40,24 @@ export const CategoryPage = ({
             }
           />
         ) : null}
-        {description ? <p className={ingressStyle}>{description}</p> : null}
+        {description ? (
+          <div className={ingressStyle}>
+            {typeof description === "string" ? (
+              <p>{description}</p>
+            ) : description.length > 0 ? (
+              <PortableText value={description} />
+            ) : null}
+          </div>
+        ) : null}
         {seo?.keywords && seo.keywords.length > 0 ? (
           <div className={keywordsSection}>
             <h2 className={keywordsTitle}>Topics</h2>
             <ul className={keywordsList}>
-              {seo.keywords.map(
-                (keyword: string | undefined, index: number) => (
-                  <li key={index} className={keywordItem}>
-                    {keyword}
-                  </li>
-                ),
-              )}
+              {seo.keywords.map((keyword: string | undefined) => (
+                <li key={keyword} className={keywordItem}>
+                  {keyword}
+                </li>
+              ))}
             </ul>
           </div>
         ) : null}

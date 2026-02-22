@@ -1,6 +1,6 @@
+import { globalStyle, style } from '@vanilla-extract/css';
 import { textContent } from '@/styles/shared/textContent.css.ts';
 import { vars } from '@/styles/theme.css.ts';
-import { style } from '@vanilla-extract/css';
 
 export const h2 = style([
 	textContent,
@@ -52,8 +52,13 @@ export const p = style([
 		fontSize: '1.05rem',
 		marginBottom: '1.6rem',
 		color: vars.color.textDim,
+		wordBreak: 'break-word',
+		overflowWrap: 'break-word',
 	},
 ]);
+globalStyle(`${p} a`, {
+	color: vars.color.primaryAlt,
+});
 
 export const blockquote = style({
 	gridColumn: '3 / -2',
