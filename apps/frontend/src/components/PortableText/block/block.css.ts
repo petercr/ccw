@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { textContent } from '@/styles/shared/textContent.css.ts';
 import { vars } from '@/styles/theme.css.ts';
 
@@ -56,6 +56,9 @@ export const p = style([
 		overflowWrap: 'break-word',
 	},
 ]);
+globalStyle(`${p} a`, {
+	color: vars.color.primaryAlt,
+});
 
 export const blockquote = style({
 	gridColumn: '3 / -2',

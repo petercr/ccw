@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { textContent } from '@/styles/shared/textContent.css.ts';
 import { vars } from '@/styles/theme.css.ts';
 
@@ -32,4 +32,8 @@ export const li = style({
 	marginBottom: '.65rem',
 	wordBreak: 'break-word',
 	overflowWrap: 'break-word',
+});
+
+globalStyle(`${li} a`, {
+	color: vars.color.primaryAlt,
 });
