@@ -64,7 +64,7 @@ export const lightTheme = createTheme(themeContract, {
 		bgAlt: '#ffffff',
 		bgSoft: '#f0f4f8',
 		text: 'rgba(29,29,31,0.82)',
-		textDim: 'rgba(0,0,0,0.1)',
+		textDim: 'rgba(0,0,0,1.0)',
 		border: 'rgba(0,102,204,0.8)',
 		borderSoft: 'rgba(0, 0, 0, 0.9)',
 		primary: '#000000',
@@ -121,7 +121,7 @@ export const darkTheme = createTheme(themeContract, {
 		bgAlt: '#112B42', // Raised panel background
 		bgSoft: '#15354D', // Soft section background
 		text: '#F5F9FC', // Near-white text for optimal readability
-		textDim: '#C2D4E2', // Muted text (metadata)
+		textDim: '#FFFFFF', // Muted text (metadata)
 		border: '#2F5470', // Contrast border
 		borderSoft: '#1E3A52', // Softer border
 		primary: '#4DB8FF', // Primary accent (light azure on dark blue)
