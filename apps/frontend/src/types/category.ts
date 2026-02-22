@@ -1,4 +1,4 @@
-import { sanityImageZ, seoZ } from '@/types/sanitySchemas.ts';
+import { portableTextZ, sanityImageZ, seoZ } from '@/types/sanitySchemas.ts';
 import { z } from 'zod';
 
 // This is a Zod schema
@@ -16,7 +16,7 @@ export const categoryZ = z.object({
 	title: z.string().nullable(),
 	fullSlug: z.string().nullable(),
 	mainImage: sanityImageZ.nullable(),
-	description: z.string().nullable(),
+	description: z.union([portableTextZ, z.string()]).nullable(),
 	seo: seoZ.nullable(),
 	_createdAt: z.string(),
 });

@@ -91,6 +91,8 @@ export const ingress = style({
 	marginBottom: '0.5rem',
 	marginTop: '0.5rem',
 	fontFamily: 'Roboto Mono, monospace',
+	wordBreak: 'break-word',
+	overflowWrap: 'break-word',
 	selectors: {
 		'[data-theme="dark"] &': {
 			color: '#ffffff',
