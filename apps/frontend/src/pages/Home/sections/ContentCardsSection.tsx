@@ -1,4 +1,5 @@
 import type { HomeDocument } from "@/types/home.ts";
+import { Link } from "@tanstack/react-router";
 import {
   buttonLink,
   cardPair,
@@ -39,11 +40,23 @@ export function ContentCardsSection({ homeData }: ContentCardsSectionProps) {
             <div className={contentCard}>
               {card1.links && card1.links.length > 0 && (
                 <div className={linkList}>
-                  {card1.links.map((link) => (
-                    <a key={link.url} href={link.url} className={simpleLink}>
-                      {link.label}
-                    </a>
-                  ))}
+                  {card1.links.map((link) =>
+                    link.isExternal ? (
+                      <a
+                        key={link.url}
+                        href={link.url}
+                        className={simpleLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link key={link.url} to={link.url} className={simpleLink}>
+                        {link.label}
+                      </Link>
+                    ),
+                  )}
                 </div>
               )}
               {card1.text && <p className={cardText}>{card1.text}</p>}
@@ -85,9 +98,20 @@ export function ContentCardsSection({ homeData }: ContentCardsSectionProps) {
                 if (block._type === "buttonContent") {
                   return (
                     <div key={block.label} className={linkList}>
-                      <a href={block.url} className={buttonLink}>
-                        {block.label}
-                      </a>
+                      {block.isExternal ? (
+                        <a
+                          href={block.url}
+                          className={buttonLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {block.label}
+                        </a>
+                      ) : (
+                        <Link to={block.url} className={buttonLink}>
+                          {block.label}
+                        </Link>
+                      )}
                     </div>
                   );
                 }

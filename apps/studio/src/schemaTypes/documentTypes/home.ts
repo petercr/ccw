@@ -53,7 +53,19 @@ export const home = defineType({
 							type: 'object',
 							fields: [
 								{ name: 'label', type: 'string', title: 'Label' },
-								{ name: 'url', type: 'url', title: 'URL' },
+								{
+									name: 'isExternal',
+									type: 'boolean',
+									title: 'External Link?',
+									description: 'Check this if the link goes to an external website',
+									initialValue: false,
+								},
+								{
+									name: 'url',
+									type: 'string',
+									title: 'URL',
+									description: 'For internal links use path like "/about". For external links use full URL like "https://example.com"',
+								},
 							],
 						},
 					],
@@ -88,7 +100,19 @@ export const home = defineType({
 							title: 'Button',
 							fields: [
 								{ name: 'label', type: 'string', title: 'Label' },
-								{ name: 'url', type: 'url', title: 'URL' },
+								{
+									name: 'isExternal',
+									type: 'boolean',
+									title: 'External Link?',
+									description: 'Check this if the link goes to an external website',
+									initialValue: false,
+								},
+								{
+									name: 'url',
+									type: 'string',
+									title: 'URL',
+									description: 'For internal links use path like "/about". For external links use full URL like "https://example.com"',
+								},
 							],
 						},
 					],

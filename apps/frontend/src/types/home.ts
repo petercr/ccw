@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 const linkZ = z.object({
 	label: z.string(),
-	url: z.string().url(),
+	isExternal: z.boolean().optional(),
+	url: z.string(),
 });
 
 export const homeZ = z.object({
@@ -30,7 +31,7 @@ export const homeZ = z.object({
 				.array(
 					z.discriminatedUnion('_type', [
 						z.object({ _type: z.literal('textContent'), text: z.string().nullable() }),
-						z.object({ _type: z.literal('buttonContent'), label: z.string(), url: z.string().url() }),
+						z.object({ _type: z.literal('buttonContent'), label: z.string(), isExternal: z.boolean().optional(), url: z.string() }),
 					]),
 				)
 				.nullable()
