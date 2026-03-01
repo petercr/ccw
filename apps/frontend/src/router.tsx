@@ -1,44 +1,52 @@
-import { ErrorComponent, createRouter } from '@tanstack/react-router';
-import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
-import * as TanstackQuery from './integrations/tanstack-query/root-provider';
+import { ErrorComponent, createRouter } from "@tanstack/react-router";
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
+import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
 
-import { getCspNonce } from '@/functions/getCspNonce.ts';
+import { getCspNonce } from "@/functions/getCspNonce.ts";
 // Import the generated route tree
-import { routeTree } from './routeTree.gen';
+import { routeTree } from "./routeTree.gen";
 
 // Create a new router instance
 export const getRouter = () => {
-	const rqContext = TanstackQuery.getContext();
+  const rqContext = TanstackQuery.getContext();
 
-	const router = createRouter({
-		routeTree,
-		context: { ...rqContext, request: null },
-		defaultPreload: 'intent',
-		defaultPendingMs: 0, // Show pending state immediately during navigation
-		defaultPendingMinMs: 100, // Keep pending state for at least 100ms to avoid flashing
-		defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
-		scrollRestoration: true,
-		ssr: { nonce: getCspNonce() },
-		defaultViewTransition: {
-			types: ({ fromLocation, toLocation }) => {
-				let direction = 'none';
+  const router = createRouter({
+    routeTree,
+    context: { ...rqContext, request: null },
+    defaultPreload: "intent",
+    defaultPreloadStaleTime: 30000, // Don't re-preload if data was fetched within 30 seconds
+    defaultPendingMs: 0, // Show pending state immediately during navigation
+    defaultPendingMinMs: 100, // Keep pending state for at least 100ms to avoid flashing
+    defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
+    scrollRestoration: true,
+    ssr: { nonce: getCspNonce() },
+    defaultViewTransition: {
+      types: ({ fromLocation, toLocation }) => {
+        let direction = "none";
 
-				if (fromLocation) {
-					const fromIndex = fromLocation.state.__TSR_index;
-					const toIndex = toLocation.state.__TSR_index;
+        if (fromLocation) {
+          const fromIndex = fromLocation.state.__TSR_index;
+          const toIndex = toLocation.state.__TSR_index;
 
-					direction = fromIndex > toIndex ? 'right' : 'left';
-				}
+          direction = fromIndex > toIndex ? "right" : "left";
+        }
 
-				return [`slide-${direction}`];
-			},
-		},
-		Wrap: (props: { children: React.ReactNode }) => {
-			return <TanstackQuery.Provider {...rqContext}>{props.children}</TanstackQuery.Provider>;
-		},
-	});
+        return [`slide-${direction}`];
+      },
+    },
+    Wrap: (props: { children: React.ReactNode }) => {
+      return (
+        <TanstackQuery.Provider {...rqContext}>
+          {props.children}
+        </TanstackQuery.Provider>
+      );
+    },
+  });
 
-	setupRouterSsrQueryIntegration({ router, queryClient: rqContext.queryClient });
+  setupRouterSsrQueryIntegration({
+    router,
+    queryClient: rqContext.queryClient,
+  });
 
-	return router;
+  return router;
 };

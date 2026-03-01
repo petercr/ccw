@@ -15,7 +15,7 @@ export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"] | order(_create
 export const testimonialsQuery = (options: UnfilteredResponseQueryOptions) =>
 	queryOptions({
 		queryKey: ['testimonials', options.perspective || 'published'],
-		staleTime: 1000 * 60 * 5,
-		gcTime: 1000 * 60 * 10,
+		staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+		gcTime: 1000 * 60 * 30, // Keep in cache for 30 minutes
 		queryFn: () => fetchTestimonials(),
 	});
