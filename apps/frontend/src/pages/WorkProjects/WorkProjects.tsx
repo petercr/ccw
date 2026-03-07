@@ -1,4 +1,6 @@
+import { BackToHome } from "@/components/BackToHome/BackToHome.tsx";
 import { MainImage } from "@/components/MainImage/MainImage.tsx";
+import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
 import { Route } from "@/routes/our-work.tsx";
 import type { WorkProject } from "@/types/workProject.ts";
 import {
@@ -45,6 +47,8 @@ export const WorkProjectsPage = () => {
           </div>
         ))}
       </div>
+      <SocialLinks />
+      <BackToHome />
     </article>
   );
 };

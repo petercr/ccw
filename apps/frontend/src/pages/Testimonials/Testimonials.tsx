@@ -1,3 +1,5 @@
+import { BackToHome } from "@/components/BackToHome/BackToHome.tsx";
+import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
 import { Route } from "@/routes/testimonials.tsx";
 import { dataset, projectId } from "@/sanity/projectDetails.ts";
 import type { Testimonial } from "@/types/testimonial.ts";
@@ -47,6 +49,8 @@ export const TestimonialsPage = () => {
           </div>
         ))}
       </div>
+      <SocialLinks />
+      <BackToHome />
     </article>
   );
 };
