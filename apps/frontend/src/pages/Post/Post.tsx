@@ -40,7 +40,7 @@ export const PostPage = ({
     fullSlug?: string | null;
   };
 
-  // Ekstraher plain text for lesetid & JSON-LD
+  // Extract plain text for reading time & JSON-LD
   const plainText =
     body
       ?.filter((b) => b._type === "block")
@@ -65,14 +65,14 @@ export const PostPage = ({
     : undefined;
 
   const publishedDisplay = publishedAt
-    ? new Date(publishedAt).toLocaleDateString("no-NO", {
+    ? new Date(publishedAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
       })
     : "";
   const updatedDisplay = _updatedAt
-    ? new Date(_updatedAt).toLocaleDateString("no-NO", {
+    ? new Date(_updatedAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -146,7 +146,7 @@ export const PostPage = ({
                     id: author.image.asset._ref,
                     width: 88,
                   })}
-                  alt={author.name || "Forfatter"}
+                  alt={author.name || "Author"}
                   className={authorAvatarImg}
                 />
               ) : (
@@ -173,14 +173,14 @@ export const PostPage = ({
             <>
               <span className={metaSeparator}>•</span>
               <time className={metaItem} dateTime={updatedISO}>
-                Oppdatert: {updatedDisplay}
+                Updated: {updatedDisplay}
               </time>
             </>
           )}
           {readingMinutes > 0 && (
             <>
               <span className={metaSeparator}>•</span>
-              <span className={metaItem}>{readingMinutes} min lesetid</span>
+              <span className={metaItem}>{readingMinutes} min read</span>
             </>
           )}
         </div>

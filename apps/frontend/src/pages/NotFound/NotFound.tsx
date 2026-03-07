@@ -6,15 +6,15 @@ export function NotFoundPage() {
 	return (
 		<div className={container}>
 			<h1 className={title}>404</h1>
-			<p className={description}>Beklager, denne siden finnes ikke.</p>
+			<p className={description}>Sorry, this page could not be found.</p>
 			<div className={buttonContainer}>
-				<Link to="/" className={buttonPrimary} aria-label="Gå til forsiden">
+				<Link to="/" className={buttonPrimary} aria-label="Go to home page">
 					<Home size={20} />
-					Gå til forsiden
+					Go to home page
 				</Link>
-				<button onClick={() => window.history.back()} className={buttonGhost} aria-label="Gå tilbake forrige side">
+				<button onClick={() => window.history.back()} className={buttonGhost} aria-label="Go back to previous page">
 					<ArrowLeft size={20} />
-					Gå tilbake
+					Go back
 				</button>
 			</div>
 		</div>
