@@ -91,6 +91,14 @@ Schema types are organized in `apps/studio/src/schemaTypes/`:
 - `blockTypes/` — portable text block types (accordion, image carousel, etc.)
 - `index.ts` — registers all schemas
 
+## Available Skills
+
+The following agent skills are installed and should be used when relevant:
+
+- **`agent-browser`** — Browser automation (navigating pages, filling forms, clicking, screenshots, scraping). Use when any task requires interacting with a running web app or external website.
+- **`frontend-design`** — Production-grade frontend UI generation. Use when asked to build or style components, pages, or layouts with high design quality.
+- **`find-skills`** — Discover and install additional agent skills. Use when the user asks how to do something that might be covered by an installable skill.
+
 ## Environment Variables
 
 **Frontend** (`apps/frontend/.env.local`):
