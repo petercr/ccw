@@ -1,3 +1,4 @@
+import { useSiteSettings } from '@/hooks/useSiteSettings.ts';
 import {
 	bottomRow,
 	brandBlock,
@@ -15,57 +16,62 @@ import {
 
 export function Footer() {
 	const year = new Date().getFullYear();
+	const siteSettings = useSiteSettings();
+	const { linkedin, github, twitter } = siteSettings?.socialLinks ?? {};
+
 	return (
 		<footer className={footer} role="contentinfo">
 			<div className={topRow}>
 				<div className={brandBlock}>
-					<div className={brandName}>SanTan Starter</div>
+					<div className={brandName}>Cape Cod World</div>
 					<p className={brandTagline}>
-						A modern content platform powered by React, TanStack Start & Sanity. Built for speed, preview, and elegant
-						DX.
+						Bringing your ideas to the world. We help small businesses and individuals build a strong online presence
+						with modern, fast, and beautiful websites.
 					</p>
+					<p className={brandTagline}>© 2016–{year} Cape Cod World</p>
 				</div>
-				<nav className={linkGroup} aria-label="Resources">
-					<div className={groupTitle}>Resources</div>
-					<a className={footerLink} href="https://github.com/MagneH/santan" target="_blank" rel="noopener noreferrer">
+				<nav className={linkGroup} aria-label="Social">
+					<div className={groupTitle}>Social</div>
+					<a
+						className={footerLink}
+						href={linkedin ?? 'https://linkedin.com'}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						LinkedIn
+					</a>
+					<a
+						className={footerLink}
+						href={github ?? 'https://github.com'}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						GitHub
 					</a>
 					<a
 						className={footerLink}
-						href="https://github.com/MagneH/santan/blob/main/README.md"
+						href={twitter ?? 'https://x.com'}
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Docs
-					</a>
-					<a className={footerLink} href="https://www.sanity.io" target="_blank" rel="noopener noreferrer">
-						Sanity.io
-					</a>
-					<a className={footerLink} href="https://tanstack.com" target="_blank" rel="noopener noreferrer">
-						TanStack
+						X
 					</a>
 				</nav>
 			</div>
 			<div className={bottomRow}>
 				<div className={smallMeta}>
-					<span className={metaItem}>© {year} SanTan Starter</span>
 					<span className={metaItem}>
 						Made with <span className={heart}>♥</span> using TanStack & Sanity
 					</span>
 				</div>
 				<div className={smallMeta}>
 					<span className={metaItem}>
-						<a
-							className={footerLink}
-							href="https://github.com/MagneH/santan/issues"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a className={footerLink} href="https://github.com/petercr/ccw/issues" target="_blank" rel="noopener noreferrer">
 							Issues
 						</a>
 					</span>
 					<span className={metaItem}>
-						<a className={footerLink} href="mailto:example@example.com">
+						<a className={footerLink} href="/contact">
 							Contact
 						</a>
 					</span>
