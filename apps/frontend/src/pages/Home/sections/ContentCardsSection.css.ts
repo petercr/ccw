@@ -88,6 +88,7 @@ export const cardText = style({
 });
 
 export const linkList = style({
+	flexDirection: 'column',
 	display: 'flex',
 	flexWrap: 'wrap',
 	gap: '1rem',
