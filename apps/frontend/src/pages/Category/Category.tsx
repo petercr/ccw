@@ -1,4 +1,6 @@
+import { BackToHome } from "@/components/BackToHome/BackToHome.tsx";
 import { MainImage } from "@/components/MainImage/MainImage.tsx";
+import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
 import PortableText from "@/components/PortableText/PortableText.tsx";
 import type { PageProps } from "@/types/PageProps.ts";
 import type { CategoryDocument } from "@/types/category.ts";
@@ -62,6 +64,8 @@ export const CategoryPage = ({
           </div>
         ) : null}
       </div>
+      <SocialLinks />
+      <BackToHome />
     </article>
   );
 };

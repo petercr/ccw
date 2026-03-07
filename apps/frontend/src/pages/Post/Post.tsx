@@ -1,4 +1,6 @@
+import { BackToHome } from "@/components/BackToHome/BackToHome.tsx";
 import { MainImage } from "@/components/MainImage/MainImage.tsx";
+import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
 import PortableText from "@/components/PortableText/PortableText.tsx";
 import { sanityImageSrcBuilder } from "@/sanity/sanityImageSrcBuilder.ts";
 import type { PageProps } from "@/types/PageProps.ts";
@@ -193,6 +195,8 @@ export const PostPage = ({
           <PortableText value={body} />
         </div>
       ) : null}
+      <SocialLinks />
+      <BackToHome />
     </article>
   );
 };
