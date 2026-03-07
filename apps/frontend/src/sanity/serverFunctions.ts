@@ -4,6 +4,7 @@ import { categoriesZ, categoryZ } from '@/types/category.ts';
 import { homeZ } from '@/types/home.ts';
 import { postsZ, postZ } from '@/types/post.ts';
 import { testimonialsZ } from '@/types/testimonial.ts';
+import { siteSettingsZ } from '@/types/siteSettings.ts';
 import { workProjectsZ } from '@/types/workProject.ts';
 import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
 import { sanityTypeLiterals } from '@santan/shared/types';
@@ -254,5 +255,30 @@ export const fetchTestimonials = createServerFn({
 	return {
 		data: testimonialsZ.parse(res.result),
 		sourceMap: res.resultSourceMap,
+	};
+});
+
+const SITE_SETTINGS_QUERY_INTERNAL = groq`*[_type == "siteSettings" && _id == "siteSettings"][0] {
+  _id,
+  _type,
+  title,
+  socialLinks
+}`;
+
+// Server function to fetch site settings
+export const fetchSiteSettings = createServerFn({
+	method: 'GET',
+}).handler(async () => {
+	const options: UnfilteredResponseQueryOptions = {
+		filterResponse: false,
+		perspective: 'published' as ClientPerspective,
+	};
+
+	const res = await client
+		.withConfig({ stega: { enabled: false, studioUrl: STUDIO_BASEPATH }, resultSourceMap: false })
+		.fetch(SITE_SETTINGS_QUERY_INTERNAL, {}, options);
+
+	return {
+		data: siteSettingsZ.nullable().parse(res.result ?? null),
 	};
 });

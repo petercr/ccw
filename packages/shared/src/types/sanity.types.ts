@@ -120,6 +120,20 @@ export type Accordion = {
   }>;
 };
 
+export type SiteSettings = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  socialLinks?: {
+    linkedin?: string;
+    github?: string;
+    twitter?: string;
+  };
+};
+
 export type WorkProject = {
   _id: string;
   _type: "workProject";
@@ -269,7 +283,7 @@ export type Category = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  description?: string;
+  description?: BlockContent;
   seo?: Seo;
 };
 
@@ -288,6 +302,7 @@ export type Home = {
     text?: string;
     links?: Array<{
       label?: string;
+      isExternal?: boolean;
       url?: string;
       _key: string;
     }>;
@@ -304,6 +319,7 @@ export type Home = {
         }
       | {
           label?: string;
+          isExternal?: boolean;
           url?: string;
           _type: "buttonContent";
           _key: string;
@@ -417,6 +433,7 @@ export type AllSanitySchemaTypes =
   | BlockContent
   | ImageCarousel
   | Accordion
+  | SiteSettings
   | WorkProject
   | SanityImageCrop
   | SanityImageHotspot
@@ -437,9 +454,3 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
-
-type ArrayOf<T> = Array<
-  T & {
-    _key: string;
-  }
->;

@@ -1,3 +1,4 @@
+import { useSiteSettings } from '@/hooks/useSiteSettings.ts';
 import { Github, Linkedin } from 'lucide-react';
 import { card, icons, link, title } from './SocialLinks.css.ts';
 
@@ -18,12 +19,15 @@ function XLogo() {
 }
 
 export function SocialLinks() {
+	const siteSettings = useSiteSettings();
+	const { linkedin, github, twitter } = siteSettings?.socialLinks ?? {};
+
 	return (
 		<div className={card}>
 			<p className={title}>Social Links</p>
 			<div className={icons}>
 				<a
-					href="https://linkedin.com"
+					href={linkedin ?? 'https://linkedin.com'}
 					target="_blank"
 					rel="noopener noreferrer"
 					className={link}
@@ -33,7 +37,7 @@ export function SocialLinks() {
 					<Linkedin size={28} />
 				</a>
 				<a
-					href="https://github.com"
+					href={github ?? 'https://github.com'}
 					target="_blank"
 					rel="noopener noreferrer"
 					className={link}
@@ -42,7 +46,7 @@ export function SocialLinks() {
 					<Github size={28} />
 				</a>
 				<a
-					href="https://x.com"
+					href={twitter ?? 'https://x.com'}
 					target="_blank"
 					rel="noopener noreferrer"
 					className={link}

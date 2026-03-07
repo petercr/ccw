@@ -1,5 +1,5 @@
 import { sanityTypeLiterals } from '@santan/shared/types';
-import { Briefcase, Home, Quote, Tags, Users } from 'lucide-react';
+import { Briefcase, Home, Quote, Settings, Tags, Users } from 'lucide-react';
 import DocumentsPane from 'sanity-plugin-documents-pane';
 import type { DefaultDocumentNodeResolver, StructureBuilder, StructureResolver } from 'sanity/structure';
 
@@ -16,6 +16,17 @@ export const structure: StructureResolver = (S) =>
 				.id('home')
 				.title('HomePage')
 				.child(defaultDocumentViews(S, sanityTypeLiterals.home)),
+			// Singleton, site-wide settings
+			S.listItem()
+				.icon(Settings)
+				.id('siteSettings')
+				.title('Site Settings')
+				.child(
+					S.document()
+						.schemaType('siteSettings')
+						.documentId('siteSettings')
+						.views([S.view.form(), S.view.component(JSONPreview).title('JSON')]),
+				),
 			S.divider(),
 			// Document lists
 			S.documentTypeListItem('post').title('Articles'),
