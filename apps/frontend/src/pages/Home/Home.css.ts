@@ -505,3 +505,11 @@ export const miniBadge = style({
 		'[data-theme="dark"] &:hover': { background: vars.color.surfaceHover, color: vars.color.primary },
 	},
 });
+
+export const socialLinksRow = style({
+	display: 'flex',
+	justifyContent: 'center',
+	paddingBottom: '4rem',
+	paddingLeft: '2rem',
+	paddingRight: '2rem',
+});

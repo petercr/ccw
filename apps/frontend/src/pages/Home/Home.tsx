@@ -10,8 +10,9 @@ import type { PageProps } from "@/types/PageProps.ts";
 import type { HomeDocument } from "@/types/home.ts";
 import { useStore } from "@tanstack/react-store";
 // Styles
-import { divider, homeContainer } from "./Home.css.ts";
+import { divider, homeContainer, socialLinksRow } from "./Home.css.ts";
 
+import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
 import { ContentCardsSection } from "./sections/ContentCardsSection.tsx";
 // Types
 import { HeroSection } from "./sections/HeroSection.tsx";
@@ -38,6 +39,9 @@ const Home = ({ data }: PageProps<HomePagePayload>) => {
       <div className={divider} />
       <ContentCardsSection homeData={homeData} />
       <div className={divider} />
+      <div className={socialLinksRow}>
+        <SocialLinks />
+      </div>
     </div>
   );
 };
