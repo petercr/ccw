@@ -37,3 +37,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 .vercel
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+midscene_run/
