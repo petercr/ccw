@@ -8,9 +8,12 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [['list'], ['@midscene/web/playwright-reporter']],
+  timeout: 60_000,
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
+    actionTimeout: 30_000,
+    navigationTimeout: 30_000,
   },
   projects: [
     {
