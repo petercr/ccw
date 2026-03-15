@@ -10,12 +10,12 @@ jobs:
     timeout-minutes: 15
 
     env:
-      VITE_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
-      VITE_SANITY_DATASET: ${{ vars.VITE_SANITY_DATASET }}
-      VITE_SANITY_API_VERSION: ${{ vars.VITE_SANITY_API_VERSION }}
-      SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
-      SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
-      SANITY_STUDIO_API_VERSION: ${{ vars.SANITY_STUDIO_API_VERSION }}
+      VITE_SANITY_PROJECT_ID: 5o216keo
+      VITE_SANITY_DATASET: production
+      VITE_SANITY_API_VERSION: 2025-12-12
+      SANITY_STUDIO_PROJECT_ID: 5o216keo
+      SANITY_STUDIO_DATASET: production
+      SANITY_STUDIO_API_VERSION: 2025-12-12
       MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME }}
       MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY }}
       MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
@@ -34,14 +34,6 @@ jobs:
 
       - name: Build shared package
         run: npm run build
-
-      - name: Debug env vars
-        run: |
-          echo "SANITY_STUDIO_PROJECT_ID length: ${#SANITY_STUDIO_PROJECT_ID}"
-          echo "SANITY_STUDIO_PROJECT_ID value: [$SANITY_STUDIO_PROJECT_ID]"
-          echo "SANITY_STUDIO_DATASET value: [$SANITY_STUDIO_DATASET]"
-          echo "SANITY_STUDIO_API_VERSION value: [$SANITY_STUDIO_API_VERSION]"
-          echo "VITE_SANITY_PROJECT_ID value: [$VITE_SANITY_PROJECT_ID]"
 
       - name: Generate Sanity types
         run: npm run generate-types
