@@ -37,3 +37,13 @@ pnpm-debug.log*
 lerna-debug.log*
 
 .vercel
+
+# act (local GitHub Actions runner)
+.secrets
+.vars
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+midscene_run/

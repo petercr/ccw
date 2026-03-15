@@ -8,7 +8,7 @@
 		"build": "NODE_ENV=production vite build",
 		"serve": "vite preview",
 		"start": "node .output/server/index.mjs",
-		"test": "vitest run",
+		"vitest": "vitest run",
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"type-check": "tsc --noEmit",
