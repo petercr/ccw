@@ -14,7 +14,13 @@ export default ({ mode }: ConfigEnv) => {
 	return defineConfig({
 		plugins: [
 			devtools(),
-			nitroV2Plugin({ preset: 'vercel', compatibilityDate: '2026-02-21' }),
+			nitroV2Plugin({
+			// Use 'node-server' for local/CI runs (e.g. e2e tests), 'vercel' for
+			// production deployment. Vercel rebuilds from source on deploy so the
+			// preset used here doesn't affect what gets shipped.
+			preset: (process.env.NITRO_PRESET as 'vercel' | 'node-server') ?? 'vercel',
+			compatibilityDate: '2026-02-21',
+		}),
 			// this is the plugin that enables path aliases
 			viteTsConfigPaths({
 				projects: ['./tsconfig.json'],
