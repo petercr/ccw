@@ -5,35 +5,33 @@ test.describe('Homepage', () => {
     await page.goto('/');
   });
 
-  test('should load and display the hero section', async ({
-    agentForPage,
-    page,
-  }) => {
-    const agent = await agentForPage(page);
-
-    await agent.aiAssert('The page has loaded and shows "Cape Cod World"');
-    await agent.aiAssert(
-      'There is a tagline that says "Bringing Your Ideas To The World"',
-    );
+  test('should load and display the hero section', async ({ page }) => {
+    await expect(
+      page.getByRole('heading', { name: /Cape Cod World/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByText(/Bringing Your Ideas To The World/i),
+    ).toBeVisible();
   });
 
   test('should display the "What We Do" section with services', async ({
-    agentForPage,
     page,
   }) => {
-    // Scroll to the "What We Do" heading and assert it's visible
-    await page.getByRole('heading', { name: /What We Do/i }).scrollIntoViewIfNeeded();
-    const agent = await agentForPage(page);
+    const whatWeDoHeading = page.getByRole('heading', {
+      name: /What We Do/i,
+    });
+    await whatWeDoHeading.scrollIntoViewIfNeeded();
+    await expect(whatWeDoHeading).toBeVisible();
 
-    await agent.aiAssert(
-      'There is a heading containing "What We Do" visible on the page',
-    );
-
-    // Scroll further to make the services list visible
-    await page.getByText(/AI Integration/i).first().scrollIntoViewIfNeeded();
-    await agent.aiAssert(
-      'The page contains links or text for Design, Development, Digital Content, Deployment, and AI Integration',
-    );
+    await page
+      .getByText(/AI Integration/i)
+      .first()
+      .scrollIntoViewIfNeeded();
+    await expect(page.getByText(/Design/i).first()).toBeVisible();
+    await expect(page.getByText(/Development/i).first()).toBeVisible();
+    await expect(page.getByText(/Digital Content/i).first()).toBeVisible();
+    await expect(page.getByText(/Deployment/i).first()).toBeVisible();
+    await expect(page.getByText(/AI Integration/i).first()).toBeVisible();
   });
 
   test('should display navigation links', async ({ page }) => {

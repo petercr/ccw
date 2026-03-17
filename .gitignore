@@ -46,4 +46,3 @@ lerna-debug.log*
 test-results/
 playwright-report/
 blob-report/
-midscene_run/
