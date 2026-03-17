@@ -7,15 +7,15 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     env:
-      VITE_SANITY_PROJECT_ID: 5o216keo
-      VITE_SANITY_DATASET: production
-      VITE_SANITY_API_VERSION: 2025-12-12
-      SANITY_STUDIO_PROJECT_ID: 5o216keo
-      SANITY_STUDIO_DATASET: production
-      SANITY_STUDIO_API_VERSION: 2025-12-12
+      VITE_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+      VITE_SANITY_DATASET: ${{ vars.VITE_SANITY_DATASET }}
+      VITE_SANITY_API_VERSION: ${{ vars.VITE_SANITY_API_VERSION }}
+      SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+      SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+      SANITY_STUDIO_API_VERSION: ${{ vars.SANITY_STUDIO_API_VERSION }}
       MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME }}
       MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY }}
       MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
@@ -31,9 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Build shared package
-        run: npm run build
 
       - name: Generate Sanity types
         run: npm run generate-types
