@@ -15,10 +15,16 @@
 		"format:check": "echo '🔍 Checking formatting...' && biome format .",
 		"check": "echo '🔍 Running all checks...' && biome check .",
 		"check:fix": "echo '🔧 Fixing all issues...' && biome check --write .",
-		"clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean"
+		"clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean",
+		"test": "playwright test",
+		"test:e2e": "playwright test --ui",
+		"test:e2e:report": "playwright show-report",
+		"vitest": "npm run vitest --workspace=@santan/frontend"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.3",
+		"@playwright/test": "^1.58.2",
+		"tsx": "^4.21.0",
 		"turbo": "^2.8.10"
 	},
 	"workspaces": [
