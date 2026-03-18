@@ -14,6 +14,7 @@ export const container = style({
 export const headerPill = style({
 	width: 300,
 	borderRadius: 12,
+	border: '1px solid #000000',
 	background: '#ffffff',
 	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
 	paddingTop: 16,
@@ -58,7 +59,7 @@ export const cardGrid = style({
 export const card = style({
 	width: 323,
 	borderRadius: 20,
-	background: 'rgba(255, 255, 255, 0.81)',
+	background: 'rgba(255, 255, 255, 0.95)',
 	border: '1px solid #000000',
 	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
 	paddingTop: 150,
@@ -69,6 +70,11 @@ export const card = style({
 	flexDirection: 'column',
 	gap: 10,
 	position: 'relative',
+	'@media': {
+		'screen and (min-width: 768px)': {
+			width: 540,
+		},
+	},
 	selectors: {
 		'[data-theme="dark"] &': {
 			background: vars.color.surfaceElevated,
@@ -82,12 +88,23 @@ export const avatarBg = style({
 	width: 120,
 	height: 120,
 	borderRadius: '50%',
+	background: '#89AAE6',
 	position: 'absolute',
 	top: 23,
 	left: '50%',
 	transform: 'translateX(-50%)',
 	display: 'grid',
 	placeItems: 'center',
+	'@media': {
+		'screen and (min-width: 768px)': {
+			background: 'transparent',
+		},
+	},
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: 'rgba(137, 170, 230, 0.3)',
+		},
+	},
 });
 
 export const avatarImage = style({
@@ -106,6 +123,11 @@ export const cardName = style({
 	fontSize: 24,
 	lineHeight: 1.4,
 	textAlign: 'left',
+	'@media': {
+		'screen and (min-width: 768px)': {
+			textAlign: 'center',
+		},
+	},
 	selectors: {
 		'[data-theme="dark"] &': {
 			color: '#F5F9FC',
