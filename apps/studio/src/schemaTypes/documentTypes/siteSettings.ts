@@ -6,8 +6,6 @@ export const siteSettings = defineType({
 	title: 'Site Settings',
 	type: 'document',
 	icon: Settings,
-	// Singleton — only one document of this type
-	__experimental_actions: ['update', 'publish'],
 	fields: [
 		defineField({
 			name: 'title',

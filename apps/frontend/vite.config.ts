@@ -12,6 +12,9 @@ export default ({ mode }: ConfigEnv) => {
 	// Workaround to load secrets since it's broken in Tanstack RC0 (or similar versions)
 	Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
 	return defineConfig({
+		resolve: {
+			tsconfigPaths: true,
+		},
 		plugins: [
 			devtools(),
 			nitroV2Plugin({
@@ -21,7 +24,7 @@ export default ({ mode }: ConfigEnv) => {
 			preset: (process.env.NITRO_PRESET as 'vercel' | 'node-server') ?? 'vercel',
 			compatibilityDate: '2026-02-21',
 		}),
-			// this is the plugin that enables path aliases
+			// Required for vanilla-extract's internal vite-node to resolve @/ path aliases
 			viteTsConfigPaths({
 				projects: ['./tsconfig.json'],
 			}),
