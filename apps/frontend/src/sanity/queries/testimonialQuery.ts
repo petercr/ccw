@@ -7,6 +7,7 @@ export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"] | order(_create
   _id,
   _type,
   name,
+  organization,
   mainImage,
   body,
   _createdAt

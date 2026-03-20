@@ -1,5 +1,5 @@
-import { vars } from '@/styles/theme.css.ts';
 import { style } from '@vanilla-extract/css';
+import { vars } from '@/styles/theme.css.ts';
 
 export const container = style({
 	minHeight: '100vh',
@@ -116,7 +116,7 @@ export const avatarImage = style({
 });
 
 export const cardName = style({
-	margin: '0.5em 0',
+	marginTop: '0.75rem',
 	color: '#000000',
 	fontFamily: 'Roboto Mono, monospace',
 	fontWeight: 400,
@@ -130,7 +130,27 @@ export const cardName = style({
 	},
 	selectors: {
 		'[data-theme="dark"] &': {
-			color: '#F5F9FC',
+			color: vars.color.primary,
+		},
+	},
+});
+
+export const cardOrganization = style({
+	margin: '0.25rem 0',
+	color: '#000000',
+	fontFamily: 'Roboto Mono, monospace',
+	fontWeight: 600,
+	fontSize: 18,
+	lineHeight: 1.4,
+	textAlign: 'left',
+	'@media': {
+		'screen and (min-width: 768px)': {
+			textAlign: 'center',
+		},
+	},
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: vars.color.primary,
 		},
 	},
 });
@@ -142,6 +162,7 @@ export const cardBody = style({
 	fontWeight: 400,
 	fontSize: 18,
 	lineHeight: 1.2,
+	whiteSpace: 'pre-line',
 	selectors: {
 		'[data-theme="dark"] &': {
 			color: '#ffffff',

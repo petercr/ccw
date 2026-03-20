@@ -11,6 +11,7 @@ import {
   cardBody,
   cardGrid,
   cardName,
+  cardOrganization,
   container,
   headerPill,
   headerTitle,
@@ -44,7 +45,10 @@ export const TestimonialsPage = () => {
                 />
               </div>
             ) : null}
-            <h3 className={cardName}>{testimonial.name}</h3>
+            <h2 className={cardName}>{testimonial.name}</h2>
+            {testimonial.organization ? (
+              <h3 className={cardOrganization}>{testimonial.organization}</h3>
+            ) : null}
             <p className={cardBody}>{testimonial.body}</p>
           </div>
         ))}

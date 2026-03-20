@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: schema.json
 export type SanityImageAssetReference = {
   _ref: string;
@@ -178,6 +180,7 @@ export type Testimonial = {
   _updatedAt: string;
   _rev: string;
   name?: string;
+  organization?: string;
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -452,5 +455,3 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
-
-export declare const internalGroqTypeReferenceTo: unique symbol;
