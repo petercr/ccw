@@ -36,7 +36,7 @@ export const headerTitle = style({
 	margin: 0,
 	textAlign: 'center',
 	color: '#000000',
-	fontFamily: 'Roboto Slab, serif',
+	fontFamily: 'Fraunces, serif',
 	fontWeight: 400,
 	fontSize: 'clamp(2rem, 6vw, 3rem)',
 	lineHeight: 1.2,
@@ -72,7 +72,7 @@ export const formCard = style({
 export const formTitle = style({
 	margin: 0,
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 24,
 	lineHeight: 1.2,
@@ -94,7 +94,7 @@ export const fieldGroup = style({
 
 export const fieldLabel = style({
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	lineHeight: 1.2,
@@ -115,7 +115,7 @@ export const fieldInput = style({
 	paddingLeft: 12,
 	paddingRight: 12,
 	color: '#ffffff',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	boxSizing: 'border-box',
@@ -145,7 +145,7 @@ export const fieldTextarea = style({
 	paddingLeft: 12,
 	paddingRight: 12,
 	color: '#ffffff',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	resize: 'vertical',
@@ -166,7 +166,7 @@ export const fieldTextarea = style({
 
 export const fieldError = style({
 	color: '#d92f2f',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontSize: 13,
 	marginTop: 2,
 	selectors: {
@@ -184,7 +184,7 @@ export const submitButton = style({
 	background: '#86d0f5',
 	border: '1px solid #000000',
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	cursor: 'pointer',
@@ -213,7 +213,7 @@ export const submitButton = style({
 export const successMessage = style({
 	textAlign: 'center',
 	color: '#178544',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	padding: '16px 0',
@@ -227,7 +227,7 @@ export const successMessage = style({
 export const errorMessage = style({
 	textAlign: 'center',
 	color: '#d92f2f',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 14,
 	selectors: {

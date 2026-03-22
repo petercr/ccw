@@ -4,7 +4,7 @@ import { globalStyle, style } from '@vanilla-extract/css';
 globalStyle('html, body', { margin: 0 });
 
 globalStyle('body', {
-	fontFamily: 'Source Sans 3, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif',
+	fontFamily: 'DM Sans, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif',
 	background: 'transparent',
 	color: vars.color.text,
 	transition: 'color .35s ease',
@@ -25,10 +25,10 @@ globalStyle('*, *::before, *::after', {
 
 export const globalBackground = style({
 	position: 'fixed',
-	top: '-5vw',
+	top: 0,
 	left: 0,
 	width: '100vw',
-	height: '105vh',
+	height: '100vh',
 	zIndex: -1,
 	margin: 0,
 	padding: 0,
@@ -37,8 +37,12 @@ export const globalBackground = style({
 	backgroundPosition: 'top left',
 	backgroundRepeat: 'no-repeat',
 	'@media': {
+		'(min-width: 768px)': {
+			backgroundPosition: 'left 60%',
+		},
 		'(min-width: 1024px)': {
 			backgroundImage: `linear-gradient(to bottom, transparent, transparent), url('/beach_backdrop.svg')`,
+			backgroundPosition: 'top left',
 		},
 	},
 });
@@ -57,8 +61,12 @@ globalStyle(`${globalBackground}::before`, {
 	opacity: 0,
 	transition: 'opacity 0.6s ease',
 	'@media': {
+		'(min-width: 768px)': {
+			backgroundPosition: 'left 60%',
+		},
 		'(min-width: 1024px)': {
 			backgroundImage: `linear-gradient(to bottom, transparent, transparent), url('/night-backdrop.svg')`,
+			backgroundPosition: 'top left',
 		},
 	},
 });

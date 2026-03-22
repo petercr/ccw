@@ -71,7 +71,7 @@ export const headerTitle = style({
 	margin: 0,
 	textAlign: 'center',
 	color: '#000000',
-	fontFamily: 'Roboto Slab, serif',
+	fontFamily: 'Fraunces, serif',
 	fontWeight: 400,
 	fontSize: 41,
 	lineHeight: 1.2,
@@ -94,7 +94,7 @@ export const ingress = style({
 	marginTop: '0.5rem',
 	color: '#000000',
 	fontStyle: 'italic',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	selectors: {
 		'[data-theme="dark"] &': {
 			color: '#ffffff',
@@ -105,7 +105,7 @@ export const ingress = style({
 export const portableTextContainer = style({
 	width: '100%',
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	lineHeight: 1.2,
@@ -150,7 +150,7 @@ export const metaBar = style({
 	color: '#000000',
 	marginTop: '0.5rem',
 	marginBottom: '0.5rem',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	selectors: {
 		'[data-theme="dark"] &': { color: '#C9D1D9' },
 	},

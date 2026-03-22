@@ -37,7 +37,7 @@ export const headerTitle = style({
 	margin: 0,
 	textAlign: 'center',
 	color: '#000000',
-	fontFamily: 'Roboto Slab, serif',
+	fontFamily: 'Fraunces, serif',
 	fontWeight: 400,
 	fontSize: 'clamp(2rem, 6vw, 3rem)',
 	lineHeight: 1.2,
@@ -118,7 +118,7 @@ export const avatarImage = style({
 export const cardName = style({
 	marginTop: '0.75rem',
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 24,
 	lineHeight: 1.4,
@@ -138,7 +138,7 @@ export const cardName = style({
 export const cardOrganization = style({
 	margin: '0.25rem 0',
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 600,
 	fontSize: 18,
 	lineHeight: 1.4,
@@ -158,7 +158,7 @@ export const cardOrganization = style({
 export const cardBody = style({
 	margin: 0,
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	lineHeight: 1.2,

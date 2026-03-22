@@ -27,7 +27,7 @@ export const card = style({
 export const title = style({
 	margin: 0,
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 20,
 	selectors: {

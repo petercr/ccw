@@ -27,7 +27,7 @@ export const card = style({
 export const cardTitle = style({
 	margin: 0,
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	selectors: {
@@ -44,7 +44,7 @@ export const button = style({
 	background: '#86d0f5',
 	border: '1px solid #000000',
 	color: '#000000',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	fontWeight: 400,
 	fontSize: 18,
 	cursor: 'pointer',

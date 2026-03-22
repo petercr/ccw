@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import "@fontsource-variable/source-sans-3";
 import "@/styles/globals.css.ts";
 
 import { createRootRouteWithContext } from "@tanstack/react-router";
