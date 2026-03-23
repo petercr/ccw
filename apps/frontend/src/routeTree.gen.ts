@@ -14,8 +14,6 @@ import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SandDuneIndexRouteImport } from './routes/sand-dune/index'
-import { Route as SandDuneSplatRouteImport } from './routes/sand-dune/$'
 import { Route as ApiPreviewRouteImport } from './routes/api.preview'
 import { Route as ApiDraftTokenRouteImport } from './routes/api.draft-token'
 
@@ -44,16 +42,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SandDuneIndexRoute = SandDuneIndexRouteImport.update({
-  id: '/sand-dune/',
-  path: '/sand-dune/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SandDuneSplatRoute = SandDuneSplatRouteImport.update({
-  id: '/sand-dune/$',
-  path: '/sand-dune/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPreviewRoute = ApiPreviewRouteImport.update({
   id: '/api/preview',
   path: '/api/preview',
@@ -73,8 +61,6 @@ export interface FileRoutesByFullPath {
   '/testimonials': typeof TestimonialsRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
-  '/sand-dune/$': typeof SandDuneSplatRoute
-  '/sand-dune/': typeof SandDuneIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,8 +70,6 @@ export interface FileRoutesByTo {
   '/testimonials': typeof TestimonialsRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
-  '/sand-dune/$': typeof SandDuneSplatRoute
-  '/sand-dune': typeof SandDuneIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,8 +80,6 @@ export interface FileRoutesById {
   '/testimonials': typeof TestimonialsRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
-  '/sand-dune/$': typeof SandDuneSplatRoute
-  '/sand-dune/': typeof SandDuneIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,8 +91,6 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/api/draft-token'
     | '/api/preview'
-    | '/sand-dune/$'
-    | '/sand-dune/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -120,8 +100,6 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/api/draft-token'
     | '/api/preview'
-    | '/sand-dune/$'
-    | '/sand-dune'
   id:
     | '__root__'
     | '/'
@@ -131,8 +109,6 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/api/draft-token'
     | '/api/preview'
-    | '/sand-dune/$'
-    | '/sand-dune/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -143,8 +119,6 @@ export interface RootRouteChildren {
   TestimonialsRoute: typeof TestimonialsRoute
   ApiDraftTokenRoute: typeof ApiDraftTokenRoute
   ApiPreviewRoute: typeof ApiPreviewRoute
-  SandDuneSplatRoute: typeof SandDuneSplatRoute
-  SandDuneIndexRoute: typeof SandDuneIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -184,20 +158,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sand-dune/': {
-      id: '/sand-dune/'
-      path: '/sand-dune'
-      fullPath: '/sand-dune/'
-      preLoaderRoute: typeof SandDuneIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sand-dune/$': {
-      id: '/sand-dune/$'
-      path: '/sand-dune/$'
-      fullPath: '/sand-dune/$'
-      preLoaderRoute: typeof SandDuneSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/preview': {
       id: '/api/preview'
       path: '/api/preview'
@@ -223,8 +183,6 @@ const rootRouteChildren: RootRouteChildren = {
   TestimonialsRoute: TestimonialsRoute,
   ApiDraftTokenRoute: ApiDraftTokenRoute,
   ApiPreviewRoute: ApiPreviewRoute,
-  SandDuneSplatRoute: SandDuneSplatRoute,
-  SandDuneIndexRoute: SandDuneIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
