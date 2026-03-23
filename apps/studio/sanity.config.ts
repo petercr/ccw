@@ -14,6 +14,7 @@ const slugAwareTypes = ['category', 'post'];
 export default defineConfig({
 	name: 'default',
 	title: 'Santan Studio',
+	basePath: '/sand-dune',
 
 	projectId: projectDetails().projectId,
 	dataset: projectDetails().dataset,
