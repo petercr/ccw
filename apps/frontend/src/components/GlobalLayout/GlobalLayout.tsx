@@ -20,6 +20,7 @@ import {
   HeadContent,
   Outlet,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { useStore } from "@tanstack/react-store";
@@ -35,6 +36,8 @@ export const GlobalLayout = () => {
   );
   const [isEmbeddedStudio, setIsEmbeddedStudio] = useState(false);
   const cspNonce = getCspNonce();
+  const location = useLocation();
+  const isStudioRoute = location.pathname.startsWith("/sand-dune");
 
   useEffect(() => {
     // Script for setting the Sanity Studio URL
@@ -200,37 +203,44 @@ export const GlobalLayout = () => {
         <FavIcons />
       </head>
       <body>
-        <div className={globalBackground} aria-hidden="true" />
-        <a
-          href="#app-root"
-          aria-label="Skip to main content"
-          style={{
-            position: "absolute",
-            left: "-999px",
-            top: "-999px",
-            background: "#000",
-            color: "#fff",
-            padding: "8px 12px",
-            borderRadius: 4,
-            transform: "translateY(-8px)",
-          }}
-          onFocus={(e) => {
-            e.currentTarget.style.left = "12px";
-            e.currentTarget.style.top = "12px";
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.left = "-999px";
-            e.currentTarget.style.top = "-999px";
-          }}
-        >
-          Skip to content
-        </a>
-        <ErrorBoundary>
-          <Header />
-          <main id="app-root">
+        {isStudioRoute ? (
+          <div style={{ position: "fixed", inset: 0 }}>
             <Outlet />
-          </main>
-          <Footer />
+            <Scripts />
+          </div>
+        ) : (
+          <>
+            <div className={globalBackground} aria-hidden="true" />
+            <a
+              href="#app-root"
+              aria-label="Skip to main content"
+              style={{
+                position: "absolute",
+                left: "-999px",
+                top: "-999px",
+                background: "#000",
+                color: "#fff",
+                padding: "8px 12px",
+                borderRadius: 4,
+                transform: "translateY(-8px)",
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.left = "12px";
+                e.currentTarget.style.top = "12px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.left = "-999px";
+                e.currentTarget.style.top = "-999px";
+              }}
+            >
+              Skip to content
+            </a>
+            <ErrorBoundary>
+              <Header />
+              <main id="app-root">
+                <Outlet />
+              </main>
+              <Footer />
           <TanStackDevtools
             config={{ position: "bottom-right" }}
             plugins={[
@@ -329,6 +339,8 @@ export const GlobalLayout = () => {
             <ExitPreviewButton />
           </ClientOnly>
         </ErrorBoundary>
+          </>
+        )}
       </body>
     </html>
   );
