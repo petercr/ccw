@@ -1,7 +1,5 @@
-import {
-  withPreviewData,
-  withPublishedData,
-} from "@/components/withDocument.tsx";
+import type { PreviewableComponent } from "@/components/PreviewWrapper.tsx";
+import { withPublishedData } from "@/components/withDocument.tsx";
 import { CategoryPage } from "@/pages/Category/Category.tsx";
 import { NotFoundPage } from "@/pages/NotFound/NotFound.tsx";
 import { PostPage } from "@/pages/Post/Post.tsx";
@@ -11,8 +9,10 @@ import { previewStore } from "@/stores/previewStore.ts";
 import type { PageProps } from "@/types/PageProps.ts";
 import type { DocumentType } from "@/types/documentType.ts";
 import { sanityTypeLiterals } from "@santan/shared/types";
-// Imports types, route, HOCs, constants, and page components
 import { useStore } from "@tanstack/react-store";
+import { Suspense, lazy } from "react";
+
+const PreviewWrapper = lazy(() => import("@/components/PreviewWrapper.tsx"));
 
 // Renders the correct page based on the document type
 export const Document = ({
@@ -42,8 +42,6 @@ export const Document = ({
   }
 };
 
-// Wraps Document with preview and published data HOCs
-const DocumentPreview = withPreviewData<DocumentType>(Document);
 const DocumentPublished = withPublishedData<DocumentType>(Document);
 
 // Top-level page component, chooses preview or published mode
@@ -68,11 +66,14 @@ export function DocumentPage() {
 
   // Renders preview or published document based on isPreview flag
   return isPreview ? (
-    <DocumentPreview
-      query={query}
-      params={params}
-      initial={initial.data ? initial : undefined}
-    />
+    <Suspense fallback={null}>
+      <PreviewWrapper
+        query={query}
+        params={params}
+        initial={initial.data ? initial : undefined}
+        component={Document as PreviewableComponent}
+      />
+    </Suspense>
   ) : (
     <DocumentPublished
       tanstackQuery={documentQuery(params.fullSlug, options)}
