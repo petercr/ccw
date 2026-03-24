@@ -43,7 +43,7 @@ export const headerTitle = style({
 	margin: 0,
 	textAlign: 'center',
 	color: '#000000',
-	fontFamily: 'Roboto Slab, serif',
+	fontFamily: 'Fraunces, serif',
 	fontWeight: 400,
 	fontSize: 41,
 	lineHeight: 1.2,
@@ -90,7 +90,7 @@ export const ingress = style({
 	color: '#000000',
 	marginBottom: '0.5rem',
 	marginTop: '0.5rem',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	wordBreak: 'break-word',
 	overflowWrap: 'break-word',
 	selectors: {
@@ -114,7 +114,7 @@ export const keywordsTitle = style({
 	color: '#000000',
 	marginBottom: '0.75rem',
 	marginTop: 0,
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	selectors: {
 		'[data-theme="dark"] &': {
 			color: '#ffffff',
@@ -139,7 +139,7 @@ export const keywordItem = style({
 	color: '#000000',
 	fontSize: '0.85rem',
 	fontWeight: 400,
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
 	cursor: 'default',
 	selectors: {

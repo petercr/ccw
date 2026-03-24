@@ -26,6 +26,7 @@ const TESTIMONIALS_QUERY_INTERNAL = groq`*[_type == "testimonial"] | order(_crea
   _id,
   _type,
   name,
+  organization,
   mainImage,
   body,
   _createdAt

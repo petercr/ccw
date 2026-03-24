@@ -117,7 +117,7 @@ export const buttonLink = style({
 	textDecoration: 'none',
 	fontWeight: 400,
 	fontSize: '1rem',
-	fontFamily: 'Roboto Mono, monospace',
+	fontFamily: 'DM Sans, sans-serif',
 	border: '1px solid #000000',
 	borderRadius: '20px',
 	boxShadow: '-3px 4px 3px rgba(0, 0, 0, 0.53)',

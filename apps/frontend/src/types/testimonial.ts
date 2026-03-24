@@ -5,6 +5,7 @@ export const testimonialZ = z.object({
 	_id: z.string(),
 	_type: z.literal('testimonial'),
 	name: z.string(),
+	organization: z.string().nullable(),
 	mainImage: sanityImageZ.nullable(),
 	body: z.string(),
 	_createdAt: z.string(),
