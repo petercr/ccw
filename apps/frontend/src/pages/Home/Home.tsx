@@ -1,21 +1,20 @@
-import {
-  withPreviewData,
-  withPublishedData,
-} from "@/components/withDocument.tsx";
-// Internal utilities
+import type { PreviewableComponent } from "@/components/PreviewWrapper.tsx";
+import { withPublishedData } from "@/components/withDocument.tsx";
 import { Route } from "@/routes/index.tsx";
 import { homeQuery } from "@/sanity/queries/homeQuery.ts";
 import { previewStore } from "@/stores/previewStore.ts";
 import type { PageProps } from "@/types/PageProps.ts";
 import type { HomeDocument } from "@/types/home.ts";
 import { useStore } from "@tanstack/react-store";
+import { Suspense, lazy } from "react";
 // Styles
 import { divider, homeContainer, socialLinksRow } from "./Home.css.ts";
 
 import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
 import { ContentCardsSection } from "./sections/ContentCardsSection.tsx";
-// Types
 import { HeroSection } from "./sections/HeroSection.tsx";
+
+const PreviewWrapper = lazy(() => import("@/components/PreviewWrapper.tsx"));
 
 type HomePagePayload = {
   homeData: HomeDocument;
@@ -46,7 +45,6 @@ const Home = ({ data }: PageProps<HomePagePayload>) => {
   );
 };
 
-const HomePreview = withPreviewData(Home);
 const HomePublished = withPublishedData(Home);
 
 export function HomePage() {
@@ -70,10 +68,15 @@ export function HomePage() {
   // Use the store value (client-side reactive) with loader as fallback (SSR)
   const isPreview = isPreviewFromStore || isPreviewFromLoader;
 
-  // Note: We pass loader's isPreview to determine which wrapper to use,
-  // but the Home component itself reads from the store for reactive updates
   return isPreview ? (
-    <HomePreview initial={initial} query={query} params={params} />
+    <Suspense fallback={null}>
+      <PreviewWrapper
+        query={query}
+        params={params}
+        initial={initial}
+        component={Home as PreviewableComponent}
+      />
+    </Suspense>
   ) : (
     <HomePublished initial={initial?.data} tanstackQuery={homeQuery(options)} />
   );

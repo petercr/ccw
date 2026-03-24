@@ -1,13 +1,5 @@
-import { useQuery } from "@/sanity/sanity.loader.ts";
-import type { ContentSourceMap } from "@sanity/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-
-interface PreviewProps<T> {
-  query: string;
-  params: Record<string, string | null>;
-  initial: { data: T; sourceMap: ContentSourceMap | undefined } | undefined;
-}
 
 interface PublicProps<T> {
   tanstackQuery: any; // Use any here to avoid complex type inference issues with queryOptions
@@ -30,27 +22,4 @@ const withPublishedData = <T,>(
   };
 };
 
-const withPreviewData = <T,>(
-  PageComponent: (props: PageComponentProps<T>) => ReactNode,
-) => {
-  return ({ query, params, initial }: PreviewProps<T>) => {
-    const { data, encodeDataAttribute } = useQuery<T>(
-      query,
-      params,
-      initial
-        ? {
-            initial: {
-              data: initial.data,
-              sourceMap: initial.sourceMap,
-            },
-          }
-        : undefined,
-    );
-
-    return (
-      <PageComponent data={data} encodeDataAttribute={encodeDataAttribute} />
-    );
-  };
-};
-
-export { withPreviewData, withPublishedData };
+export { withPublishedData };
