@@ -1,0 +1,9 @@
+okay let's git stash the header changes, then switch to main and pull
+
+---
+
+yes
+
+---
+
+switch branches to docs, and then push all the claude and entire files up to that branch
