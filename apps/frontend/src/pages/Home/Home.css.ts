@@ -86,6 +86,16 @@ export const heroSubtitle = style({
 	},
 });
 
+export const heroSubtitleEmojis = style({
+	fontStyle: 'normal',
+	'@media': {
+		'screen and (max-width: 768px)': {
+			display: 'block',
+			marginTop: '0.25rem',
+		},
+	},
+});
+
 export const heroDescription = style({
 	fontSize: '1.3125rem',
 	lineHeight: 1.9,
