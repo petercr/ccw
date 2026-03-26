@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "55e1ea4ddf7d",
+  "session_id": "ba40f717-f702-4a9e-9f76-b57a4768e4c0",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-26T14:57:11.027169692Z",
+  "branch": "feat/desktop-card-max-widths",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/frontend/src/pages/Home/Home.css.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "740f86189b53",
+  "checkpoint_transcript_start": 39,
+  "transcript_lines_at_start": 39,
+  "token_usage": {
+    "input_tokens": 69,
+    "cache_creation_tokens": 257799,
+    "cache_read_tokens": 3348895,
+    "output_tokens": 9147,
+    "api_call_count": 48
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-26T14:57:10.765036934Z",
+    "agent_lines": 14,
+    "human_added": 311,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 325,
+    "agent_percentage": 4.3076923076923075
+  }
+}
