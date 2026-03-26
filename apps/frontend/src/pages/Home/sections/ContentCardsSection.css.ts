@@ -24,13 +24,13 @@ export const contentCardsSection = style({
 export const cardRow = style({
 	display: 'grid',
 	gridTemplateColumns: 'repeat(1, 1fr)',
-	gap: '2.5rem',
+	gap: '4rem',
 });
 
 export const cardPair = style({
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '1.5rem',
+	gap: '2.5rem',
 });
 
 export const headingCard = style({
@@ -44,6 +44,10 @@ export const headingCard = style({
 	border: `2px solid ${vars.color.borderSoft}`,
 	borderRadius: '1.25rem',
 	boxShadow: vars.shadow.subtle,
+	maxWidth: '33rem',
+	marginLeft: 'auto',
+	marginRight: 'auto',
+	width: '100%',
 	selectors: {
 		'[data-theme="dark"] &': {
 			border: '2px solid rgba(210 201 201 / 0.63)',
@@ -69,6 +73,10 @@ export const contentCard = style({
 	gap: '1.5rem',
 	boxShadow: vars.shadow.subtle,
 	transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+	maxWidth: '44rem',
+	marginLeft: 'auto',
+	marginRight: 'auto',
+	width: '100%',
 	':hover': {
 		transform: 'translateY(-4px)',
 		boxShadow: vars.shadow.float,
