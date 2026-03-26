@@ -38,39 +38,30 @@ export default function Header() {
   // Deterministic initial theme to avoid SSR/client mismatch. Real preference applied after mount.
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  // On mount, determine preferred theme from existing data-theme attr or storage / media
-  useEffect(() => {
-    setMounted(true);
-    try {
-      let preferred: "light" | "dark" =
-        document.documentElement.getAttribute("data-theme") === "dark"
-          ? "dark"
-          : "light";
-      if (preferred === "light") {
-        const stored = localStorage.getItem("theme");
-        if (stored === "dark" || stored === "light") preferred = stored;
-        else if (window.matchMedia("(prefers-color-scheme: dark)").matches)
-          preferred = "dark";
-      }
-      if (preferred !== theme) setTheme(preferred);
-    } catch {}
-  }, []);
-
-  // Prevent background scroll when mobile menu open
-  useEffect(() => {
-    if (!mounted) return;
-    if (open) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = prev;
-      };
-    }
-  }, [open, mounted]);
-
-  // Apply theme to <html> when theme changes
+  // On mount, resolve preferred theme; on every theme change, apply to <html> and persist
   useEffect(() => {
     if (typeof document === "undefined") return;
+
+    if (!mounted) {
+      setMounted(true);
+      try {
+        let preferred: "light" | "dark" =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "dark"
+            : "light";
+        if (preferred === "light") {
+          const stored = localStorage.getItem("theme");
+          if (stored === "dark" || stored === "light") preferred = stored;
+          else if (window.matchMedia("(prefers-color-scheme: dark)").matches)
+            preferred = "dark";
+        }
+        if (preferred !== theme) {
+          setTheme(preferred);
+          return; // re-runs with the correct theme
+        }
+      } catch {}
+    }
+
     const root = document.documentElement;
     if (theme === "dark") {
       root.setAttribute("data-theme", "dark");
@@ -84,7 +75,17 @@ export default function Header() {
     try {
       localStorage.setItem("theme", theme);
     } catch {}
-  }, [theme]);
+  }, [theme, mounted]);
+
+  // Prevent background scroll when mobile menu open
+  useEffect(() => {
+    if (!mounted || !open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open, mounted]);
 
   const toggleTheme = useCallback(() => {
     setTheme((t) => (t === "light" ? "dark" : "light"));
@@ -111,6 +112,7 @@ export default function Header() {
         </nav>
         <div className={spacer} />
         <button
+          type="button"
           className={themeToggle}
           aria-label="Toggle color theme"
           onClick={toggleTheme}
@@ -121,6 +123,7 @@ export default function Header() {
           </span>
         </button>
         <button
+          type="button"
           className={mobileMenuButton}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -150,6 +153,7 @@ export default function Header() {
             SanTan
           </Link>
           <button
+            type="button"
             className={closeButton}
             aria-label="Close menu"
             onClick={() => setOpen(false)}
