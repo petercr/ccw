@@ -1,0 +1,17 @@
+today we're going to work on adjusting the max height on our header cards and our content cards on desktop views. use the penpot mcp server to view the Desktop page. you can view the frame Intro to see the max widths of the header and cards. then we will apply those max width styles to the landing page first.
+
+---
+
+ok try again penpot mcp is working
+
+---
+
+ok great now on the landing route page we need to add more top & bottom margin to the headers and cards. they're too close together now
+
+---
+
+it looks good for now. on the "/contact" route let's go ahead and change the max width to 50% on desktop, and 40% on 4k views
+
+---
+
+we need to adjust the headerPill size to be less than the formCard size. like we did with the rest of the headers

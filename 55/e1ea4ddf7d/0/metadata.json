@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "55e1ea4ddf7d",
+  "session_id": "4907b76a-ee81-4034-b60f-91bccc84a4a6",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-26T14:57:10.561575667Z",
+  "branch": "feat/desktop-card-max-widths",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/src/pages/Contact/Contact.css.ts",
+    "apps/frontend/src/pages/Home/Home.css.ts",
+    "apps/frontend/src/pages/Home/sections/ContentCardsSection.css.ts"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "7a9644baed4e",
+  "token_usage": {
+    "input_tokens": 140,
+    "cache_creation_tokens": 75346,
+    "cache_read_tokens": 1881118,
+    "output_tokens": 12351,
+    "api_call_count": 37
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-26T14:57:10.327576967Z",
+    "agent_lines": 26,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 26,
+    "agent_percentage": 100
+  }
+}
