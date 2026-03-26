@@ -36,6 +36,10 @@ export const heroContent = style({
 	borderRadius: '1.25rem',
 	padding: '2.5rem 2rem',
 	boxShadow: vars.shadow.subtle,
+	maxWidth: '46rem',
+	marginLeft: 'auto',
+	marginRight: 'auto',
+	width: '100%',
 	selectors: {
 		'[data-theme="dark"] &': {
 			background: vars.color.surfaceElevated,

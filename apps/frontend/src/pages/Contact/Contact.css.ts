@@ -12,8 +12,13 @@ export const container = style({
 });
 
 export const headerPill = style({
-	width: 300,
+	width: '100%',
+	maxWidth: '90%',
 	borderRadius: 12,
+	'@media': {
+		'screen and (min-width: 769px)': { maxWidth: '37%' },
+		'screen and (min-width: 2560px)': { maxWidth: '30%' },
+	},
 	background: '#ffffff',
 	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
 	paddingTop: 16,
@@ -48,8 +53,13 @@ export const headerTitle = style({
 });
 
 export const formCard = style({
-	width: 323,
+	width: '100%',
+	maxWidth: '90%',
 	borderRadius: 20,
+	'@media': {
+		'screen and (min-width: 769px)': { maxWidth: '50%' },
+		'screen and (min-width: 2560px)': { maxWidth: '40%' },
+	},
 	background: 'rgba(255, 255, 255, 0.92)',
 	border: '2px solid #000000',
 	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
