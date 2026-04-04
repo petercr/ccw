@@ -23,3 +23,7 @@ ok code works but doesn't seem to be applied in browser. check Yourself with Chr
 ---
 
 good 2 go now
+
+---
+
+ok good enough for now. make a new branch, and commit changes to it
