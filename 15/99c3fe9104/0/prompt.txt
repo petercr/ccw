@@ -31,3 +31,7 @@ ok good enough for now. make a new branch, and commit changes to it
 ---
 
 great let's make a pr from this branch to main
+
+---
+
+add seo.ts & meta.ts to this pr
