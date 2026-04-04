@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.5.2",
+  "checkpoint_id": "5491ad1df48b",
+  "strategy": "manual-commit",
+  "branch": "feat/favicon-dark-mode",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "apps/frontend/public/apple-touch-icon.png",
+    "apps/frontend/public/favicon-96x96.png",
+    "apps/frontend/public/favicon.ico",
+    "apps/frontend/public/favicon.svg",
+    "apps/frontend/public/site.webmanifest",
+    "apps/frontend/public/web-app-manifest-192x192.png",
+    "apps/frontend/public/web-app-manifest-512x512.png",
+    "apps/frontend/src/components/GlobalLayout/FavIcons.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/54/91ad1df48b/0/metadata.json",
+      "transcript": "/54/91ad1df48b/0/full.jsonl",
+      "content_hash": "/54/91ad1df48b/0/content_hash.txt",
+      "prompt": "/54/91ad1df48b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 70,
+    "cache_creation_tokens": 116417,
+    "cache_read_tokens": 2053655,
+    "output_tokens": 24970,
+    "api_call_count": 42
+  }
+}

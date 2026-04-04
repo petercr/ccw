@@ -1,0 +1,25 @@
+today we are working on why we keep seeing the old favicon despite changing it out for the new svg one
+
+---
+
+opened incog window, still doesn't reload favicon
+
+---
+
+ok here is what is in the head: <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" data-tsd-source="/src/components/GlobalLayout/FavIcons.tsx:3:5">
+
+---
+
+i forgot to upload new icons. i have added them, they work. now can we get the favicon to swap out for a different one in dark mode
+
+---
+
+"apps/frontend/public/favicon-dark.png"
+
+---
+
+ok code works but doesn't seem to be applied in browser. check Yourself with Chrome MCP
+
+---
+
+good 2 go now

@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.5.2",
+  "checkpoint_id": "5491ad1df48b",
+  "session_id": "bd404006-541d-465d-a7f4-7f8f6d16ffd0",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-04T19:11:13.39900761Z",
+  "branch": "feat/favicon-dark-mode",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "apps/frontend/public/apple-touch-icon.png",
+    "apps/frontend/public/favicon-96x96.png",
+    "apps/frontend/public/favicon.ico",
+    "apps/frontend/public/favicon.svg",
+    "apps/frontend/public/site.webmanifest",
+    "apps/frontend/public/web-app-manifest-192x192.png",
+    "apps/frontend/public/web-app-manifest-512x512.png",
+    "apps/frontend/src/components/GlobalLayout/FavIcons.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6",
+  "turn_id": "640ba68e78bb",
+  "token_usage": {
+    "input_tokens": 70,
+    "cache_creation_tokens": 116417,
+    "cache_read_tokens": 2053655,
+    "output_tokens": 24970,
+    "api_call_count": 42
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-04T19:11:13.208351949Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 30,
+    "human_removed": 35,
+    "total_committed": 34,
+    "agent_percentage": 0
+  }
+}
