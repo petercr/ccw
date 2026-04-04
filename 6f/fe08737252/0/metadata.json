@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.5.2",
+  "checkpoint_id": "6ffe08737252",
+  "session_id": "3d1e096c-e8d9-4255-81b0-aa3baae6384e",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-04T20:03:42.242328058Z",
+  "branch": "feat/favicon-dark-mode",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/public/apple-touch-icon.png",
+    "apps/frontend/public/favicon-96x96-v2.png",
+    "apps/frontend/public/favicon-96x96.png",
+    "apps/frontend/public/favicon-dark-v2.png",
+    "apps/frontend/public/favicon-dark.png",
+    "apps/frontend/public/favicon-v2.ico",
+    "apps/frontend/public/favicon-v2.png",
+    "apps/frontend/public/favicon-v2.svg",
+    "apps/frontend/public/favicon.ico",
+    "apps/frontend/public/favicon.png",
+    "apps/frontend/public/favicon.svg",
+    "apps/frontend/public/og-image-v2.png",
+    "apps/frontend/public/og-image.png",
+    "apps/frontend/public/site.webmanifest",
+    "apps/frontend/public/web-app-manifest-192x192-v2.png",
+    "apps/frontend/public/web-app-manifest-192x192.png",
+    "apps/frontend/public/web-app-manifest-512x512-v2.png",
+    "apps/frontend/public/web-app-manifest-512x512.png",
+    "apps/frontend/src/components/GlobalLayout/FavIcons.tsx",
+    "apps/frontend/src/lib/seo.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-haiku-4-5-20251001",
+  "turn_id": "4deab4b01271",
+  "token_usage": {
+    "input_tokens": 33,
+    "cache_creation_tokens": 14150,
+    "cache_read_tokens": 495416,
+    "output_tokens": 3281,
+    "api_call_count": 23
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-04T20:03:42.142878535Z",
+    "agent_lines": 20,
+    "human_added": 4,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 26,
+    "agent_percentage": 76.92307692307693
+  }
+}

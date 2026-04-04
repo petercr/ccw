@@ -1,0 +1,13 @@
+we need to take the favicon files in "/home/peterc/ccw/apps/frontend/public" and change their names slightly so that we can bust the online cache. force and update
+
+---
+
+also change the web-app-manifest files and refs in the webmanifest
+
+---
+
+also do og-image
+
+---
+
+ref in this file but i fixed it: /home/peterc/ccw/apps/frontend/src/lib/seo.ts

@@ -1,0 +1,44 @@
+{
+  "cli_version": "0.5.2",
+  "checkpoint_id": "6ffe08737252",
+  "strategy": "manual-commit",
+  "branch": "feat/favicon-dark-mode",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/public/apple-touch-icon.png",
+    "apps/frontend/public/favicon-96x96-v2.png",
+    "apps/frontend/public/favicon-96x96.png",
+    "apps/frontend/public/favicon-dark-v2.png",
+    "apps/frontend/public/favicon-dark.png",
+    "apps/frontend/public/favicon-v2.ico",
+    "apps/frontend/public/favicon-v2.png",
+    "apps/frontend/public/favicon-v2.svg",
+    "apps/frontend/public/favicon.ico",
+    "apps/frontend/public/favicon.png",
+    "apps/frontend/public/favicon.svg",
+    "apps/frontend/public/og-image-v2.png",
+    "apps/frontend/public/og-image.png",
+    "apps/frontend/public/site.webmanifest",
+    "apps/frontend/public/web-app-manifest-192x192-v2.png",
+    "apps/frontend/public/web-app-manifest-192x192.png",
+    "apps/frontend/public/web-app-manifest-512x512-v2.png",
+    "apps/frontend/public/web-app-manifest-512x512.png",
+    "apps/frontend/src/components/GlobalLayout/FavIcons.tsx",
+    "apps/frontend/src/lib/seo.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6f/fe08737252/0/metadata.json",
+      "transcript": "/6f/fe08737252/0/full.jsonl",
+      "content_hash": "/6f/fe08737252/0/content_hash.txt",
+      "prompt": "/6f/fe08737252/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 33,
+    "cache_creation_tokens": 14150,
+    "cache_read_tokens": 495416,
+    "output_tokens": 3281,
+    "api_call_count": 23
+  }
+}
