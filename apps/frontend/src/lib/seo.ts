@@ -1,4 +1,4 @@
-import AppLogo from "../../public/web-app-manifest-512x512.png?url";
+import AppLogo from "../../public/web-app-manifest-512x512-v2.png?url";
 
 const basePath = import.meta.env.VITE_BASE_PATH || process.env.VITE_BASE_PATH;
 
