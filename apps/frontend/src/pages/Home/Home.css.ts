@@ -4,6 +4,8 @@ import { style } from '@vanilla-extract/css';
 export const homeContainer = style({
 	minHeight: '100vh',
 	background: 'transparent',
+	position: 'relative',
+	zIndex: 1,
 });
 
 export const heroSection = style({

@@ -2,6 +2,8 @@ import { vars } from '@/styles/theme.css.ts';
 import { style } from '@vanilla-extract/css';
 
 export const footer = style({
+	position: 'relative',
+	zIndex: 1,
 	marginTop: '6rem',
 	borderTop: `1px solid ${vars.color.borderSoft}`,
 	background: vars.color.surfaceElevated,

@@ -20,6 +20,7 @@
 		"publish:preview-secret": "node scripts/publish-secret.js"
 	},
 	"dependencies": {
+		"@paper-design/shaders-react": "^0.0.72",
 		"@portabletext/react": "^6.0.2",
 		"@sanity/asset-utils": "^2.3.0",
 		"@sanity/client": "^7.15.0",
