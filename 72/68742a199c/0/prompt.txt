@@ -1,0 +1,410 @@
+today we're going to work on issue #27 in this repo. let's make a plan to do it
+
+---
+
+◇ ultraplan
+Starting Claude Code on the web…
+
+---
+
+The remote ultraplan session produced a plan and is waiting for approval. Tell the user to open https://claude.ai/code/REDACTED to review it.
+
+---
+
+Ultraplan approved in browser. Here is the plan:
+
+<ultraplan>
+# Plan: Add Water Shader to Landing Page
+
+## Context
+
+The site has a fixed background SVG at `z-index: -1` (in `GlobalLayout`) and page content in normal flow on top. The goal is to add a `@paper-design/shaders-react` Water shader that sits **between** the SVG backdrop and the page content — visible through the transparent `homeContainer` but not blocking interaction. It must lazy-load after initial paint to avoid hurting Lighthouse scores.
+
+## Layering
+
+```
+z-index: -1  │  globalBackground div (fixed SVG backdrop)     ← GlobalLayout.css.ts:32
+z-index:  0  │  Water shader (fixed, pointer-events: none)    ← NEW
+z-index:  1+ │  Page content (normal flow)                    ← existing
+```
+
+The `homeContainer` already has `background: transparent`, so the shader will show through without changes to content styles.
+
+## Steps
+
+### 1. Install the package
+
+```bash
+npm install @paper-design/shaders-react --workspace=@santan/frontend
+```
+
+### 2. Create `apps/frontend/src/components/WaterShader/WaterShader.css.ts`
+
+Vanilla Extract style for the shader container:
+- `position: fixed`, `top: 0`, `left: 0`, `width: 100vw`, `height: 100vh`
+- `zIndex: 0` — above the SVG backdrop (`-1`) but below normal-flow content
+- `pointerEvents: 'none'` — non-interactive overlay
+- Opacity transition: start at `0`, animate to `1` for a smooth fade-in after load
+
+### 3. Create `apps/frontend/src/components/WaterShader/WaterShader.tsx`
+
+Default-export a component that:
+- Renders `<Water>` from `@paper-design/shaders-react`
+- Passes `style={{ width: '100%', height: '100%' }}` to fill its container
+- Uses the shader container style from step 2
+- Uses a `useState` + `useEffect` to flip opacity from 0 to 1 after mount (fade-in)
+- Props from the issue sample: `speed`, `colorBack`, `colorHighlight`, `highlights`, `layering`, `edges`, `waves`, `caustic`, `size` — no `image` prop initially
+- Marks the container `aria-hidden="true"`
+
+### 4. Modify `apps/frontend/src/pages/Home/Home.tsx`
+
+In the `HomePage` component (not the inner `Home` — it needs to render regardless of preview mode):
+
+- Add `React.lazy(() => import("@/components/WaterShader/WaterShader.tsx"))` — follows the existing `PreviewWrapper` lazy pattern on line 17
+- Add a `useEffect` + `useState` gate: set `showShader = true` after mount (defers the import until after first paint)
+- Render inside `<Suspense fallback={null}>` **before** the existing return JSX, so it layers beneath content:
+
+```tsx
+{showShader && (
+  <Suspense fallback={null}>
+    <WaterShader />
+  </Suspense>
+)}
+```
+
+Place this just before the ternary that renders either `PreviewWrapper` or `HomePublished`.
+
+## Files
+
+| File | Action |
+|------|--------|
+| `apps/frontend/package.json` | Modified by `npm install` (new dependency) |
+| `apps/frontend/src/components/WaterShader/WaterShader.css.ts` | **New** |
+| `apps/frontend/src/components/WaterShader/WaterShader.tsx` | **New** |
+| `apps/frontend/src/pages/Home/Home.tsx` | Modified — lazy import + deferred render |
+
+## Verification
+
+1. `npm run build` — builds without errors
+2. `npm run type-check` — passes
+3. `npm test` (root — runs `playwright test` against `e2e/`) — existing homepage and navigation tests pass
+4. `npm run dev` — visit `localhost:3000`:
+   - Shader renders as an animated water layer behind all content
+   - Content remains fully clickable (pointer-events: none works)
+   - Shader does NOT appear on other routes (it's only in `HomePage`)
+   - Shader fades in after initial paint (no flash)
+5. Navigate away and back — shader re-mounts correctly
+</ultraplan>
+
+The user approved this plan in the remote session. Give them a brief summary, then start implementing.
+
+---
+
+good news the shader runs, but a couple of things:
+1. the shader is on top of all of the content
+2. we are getting this console error on chrome: :3000/:1 Loading the font 'https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2' violates the following Content Security Policy directive: "font-src 'self' data: https://fonts.gstatic.com". The action has been blocked.
+BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1440 Uncaught (in promise) TypeError: routerState.cachedMatches is not iterable
+    at Object.fn (BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1440:20)
+    at runComputation (context-D56_tqst.js?v=21c80064:402:20)
+    at updateComputation (context-D56_tqst.js?v=21c80064:387:2)
+    at createMemo (context-D56_tqst.js?v=21c80064:109:9)
+    at BaseTanStackRouterDevtoolsPanel (BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1436:22)
+    at context-D56_tqst.js?v=21c80064:965:42
+    at untrack (context-D56_tqst.js?v=21c80064:246:10)
+    at Object.fn (context-D56_tqst.js?v=21c80064:964:45)
+    at runComputation (context-D56_tqst.js?v=21c80064:402:20)
+    at updateComputation (context-D56_tqst.js?v=21c80064:387:2)
+(anonymous) @ BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1440
+runComputation @ context-D56_tqst.js?v=21c80064:402
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+createMemo @ context-D56_tqst.js?v=21c80064:109
+BaseTanStackRouterDevtoolsPanel @ BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1436
+(anonymous) @ context-D56_tqst.js?v=21c80064:965
+untrack @ context-D56_tqst.js?v=21c80064:246
+(anonymous) @ context-D56_tqst.js?v=21c80064:964
+runComputation @ context-D56_tqst.js?v=21c80064:402
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+runTop @ context-D56_tqst.js?v=21c80064:480
+runQueue @ context-D56_tqst.js?v=21c80064:551
+completeUpdates @ context-D56_tqst.js?v=21c80064:509
+runUpdates @ context-D56_tqst.js?v=21c80064:498
+completeLoad @ context-D56_tqst.js?v=21c80064:153
+loadEnd @ context-D56_tqst.js?v=21c80064:148
+(anonymous) @ context-D56_tqst.js?v=21c80064:216
+Promise.then
+load @ context-D56_tqst.js?v=21c80064:216
+createResource @ context-D56_tqst.js?v=21c80064:234
+wrap @ context-D56_tqst.js?v=21c80064:960
+(anonymous) @ context-D56_tqst.js?v=21c80064:803
+untrack @ context-D56_tqst.js?v=21c80064:246
+createComponent @ context-D56_tqst.js?v=21c80064:803
+get children @ index.js?v=21c80064:125
+(anonymous) @ context-D56_tqst.js?v=21c80064:698
+runComputation @ context-D56_tqst.js?v=21c80064:402
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+createMemo @ context-D56_tqst.js?v=21c80064:109
+children @ context-D56_tqst.js?v=21c80064:313
+(anonymous) @ context-D56_tqst.js?v=21c80064:698
+untrack @ context-D56_tqst.js?v=21c80064:246
+(anonymous) @ context-D56_tqst.js?v=21c80064:693
+runComputation @ context-D56_tqst.js?v=21c80064:402
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+createRenderEffect @ context-D56_tqst.js?v=21c80064:91
+provider @ context-D56_tqst.js?v=21c80064:693
+(anonymous) @ context-D56_tqst.js?v=21c80064:803
+untrack @ context-D56_tqst.js?v=21c80064:246
+createComponent @ context-D56_tqst.js?v=21c80064:803
+get children @ index.js?v=21c80064:122
+(anonymous) @ context-D56_tqst.js?v=21c80064:698
+runComputation @ context-D56_tqst.js?v=21c80064:402
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+createMemo @ context-D56_tqst.js?v=21c80064:109
+children @ context-D56_tqst.js?v=21c80064:313
+(anonymous) @ context-D56_tqst.js?v=21c80064:698
+untrack @ context-D56_tqst.js?v=21c80064:246
+(anonymous) @ context-D56_tqst.js?v=21c80064:693
+runComputation @ context-D56_tqst.js?v=21c80064:402
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+createRenderEffect @ context-D56_tqst.js?v=21c80064:91
+provider @ context-D56_tqst.js?v=21c80064:693
+(anonymous) @ context-D56_tqst.js?v=21c80064:803
+untrack @ context-D56_tqst.js?v=21c80064:241
+createComponent @ context-D56_tqst.js?v=21c80064:803
+(anonymous) @ index.js?v=21c80064:119
+(anonymous) @ context-D56_tqst.js?v=21c80064:1362
+updateFn @ context-D56_tqst.js?v=21c80064:58
+runUpdates @ context-D56_tqst.js?v=21c80064:497
+createRoot @ context-D56_tqst.js?v=21c80064:62
+render @ context-D56_tqst.js?v=21c80064:1360
+mount @ index.js?v=21c80064:106
+(anonymous) @ TanStackRouterDevtoolsPanel.js?v=21c80064:36
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18567
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+commitHookEffectListMount @ chunk-NKD4OPHI.js?v=21c80064:9411
+commitHookPassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:9465
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11040
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11055
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11055
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11033
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11201
+recursivelyTraversePassiveMountEffects @ chunk-NKD4OPHI.js?v=21c80064:11010
+commitPassiveMountOnFiber @ chunk-NKD4OPHI.js?v=21c80064:11066
+flushPassiveEffects @ chunk-NKD4OPHI.js?v=21c80064:13150
+(anonymous) @ chunk-NKD4OPHI.js?v=21c80064:12776
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<TanStackRouterDevtoolsPanel>
+exports.jsxDEV @ react_jsx-dev-runtime.js?v=21c80064:247
+GlobalLayout @ GlobalLayout.tsx:335
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopSync @ chunk-NKD4OPHI.js?v=21c80064:12424
+renderRootSync @ chunk-NKD4OPHI.js?v=21c80064:12408
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performSyncWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:13517
+flushSyncWorkAcrossRoots_impl @ chunk-NKD4OPHI.js?v=21c80064:13414
+flushPassiveEffects @ chunk-NKD4OPHI.js?v=21c80064:13187
+(anonymous) @ chunk-NKD4OPHI.js?v=21c80064:12776
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<GlobalLayout>
+exports.jsxs @ chunk-AYJTSRG2.js?v=21c80064:258
+MatchView @ Match.js?v=21c80064:75
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<MatchView>
+exports.jsx @ chunk-AYJTSRG2.js?v=21c80064:247
+MatchImpl @ Match.js?v=21c80064:43
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+updateSimpleMemoComponent @ chunk-NKD4OPHI.js?v=21c80064:7264
+updateMemoComponent @ chunk-NKD4OPHI.js?v=21c80064:7218
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8786
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<MatchImpl>
+exports.jsx @ chunk-AYJTSRG2.js?v=21c80064:247
+MatchesInner @ Matches.js?v=21c80064:27
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<MatchesInner>
+exports.jsx @ chunk-AYJTSRG2.js?v=21c80064:247
+Matches @ Matches.js?v=21c80064:18
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<Matches>
+exports.jsx @ chunk-AYJTSRG2.js?v=21c80064:247
+RouterProvider @ RouterProvider.js?v=21c80064:39
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<RouterProvider>
+exports.jsx @ chunk-AYJTSRG2.js?v=21c80064:247
+children @ StartClient.js?t=1775868826006&v=21c80064:10
+AwaitInner @ awaited.js?v=21c80064:28
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<AwaitInner>
+exports.jsx @ chunk-AYJTSRG2.js?v=21c80064:247
+Await @ awaited.js?v=21c80064:19
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<Await>
+exports.jsx @ chunk-AYJTSRG2.js?v=21c80064:247
+StartClient @ StartClient.js?t=1775868826006&v=21c80064:8
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18509
+renderWithHooksAgain @ chunk-NKD4OPHI.js?v=21c80064:5729
+renderWithHooks @ chunk-NKD4OPHI.js?v=21c80064:5665
+updateFunctionComponent @ chunk-NKD4OPHI.js?v=21c80064:7475
+beginWork @ chunk-NKD4OPHI.js?v=21c80064:8525
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+performUnitOfWork @ chunk-NKD4OPHI.js?v=21c80064:12561
+workLoopConcurrentByScheduler @ chunk-NKD4OPHI.js?v=21c80064:12557
+renderRootConcurrent @ chunk-NKD4OPHI.js?v=21c80064:12539
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11766
+performWorkOnRootViaSchedulerTask @ chunk-NKD4OPHI.js?v=21c80064:13505
+performWorkUntilDeadline @ chunk-NKD4OPHI.js?v=21c80064:36
+<StartClient>
+exports.jsxDEV @ react_jsx-dev-runtime.js?v=21c80064:247
+(anonymous) @ client.tsx:9
+exports.startTransition @ chunk-O22H3KVJ.js?v=21c80064:877
+(anonymous) @ client.tsx:5
+(index):1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+(index):1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+(index):1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+(index):1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+
+---
+
+yes it works now. good job. let's spin up chrome mcp and try to debug those console errors
+
+---
+
+lets see what would happen if we added the backgroud svgs to the image prop in the shader.
+
+---
+
+no it's too wild let's undo those last changes. fallback to when the shader had no image
