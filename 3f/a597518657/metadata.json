@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "3fa597518657",
+  "strategy": "manual-commit",
+  "branch": "feat/water-shader",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/src/components/WaterShader/WaterShader.tsx",
+    "package-lock.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3f/a597518657/0/metadata.json",
+      "transcript": "/3f/a597518657/0/full.jsonl",
+      "content_hash": "/3f/a597518657/0/content_hash.txt",
+      "prompt": "/3f/a597518657/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 98,
+    "cache_creation_tokens": 50329,
+    "cache_read_tokens": 5474883,
+    "output_tokens": 20208,
+    "api_call_count": 69
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "3fa597518657",
+  "session_id": "e4d2a949-d40f-45f6-8d98-4a6c8ee456c0",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-13T20:48:55.738735748Z",
+  "branch": "feat/water-shader",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/src/components/WaterShader/WaterShader.tsx",
+    "package-lock.json"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6",
+  "turn_id": "22dc53098fe2",
+  "checkpoint_transcript_start": 120,
+  "transcript_lines_at_start": 120,
+  "token_usage": {
+    "input_tokens": 98,
+    "cache_creation_tokens": 50329,
+    "cache_read_tokens": 5474883,
+    "output_tokens": 20208,
+    "api_call_count": 69
+  },
+  "session_metrics": {
+    "turn_count": 9
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-13T20:48:55.376023172Z",
+    "agent_lines": 0,
+    "agent_removed": 1,
+    "human_added": 0,
+    "human_modified": 5100,
+    "human_removed": 60,
+    "total_committed": 13,
+    "total_lines_changed": 5161,
+    "agent_percentage": 0.019376089905057157,
+    "metric_version": 2
+  }
+}

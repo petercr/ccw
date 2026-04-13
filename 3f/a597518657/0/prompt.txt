@@ -1,0 +1,512 @@
+ok we need to make sure that if the user has prefers-reduced-motion on that the shader DOES NOT load for them. it makes a lot of motion.
+
+---
+
+looks like we have an error with that flag on:
+(index):1 Loading the font 'https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2' violates the following Content Security Policy directive: "font-src 'self' data: https://fonts.gstatic.com". The action has been blocked.
+
+BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1440 Uncaught (in promise) TypeError: routerState.cachedMatches is not iterable
+
+    at Object.fn (BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1440:20)
+
+    at runComputation (context-D56_tqst.js?v=21c80064:402:20)
+
+    at updateComputation (context-D56_tqst.js?v=21c80064:387:2)
+
+    at createMemo (context-D56_tqst.js?v=21c80064:109:9)
+
+    at BaseTanStackRouterDevtoolsPanel (BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1436:22)
+
+    at context-D56_tqst.js?v=21c80064:965:42
+
+    at untrack (context-D56_tqst.js?v=21c80064:246:10)
+
+    at Object.fn (context-D56_tqst.js?v=21c80064:964:45)
+
+    at runComputation (context-D56_tqst.js?v=21c80064:402:20)
+
+    at updateComputation (context-D56_tqst.js?v=21c80064:387:2)
+
+(anonymous) @ BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1440
+
+runComputation @ context-D56_tqst.js?v=21c80064:402
+
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+
+createMemo @ context-D56_tqst.js?v=21c80064:109
+
+BaseTanStackRouterDevtoolsPanel @ BaseTanStackRouterDevtoolsPanel-B43j38ty.js?v=21c80064:1436
+
+(anonymous) @ context-D56_tqst.js?v=21c80064:965
+
+untrack @ context-D56_tqst.js?v=21c80064:246
+
+(anonymous) @ context-D56_tqst.js?v=21c80064:964
+
+runComputation @ context-D56_tqst.js?v=21c80064:402
+
+updateComputation @ context-D56_tqst.js?v=21c80064:387
+
+runTop @ context-D56_tqst.js?v=21c80064:480
+
+runQueue @ context-D56_tqst.js?v=21c80064:551
+
+completeUpdates @ context-D56_tqst.js?v=21c80064:509
+
+runUpdates @ context-D56_tqst.js?v=21c80064:498
+
+completeLoad @ context-D56_tqst.js?v=21c80064:153
+
+loadEnd @ context-D56_tqst.js?v=21c80064:148
+
+(anonymous) @ context-D56_tqst.js?v=21c80064:216
+
+installHook.js:1 Error: Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
+
+    at finishRenderingHooks (chunk-NKD4OPHI.js?v=21c80064:5697:17)
+
+    at renderWithHooks (chunk-NKD4OPHI.js?v=21c80064:5675:9)
+
+    at updateFunctionComponent (chunk-NKD4OPHI.js?v=21c80064:7475:21)
+
+    at beginWork (chunk-NKD4OPHI.js?v=21c80064:8525:20)
+
+    at runWithFiberInDEV (chunk-NKD4OPHI.js?v=21c80064:997:72)
+
+    at performUnitOfWork (chunk-NKD4OPHI.js?v=21c80064:12561:98)
+
+    at workLoopSync (chunk-NKD4OPHI.js?v=21c80064:12424:43)
+
+    at renderRootSync (chunk-NKD4OPHI.js?v=21c80064:12408:13)
+
+    at performWorkOnRoot (chunk-NKD4OPHI.js?v=21c80064:11827:37)
+
+    at performSyncWorkOnRoot (chunk-NKD4OPHI.js?v=21c80064:13517:9)
+
+
+
+The above error occurred in the <WaterShader> component.
+
+
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+
+
+overrideMethod @ installHook.js:1
+
+console.<computed> @ Header.tsx:72
+
+defaultOnCaughtError @ chunk-NKD4OPHI.js?v=21c80064:7001
+
+logCaughtError @ chunk-NKD4OPHI.js?v=21c80064:7033
+
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+
+inst.componentDidCatch.update.callback @ chunk-NKD4OPHI.js?v=21c80064:7078
+
+callCallback @ chunk-NKD4OPHI.js?v=21c80064:5491
+
+commitCallbacks @ chunk-NKD4OPHI.js?v=21c80064:5503
+
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+
+commitClassCallbacks @ chunk-NKD4OPHI.js?v=21c80064:9490
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9958
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10066
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10044
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10066
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10044
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9992
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9907
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9992
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9992
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9907
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9963
+
+flushLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:12924
+
+commitRoot @ chunk-NKD4OPHI.js?v=21c80064:12803
+
+commitRootWhenReady @ chunk-NKD4OPHI.js?v=21c80064:12016
+
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11950
+
+performSyncWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:13517
+
+flushSyncWorkAcrossRoots_impl @ chunk-NKD4OPHI.js?v=21c80064:13414
+
+processRootScheduleInMicrotask @ chunk-NKD4OPHI.js?v=21c80064:13437
+
+(anonymous) @ chunk-NKD4OPHI.js?v=21c80064:13531
+
+installHook.js:1 Warning: Error in route match: //
+
+overrideMethod @ installHook.js:1
+
+console.<computed> @ Header.tsx:72
+
+onCatch @ Match.js?v=21c80064:84
+
+componentDidCatch @ CatchBoundary.js?v=21c80064:35
+
+react_stack_bottom_frame @ chunk-NKD4OPHI.js?v=21c80064:18547
+
+inst.componentDidCatch.update.callback @ chunk-NKD4OPHI.js?v=21c80064:7086
+
+callCallback @ chunk-NKD4OPHI.js?v=21c80064:5491
+
+commitCallbacks @ chunk-NKD4OPHI.js?v=21c80064:5503
+
+runWithFiberInDEV @ chunk-NKD4OPHI.js?v=21c80064:997
+
+commitClassCallbacks @ chunk-NKD4OPHI.js?v=21c80064:9490
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9958
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10066
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10044
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10066
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10044
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9992
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9907
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9992
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9992
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9907
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9903
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:10074
+
+recursivelyTraverseLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:10792
+
+commitLayoutEffectOnFiber @ chunk-NKD4OPHI.js?v=21c80064:9963
+
+flushLayoutEffects @ chunk-NKD4OPHI.js?v=21c80064:12924
+
+commitRoot @ chunk-NKD4OPHI.js?v=21c80064:12803
+
+commitRootWhenReady @ chunk-NKD4OPHI.js?v=21c80064:12016
+
+performWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:11950
+
+performSyncWorkOnRoot @ chunk-NKD4OPHI.js?v=21c80064:13517
+
+flushSyncWorkAcrossRoots_impl @ chunk-NKD4OPHI.js?v=21c80064:13414
+
+processRootScheduleInMicrotask @ chunk-NKD4OPHI.js?v=21c80064:13437
+
+(anonymous) @ chunk-NKD4OPHI.js?v=21c80064:13531
+
+installHook.js:1 [Server] [Client] %o
+
+
+
+%s
+
+
+
+%s
+
+ Object The above error occurred in the <WaterShader> component. React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+overrideMethod @ installHook.js:1
+
+eventSource.onmessage @ Header.tsx:157
+
+installHook.js:1 [Server] [Client] Warning: Error in route match: //
+
+overrideMethod @ installHook.js:1
+
+eventSource.onmessage @ Header.tsx:157
+
+Header.tsx:157 [Server] [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+---
+
+great works well. look into the tanstack devtools error and see what that's about
+
+---
+
+yes do 1
+
+---
+
+ok enough of this. just put it back how you found it with the package.json. before we started trying to match the versions
