@@ -2,12 +2,25 @@ import { Water } from "@paper-design/shaders-react";
 import { useEffect, useState } from "react";
 import { shaderContainer, shaderVisible } from "./WaterShader.css.ts";
 
+const DARK_HIGHLIGHT = "#095677";
+const LIGHT_HIGHLIGHT = "#17A9E5";
+
 export default function WaterShader() {
   const [visible, setVisible] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(id);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const read = () => setIsDark(root.getAttribute("data-theme") === "dark");
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -16,15 +29,15 @@ export default function WaterShader() {
       aria-hidden="true"
     >
       <Water
-        speed={0.54}
+        speed={0.71}
         colorBack="#00000000"
-        colorHighlight="#ffffff"
-        size={0.74}
-        highlights={0.07}
+        colorHighlight={isDark ? DARK_HIGHLIGHT : LIGHT_HIGHLIGHT}
+        size={0.55}
+        highlights={0.19}
         layering={0.5}
         edges={0.8}
-        waves={0.5}
-        caustic={0.1}
+        waves={0.17}
+        caustic={0.26}
         scale={1.43}
         fit="contain"
         style={{ width: "100%", height: "100%" }}
