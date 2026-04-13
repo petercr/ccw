@@ -2,26 +2,41 @@ import { Water } from "@paper-design/shaders-react";
 import { useEffect, useState } from "react";
 import { shaderContainer, shaderVisible } from "./WaterShader.css.ts";
 
-const DARK_HIGHLIGHT = "#095677";
+const DARK_HIGHLIGHT = "#EFEFEF";
 const LIGHT_HIGHLIGHT = "#17A9E5";
 
 export default function WaterShader() {
   const [visible, setVisible] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const read = () => setReducedMotion(mql.matches);
+    read();
+    mql.addEventListener("change", read);
+    return () => mql.removeEventListener("change", read);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) return;
     const id = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(id);
-  }, []);
+  }, [reducedMotion]);
 
   useEffect(() => {
     const root = document.documentElement;
     const read = () => setIsDark(root.getAttribute("data-theme") === "dark");
     read();
     const observer = new MutationObserver(read);
-    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
     return () => observer.disconnect();
   }, []);
+
+  if (reducedMotion) return null;
 
   return (
     <div
