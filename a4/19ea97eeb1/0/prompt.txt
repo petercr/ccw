@@ -1,0 +1,13 @@
+great i have updated some of the props to WaterShader.tsx. what we need to do now is make so that we can swap out the colorHighlight based on light/dark themes. light mode will be "#17A9E5" and dark mode will be the curent value. let's go!
+
+---
+
+great let's update the agents.md file with how theming works in this project
+
+---
+
+ok 1 more thing. on mobile on an actual phone, the background image is set to 100vh. we need to set it to 100dvh to account for browser bar
+
+---
+
+umm that was the shader, not the main background image! we need to address that
