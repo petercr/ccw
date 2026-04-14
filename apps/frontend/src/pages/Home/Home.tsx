@@ -6,7 +6,7 @@ import { previewStore } from "@/stores/previewStore.ts";
 import type { PageProps } from "@/types/PageProps.ts";
 import type { HomeDocument } from "@/types/home.ts";
 import { useStore } from "@tanstack/react-store";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 // Styles
 import { divider, homeContainer, socialLinksRow } from "./Home.css.ts";
 
@@ -15,6 +15,7 @@ import { ContentCardsSection } from "./sections/ContentCardsSection.tsx";
 import { HeroSection } from "./sections/HeroSection.tsx";
 
 const PreviewWrapper = lazy(() => import("@/components/PreviewWrapper.tsx"));
+const WaterShader = lazy(() => import("@/components/WaterShader/WaterShader.tsx"));
 
 type HomePagePayload = {
   homeData: HomeDocument;
@@ -68,16 +69,38 @@ export function HomePage() {
   // Use the store value (client-side reactive) with loader as fallback (SSR)
   const isPreview = isPreviewFromStore || isPreviewFromLoader;
 
-  return isPreview ? (
-    <Suspense fallback={null}>
-      <PreviewWrapper
-        query={query}
-        params={params}
-        initial={initial}
-        component={Home as PreviewableComponent}
-      />
-    </Suspense>
-  ) : (
-    <HomePublished initial={initial?.data} tanstackQuery={homeQuery(options)} />
+  // Defer shader load until after first paint to protect Lighthouse scores.
+  // Also check for WebGL support before loading the shader bundle at all.
+  const [showShader, setShowShader] = useState(false);
+  useEffect(() => {
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+      if (gl) setShowShader(true);
+    } catch {
+      // No WebGL — skip shader entirely
+    }
+  }, []);
+
+  return (
+    <>
+      {showShader && (
+        <Suspense fallback={null}>
+          <WaterShader />
+        </Suspense>
+      )}
+      {isPreview ? (
+        <Suspense fallback={null}>
+          <PreviewWrapper
+            query={query}
+            params={params}
+            initial={initial}
+            component={Home as PreviewableComponent}
+          />
+        </Suspense>
+      ) : (
+        <HomePublished initial={initial?.data} tanstackQuery={homeQuery(options)} />
+      )}
+    </>
   );
 }
