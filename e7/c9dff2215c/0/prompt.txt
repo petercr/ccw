@@ -1,0 +1,1 @@
+we need to finish up this pr. the water shader looks to be using WebGL for it's processing. there is pretty good support for it, let's double check that's what the shader uses. and let's add a conditional to make sure if WebGL or WebGPU (whichever is used) is not available then we don't load the shader.
