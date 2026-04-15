@@ -1,5 +1,5 @@
-import { vars } from '@/styles/theme.css.ts';
 import { globalStyle, style } from '@vanilla-extract/css';
+import { vars } from '@/styles/theme.css.ts';
 
 globalStyle('html, body', { margin: 0 });
 
@@ -45,6 +45,11 @@ export const globalBackground = style({
 			backgroundPosition: 'top left',
 		},
 	},
+});
+
+export const contentLayer = style({
+	position: 'relative',
+	zIndex: 1,
 });
 
 globalStyle(`${globalBackground}::before`, {
