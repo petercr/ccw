@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "ed2487fe17d9",
+  "strategy": "manual-commit",
+  "branch": "feat/playwright-e2e-tests",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "e2e/category.spec.ts",
+    "e2e/contact.spec.ts",
+    "e2e/our-work.spec.ts",
+    "e2e/post.spec.ts",
+    "e2e/testimonials.spec.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ed/2487fe17d9/0/metadata.json",
+      "transcript": "/ed/2487fe17d9/0/full.jsonl",
+      "content_hash": "/ed/2487fe17d9/0/content_hash.txt",
+      "prompt": "/ed/2487fe17d9/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 97,
+    "cache_creation_tokens": 247867,
+    "cache_read_tokens": 3902578,
+    "output_tokens": 55628,
+    "api_call_count": 67
+  }
+}

@@ -1,0 +1,267 @@
+today we're going to work on issue #47 in this repo. adding more playwright tests.
+
+---
+
+on contact.spec.ts only the 1st 2 tests pass. the rest fail, even though they work on the site.
+
+---
+
+i think you're stuck running tests. when i run them in the cli heres what i get:
+  1) [chromium] › e2e/contact.spec.ts:19:7 › Contact page › shows inline validation errors when required fields are blank and form is submitted
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('First name is required')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText('First name is required')
+
+
+      19 |   test('shows inline validation errors when required fields are blank and form is submitted', async ({ page }) => {
+      20 |     await page.getByRole('button', { name: 'Submit' }).click();
+    > 21 |     await expect(page.getByText('First name is required')).toBeVisible();
+         |                                                            ^
+      22 |     await expect(page.getByText('Last name is required')).toBeVisible();
+      23 |     await expect(page.getByText('Reason for message is required')).toBeVisible();
+      24 |   });
+        at /home/peterc/ccw/e2e/contact.spec.ts:21:60
+
+    Error Context: test-results/contact-Contact-page-shows-c47fc-blank-and-form-is-submitted-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ───────────────────────────────────────────────────────
+    test-results/contact-Contact-page-shows-c47fc-blank-and-form-is-submitted-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/contact-Contact-page-shows-c47fc-blank-and-form-is-submitted-chromium/trace.zip
+
+    ──────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/contact.spec.ts:26:7 › Contact page › clears errors as fields are filled in
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('First name is required')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText('First name is required')
+
+
+      26 |   test('clears errors as fields are filled in', async ({ page }) => {
+      27 |     await page.getByRole('button', { name: 'Submit' }).click();
+    > 28 |     await expect(page.getByText('First name is required')).toBeVisible();
+         |                                                            ^
+      29 |
+      30 |     await page.getByLabel('First Name').fill('Jane');
+      31 |     await expect(page.getByText('First name is required')).not.toBeVisible();
+        at /home/peterc/ccw/e2e/contact.spec.ts:28:60
+
+    Error Context: test-results/contact-Contact-page-clears-errors-as-fields-are-filled-in-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ───────────────────────────────────────────────────────
+    test-results/contact-Contact-page-clears-errors-as-fields-are-filled-in-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/contact-Contact-page-clears-errors-as-fields-are-filled-in-chromium/trace.zip
+
+    ──────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/contact.spec.ts:34:7 › Contact page › disables the submit button while submitting
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: 'Sending...' })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Sending...' })
+
+
+      43 |     await page.getByRole('button', { name: 'Submit' }).click();
+      44 |
+    > 45 |     await expect(page.getByRole('button', { name: 'Sending...' })).toBeDisabled();
+         |                                                                    ^
+      46 |   });
+      47 |
+      48 |   test('shows success message after a successful submission', async ({ page }) => {
+        at /home/peterc/ccw/e2e/contact.spec.ts:45:68
+
+    Error Context: test-results/contact-Contact-page-disab-aee86-mit-button-while-submitting-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ───────────────────────────────────────────────────────
+    test-results/contact-Contact-page-disab-aee86-mit-button-while-submitting-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/contact-Contact-page-disab-aee86-mit-button-while-submitting-chromium/trace.zip
+
+    ──────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › e2e/contact.spec.ts:48:7 › Contact page › shows success message after a successful submission
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/Thanks! Your message has been sent/i)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText(/Thanks! Your message has been sent/i)
+
+
+      58 |     await expect(
+      59 |       page.getByText(/Thanks! Your message has been sent/i),
+    > 60 |     ).toBeVisible();
+         |       ^
+      61 |   });
+      62 |
+      63 |   test('shows error message when the submission fails', async ({ page }) => {
+        at /home/peterc/ccw/e2e/contact.spec.ts:60:7
+
+    Error Context: test-results/contact-Contact-page-shows-d90b2-ter-a-successful-submission-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ───────────────────────────────────────────────────────
+    test-results/contact-Contact-page-shows-d90b2-ter-a-successful-submission-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/contact-Contact-page-shows-d90b2-ter-a-successful-submission-chromium/trace.zip
+
+    ──────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › e2e/contact.spec.ts:63:7 › Contact page › shows error message when the submission fails
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/Something went wrong/i)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText(/Something went wrong/i)
+
+
+      71 |     await page.getByRole('button', { name: 'Submit' }).click();
+      72 |
+    > 73 |     await expect(page.getByText(/Something went wrong/i)).toBeVisible();
+         |                                                           ^
+      74 |   });
+      75 |
+      76 |   test('shows BackToHome and SocialLinks components', async ({ page }) => {
+        at /home/peterc/ccw/e2e/contact.spec.ts:73:59
+
+    Error Context: test-results/contact-Contact-page-shows-9ca7b-e-when-the-submission-fails-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ───────────────────────────────────────────────────────
+    test-results/contact-Contact-page-shows-9ca7b-e-when-the-submission-fails-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/contact-Contact-page-shows-9ca7b-e-when-the-submission-fails-chromium/trace.zip
+
+    ──────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › e2e/contact.spec.ts:76:7 › Contact page › shows BackToHome and SocialLinks components
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('link', { name: /LinkedIn/i })
+    Expected: visible
+    Error: strict mode violation: getByRole('link', { name: /LinkedIn/i }) resolved to 2 elements:
+        1) <a target="_blank" aria-label="LinkedIn" rel="noopener noreferrer" class="SocialLinks_link__bzwua13" href="https://www.linkedin.com/in/peter-cruckshank-25022a141/" data-tsd-source="/src/components/SocialLinks/SocialLinks.tsx:29:5">…</a> aka getByLabel('LinkedIn')
+        2) <a target="_blank" rel="noopener noreferrer" class="Footer_footerLink__1tjqzbx7" data-tsd-source="/src/components/Footer/Footer.tsx:35:6" href="https://www.linkedin.com/in/peter-cruckshank-25022a141/">LinkedIn</a> aka getByText('LinkedIn')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByRole('link', { name: /LinkedIn/i })
+
+
+      76 |   test('shows BackToHome and SocialLinks components', async ({ page }) => {
+      77 |     await expect(page.getByRole('link', { name: /Let's Go/i })).toBeVisible();
+    > 78 |     await expect(page.getByRole('link', { name: /LinkedIn/i })).toBeVisible();
+         |                                                                 ^
+      79 |   });
+      80 | });
+      81 |
+        at /home/peterc/ccw/e2e/contact.spec.ts:78:65
+
+    Error Context: test-results/contact-Contact-page-shows-abf8b--and-SocialLinks-components-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ───────────────────────────────────────────────────────
+    test-results/contact-Contact-page-shows-abf8b--and-SocialLinks-components-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/contact-Contact-page-shows-abf8b--and-SocialLinks-components-chromium/trace.zip
+
+    ──────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › e2e/contact.spec.ts:19:7 › Contact page › shows inline validation errors when required fields are blank and form is submitted
+    [chromium] › e2e/contact.spec.ts:26:7 › Contact page › clears errors as fields are filled in ─
+    [chromium] › e2e/contact.spec.ts:34:7 › Contact page › disables the submit button while submitting
+    [chromium] › e2e/contact.spec.ts:48:7 › Contact page › shows success message after a successful submission
+    [chromium] › e2e/contact.spec.ts:63:7 › Contact page › shows error message when the submission fails
+    [chromium] › e2e/contact.spec.ts:76:7 › Contact page › shows BackToHome and SocialLinks components
+  2 passed (20.2s)
+
+---
+
+now all contact tests fail. the wait for networkidle doesn't seem to be working at all. they just timeout after 30s
+
+---
+
+all but #5 pass now:
+ 1) [chromium] › e2e/contact.spec.ts:39:7 › Contact page › disables the submit button while submitting
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: 'Sending...' })
+    Expected: disabled
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Sending...' })
+
+
+      48 |     await page.getByRole('button', { name: 'Submit' }).click();
+      49 |
+    > 50 |     await expect(page.getByRole('button', { name: 'Sending...' })).toBeDisabled();
+         |                                                                    ^
+      51 |   });
+      52 |
+      53 |   test('shows success message after a successful submission', async ({ page }) => {
+        at /home/peterc/ccw/e2e/contact.spec.ts:50:68
+
+    Error Context: test-results/contact-Contact-page-disab-aee86-mit-button-while-submitting-chromium/error-context.md
+
+---
+
+great they all pass now. lets update testimonials and our-work too
+
+---
+
+good, 25 passed and 9 skipped.  catagory and post were skipped
+
+---
+
+use chrome mcp to open "http://localhost:3000/design" this is 1 of the pre-built pages. adjust tests to match
+
+---
+
+1 test fails:  1) [chromium] › e2e/contact.spec.ts:39:7 › Contact page › disables the submit button while submitting
+
+    Test timeout of 30000ms exceeded.
