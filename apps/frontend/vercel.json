@@ -1,5 +1,11 @@
 {
-	"buildCommand": "cd ../.. && npx turbo run build --filter=@santan/frontend...",
-	"outputDirectory": ".vercel/output",
-	"framework": null
+  "buildCommand": "cd ../.. && npx turbo run build --filter=@santan/frontend...",
+  "outputDirectory": ".vercel/output",
+  "framework": null,
+  "git": {
+    "deploymentEnabled": {
+      "entire/checkpoints/v1": false,
+      "entire/**": false
+    }
+  }
 }
