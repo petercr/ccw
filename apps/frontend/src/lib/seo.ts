@@ -1,6 +1,8 @@
 import AppLogo from "../../public/web-app-manifest-512x512-v2.png?url";
 
-const basePath = import.meta.env.VITE_BASE_PATH || process.env.VITE_BASE_PATH;
+const basePath = import.meta.env.VITE_BASE_PATH || process.env.VITE_BASE_PATH || "";
+const siteUrl = import.meta.env.VITE_SITE_URL || process.env.VITE_SITE_URL || process.env.SITE_URL || "";
+const canonicalBaseUrl = isAbsoluteUrl(siteUrl) ? siteUrl : isAbsoluteUrl(basePath) ? basePath : "";
 
 /**
  * Strips Sanity Stega encoding (zero-width and invisible Unicode characters)
@@ -13,11 +15,35 @@ function stripStega(value: string): string {
   return value.replace(stegaPattern, "");
 }
 
+function isAbsoluteUrl(value: string): boolean {
+  return /^https?:\/\//i.test(value);
+}
+
+function joinUrl(base: string, path: string): string {
+  return `${base.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
+}
+
+function toAbsoluteUrl(value?: string): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  if (isAbsoluteUrl(value)) {
+    return value;
+  }
+
+  if (canonicalBaseUrl) {
+    return joinUrl(canonicalBaseUrl, value);
+  }
+
+  return undefined;
+}
+
 export const seo = ({
   title,
   description,
   keywords,
-  image = `${basePath}${AppLogo.replace("/public", "")}`,
+  image,
   relativeUrl,
 }: {
   title: string;
@@ -28,7 +54,12 @@ export const seo = ({
 }) => {
   const cleanTitle = stripStega(title);
   const cleanDescription = description ? stripStega(description) : undefined;
-  const absoluteUrl = relativeUrl ? `${basePath}${relativeUrl}` : undefined;
+  const cleanRelativeUrl = relativeUrl ? stripStega(relativeUrl) : undefined;
+
+  const defaultImagePath = `${basePath}${AppLogo.replace("/public", "")}`;
+  const ogImage = toAbsoluteUrl(image || defaultImagePath);
+  const absoluteUrl = toAbsoluteUrl(cleanRelativeUrl);
+
   const keywordsString = Array.isArray(keywords)
     ? keywords.map(stripStega).join(", ")
     : keywords
@@ -38,22 +69,26 @@ export const seo = ({
   return [
     { title: cleanTitle },
     { name: "twitter:title", content: cleanTitle },
-    { name: "og:title", content: cleanTitle },
-    { name: "og:type", content: "website" },
-    { name: "twitter:image", content: image },
+    { property: "og:title", content: cleanTitle },
+    { property: "og:type", content: "website" },
+    ...(ogImage
+      ? [
+          { name: "twitter:image", content: ogImage },
+          { property: "og:image", content: ogImage },
+        ]
+      : []),
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "og:image", content: image },
     ...(cleanDescription
       ? [
           { name: "description", content: cleanDescription },
           { name: "twitter:description", content: cleanDescription },
-          { name: "og:description", content: cleanDescription },
+          { property: "og:description", content: cleanDescription },
         ]
       : []),
     ...(keywordsString ? [{ name: "keywords", content: keywordsString }] : []),
     ...(absoluteUrl
       ? [
-          { name: "og:url", content: absoluteUrl },
+          { property: "og:url", content: absoluteUrl },
           { name: "twitter:url", content: absoluteUrl },
         ]
       : []),
