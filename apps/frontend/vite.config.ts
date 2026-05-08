@@ -12,9 +12,6 @@ export default ({ mode }: ConfigEnv) => {
 	// Workaround to load secrets since it's broken in Tanstack RC0 (or similar versions)
 	Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
 	return defineConfig({
-		resolve: {
-			tsconfigPaths: true,
-		},
 		plugins: [
 			devtools(),
 			nitroV2Plugin({
