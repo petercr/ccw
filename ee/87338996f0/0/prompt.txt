@@ -1,1 +1,5 @@
 we need to update react, react-dom and start to latest versions
+
+---
+
+switch to npm updates branch and commit changes
