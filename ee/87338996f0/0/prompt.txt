@@ -1,0 +1,1 @@
+we need to update react, react-dom and start to latest versions
