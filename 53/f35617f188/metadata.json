@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "53f35617f188",
+  "strategy": "manual-commit",
+  "branch": "contact-audit-card",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/src/pages/Contact/Contact.css.ts",
+    "apps/frontend/src/pages/Contact/Contact.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/53/f35617f188/0/metadata.json",
+      "transcript": "/53/f35617f188/0/full.jsonl",
+      "content_hash": "/53/f35617f188/0/content_hash.txt",
+      "prompt": "/53/f35617f188/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 49,
+    "cache_creation_tokens": 54933,
+    "cache_read_tokens": 1684414,
+    "output_tokens": 10059,
+    "api_call_count": 33
+  }
+}
