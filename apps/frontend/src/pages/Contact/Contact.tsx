@@ -2,6 +2,11 @@ import { useState } from "react";
 import { BackToHome } from "@/components/BackToHome/BackToHome.tsx";
 import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
 import {
+  auditCard,
+  auditContent,
+  auditKicker,
+  auditSubtext,
+  auditText,
   container,
   errorMessage,
   fieldError,
@@ -133,6 +138,17 @@ export const ContactPage = () => {
       <header className={headerPill}>
         <h1 className={headerTitle}>Contact</h1>
       </header>
+
+      <aside className={auditCard} aria-label="Free website audit">
+        <div className={auditContent}>
+          <span className={auditKicker}>Free website audit</span>
+          <p className={auditText}>Find the quick wins hiding on your site.</p>
+          <p className={auditSubtext}>
+            Contact us today for a complimentary review and practical next
+            steps.
+          </p>
+        </div>
+      </aside>
 
       <div className={formCard}>
         <h2 className={formTitle}>Contact Form</h2>
