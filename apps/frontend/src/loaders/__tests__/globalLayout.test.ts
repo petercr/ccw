@@ -8,6 +8,12 @@ vi.mock('@/lib/previewMode', () => ({
 	detectPreviewMode: vi.fn(), // Mocking detectPreviewMode function
 }));
 
+vi.mock('@/sanity/serverFunctions.ts', () => ({
+	fetchSiteSettings: vi.fn(async () => ({
+		data: null,
+	})),
+}));
+
 // Test suite for the globalLayout function
 describe('globalLayout', () => {
 	it('should load global layout data correctly', async () => {

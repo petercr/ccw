@@ -7,6 +7,13 @@ vi.mock('@/lib/previewMode', () => ({
 	detectPreviewMode: vi.fn(),
 }));
 
+vi.mock('@/sanity/serverFunctions.ts', () => ({
+	fetchDocument: vi.fn(async () => ({
+		data: null,
+		sourceMap: undefined,
+	})),
+}));
+
 describe('documentLoader', () => {
 	it('should load document data correctly', async () => {
 		const mockQueryClient = new QueryClient();

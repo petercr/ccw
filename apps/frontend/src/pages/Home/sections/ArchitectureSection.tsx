@@ -50,7 +50,7 @@ export function ArchitectureSection({ badges }: ArchitectureSectionProps) {
 					>
 						Data Flow
 					</div>
-					<pre className={codeBlock} aria-label="Data flow example">
+					<pre className={codeBlock}>
 						<code>{`Client Request
    │
    ├─ Route Loader (decides preview vs published)

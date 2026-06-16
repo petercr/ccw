@@ -11,6 +11,8 @@ export const SanityLogo: React.FC<{ height?: number; className?: string }> = ({ 
 			fill="currentColor"
 			xmlns="http://www.w3.org/2000/svg"
 			className={className}
+			role="img"
+			aria-label="Sanity"
 		>
 			<g clipPath="url(#clip0_2001_20)">
 				<path

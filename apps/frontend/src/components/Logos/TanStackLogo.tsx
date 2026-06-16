@@ -11,7 +11,15 @@ export const TanStackLogo: React.FC<{ height?: number; width?: number; className
 }) => {
 	// Use CSS currentColor so parent can control color, then fallback to theme token.
 	return (
-		<svg height={height} viewBox="0 0 3178 660" width={width} xmlns="http://www.w3.org/2000/svg" className={className}>
+		<svg
+			height={height}
+			viewBox="0 0 3178 660"
+			width={width}
+			xmlns="http://www.w3.org/2000/svg"
+			className={className}
+			role="img"
+			aria-label="TanStack"
+		>
 			<g fill="currentColor" transform="translate(.9778)">
 				<g transform="translate(740.0222 38)">
 					<path d="m101.695801 467h101.445312v-264.858398h90.917969v-80.390625h-283.28125v80.390625h90.917969z" />
