@@ -41,7 +41,7 @@ test.describe("Contact page", () => {
     await expect(page.getByText("First name is required")).toBeVisible();
 
     await page.getByLabel("First Name").fill("Jane");
-    await expect(page.getByText("First name is required")).not.toBeVisible();
+    await expect(page.getByText("First name is required")).toBeHidden();
   });
 
   test("shows success message after a successful submission", async ({

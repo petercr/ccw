@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,9 +13,10 @@ const file = fs.readFileSync(inputFile, 'utf8');
 const typeRegex = /_type:\s*["']([^"']+)["']/g;
 
 const types = new Set<string>();
-let match;
-while ((match = typeRegex.exec(file)) !== null) {
+let match: RegExpExecArray | null = typeRegex.exec(file);
+while (match !== null) {
 	types.add(match[1]);
+	match = typeRegex.exec(file);
 }
 
 const enumMembers = Array.from(types)

@@ -7,6 +7,17 @@ vi.mock('@/lib/previewMode', () => ({
 	detectPreviewMode: vi.fn(),
 }));
 
+vi.mock('@/sanity/serverFunctions.ts', () => ({
+	fetchHomeData: vi.fn(async () => ({
+		data: {
+			homeData: null,
+			postsData: [],
+			categoriesData: [],
+		},
+		sourceMap: undefined,
+	})),
+}));
+
 describe('homeLoader', () => {
 	it('should load home data correctly', async () => {
 		const mockQueryClient = new QueryClient();

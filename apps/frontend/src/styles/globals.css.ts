@@ -18,9 +18,11 @@ if (import.meta.env.DEV) {
 	const modulePaths = Object.keys(blockCssModules);
 
 	if (modulePaths.length === 0) {
-		console.warn('⚠️ No block CSS modules found in ../components/PortableText/**/*.css.ts');
+		console.warn('No block CSS modules found in ../components/PortableText/**/*.css.ts');
 	} else {
-		modulePaths.forEach((p) => console.log('✔️ Loaded:', p.replace(/\.{2}\//g, 'src/')));
+		for (const p of modulePaths) {
+			console.log('Loaded:', p.replace(/\.{2}\//g, 'src/'));
+		}
 	}
 
 	console.groupEnd();
