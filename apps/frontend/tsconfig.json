@@ -9,7 +9,6 @@
 	],
 
 	"compilerOptions": {
-		"ignoreDeprecations": "6.0",
 		"target": "ES2022",
 		"jsx": "react-jsx",
 		"module": "ESNext",
@@ -29,7 +28,6 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
-		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
 			"@santan/shared": ["../../packages/shared/src/index.ts"],
