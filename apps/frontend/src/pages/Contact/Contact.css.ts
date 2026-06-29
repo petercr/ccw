@@ -11,6 +11,95 @@ export const container = style({
 	gap: 32,
 });
 
+export const auditCard = style({
+	width: '100%',
+	maxWidth: '90%',
+	borderRadius: 20,
+	'@media': {
+		'screen and (min-width: 769px)': { maxWidth: '50%' },
+		'screen and (min-width: 2560px)': { maxWidth: '40%' },
+	},
+	background: 'rgba(255, 255, 255, 0.92)',
+	border: '2px solid #000000',
+	boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+	paddingTop: 26,
+	paddingBottom: 26,
+	paddingLeft: 24,
+	paddingRight: 24,
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: vars.color.surfaceElevated,
+			border: '2px solid rgba(210 201 201 / 0.63)',
+			boxShadow: vars.shadow.subtle,
+		},
+	},
+});
+
+export const auditContent = style({
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	gap: 8,
+	textAlign: 'center',
+});
+
+export const auditKicker = style({
+	display: 'inline-flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	minHeight: 28,
+	borderRadius: 624,
+	background: '#cce8f8',
+	border: '1.5px solid rgba(0, 0, 0, 0.35)',
+	color: '#000000',
+	fontFamily: 'DM Sans, sans-serif',
+	fontWeight: 700,
+	fontSize: 11,
+	letterSpacing: 1,
+	lineHeight: 1,
+	paddingLeft: 12,
+	paddingRight: 12,
+	textTransform: 'uppercase',
+	selectors: {
+		'[data-theme="dark"] &': {
+			background: '#0c1b4d',
+			borderColor: 'rgba(255, 255, 255, 0.3)',
+			color: '#F5F9FC',
+		},
+	},
+});
+
+export const auditText = style({
+	margin: 0,
+	color: '#000000',
+	fontFamily: 'Fraunces, serif',
+	fontWeight: 400,
+	fontSize: 'clamp(1.75rem, 5vw, 2.25rem)',
+	lineHeight: 1.08,
+	textAlign: 'center',
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#F5F9FC',
+		},
+	},
+});
+
+export const auditSubtext = style({
+	margin: 0,
+	maxWidth: 560,
+	color: '#000000',
+	fontFamily: 'DM Sans, sans-serif',
+	fontWeight: 400,
+	fontSize: 'clamp(1rem, 2.5vw, 1.125rem)',
+	lineHeight: 1.45,
+	textAlign: 'center',
+	selectors: {
+		'[data-theme="dark"] &': {
+			color: '#F5F9FC',
+		},
+	},
+});
+
 export const headerPill = style({
 	width: '100%',
 	maxWidth: '90%',
@@ -246,4 +335,3 @@ export const errorMessage = style({
 		},
 	},
 });
-

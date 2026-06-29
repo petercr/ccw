@@ -8,10 +8,16 @@
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"module": "Preserve",
+		"moduleResolution": "bundler",
 		"moduleDetection": "force",
 		"isolatedModules": true,
 		"jsx": "preserve",
-		"incremental": true
+		"incremental": true,
+		"baseUrl": ".",
+		"paths": {
+			"@santan/shared": ["../../packages/shared/src/index.ts"],
+			"@santan/shared/types": ["../../packages/shared/src/types/index.ts"]
+		}
 	},
 	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["node_modules"]
