@@ -11,9 +11,7 @@ export function toPlainText(blocks: PortableText | null | undefined): string {
 		.filter((block): block is Extract<typeof block, { _type: 'block' }> => block._type === 'block')
 		.map((block) => {
 			if (!block.children) return '';
-			return block.children
-				.map((child) => ('text' in child ? child.text : ''))
-				.join('');
+			return block.children.map((child) => ('text' in child ? child.text : '')).join('');
 		})
 		.join('\n\n');
 }
@@ -21,10 +19,7 @@ export function toPlainText(blocks: PortableText | null | undefined): string {
 /**
  * Extracts a truncated plain text excerpt from PortableText blocks.
  */
-export function toPlainTextExcerpt(
-	blocks: PortableText | null | undefined,
-	maxLength = 150,
-): string {
+export function toPlainTextExcerpt(blocks: PortableText | null | undefined, maxLength = 150): string {
 	const text = toPlainText(blocks);
 	if (text.length <= maxLength) return text;
 	return `${text.slice(0, maxLength).trim()}…`;

@@ -64,7 +64,8 @@ export const home = defineType({
 									name: 'url',
 									type: 'string',
 									title: 'URL',
-									description: 'For internal links use path like "/about". For external links use full URL like "https://example.com"',
+									description:
+										'For internal links use path like "/about". For external links use full URL like "https://example.com"',
 								},
 							],
 						},
@@ -111,7 +112,8 @@ export const home = defineType({
 									name: 'url',
 									type: 'string',
 									title: 'URL',
-									description: 'For internal links use path like "/about". For external links use full URL like "https://example.com"',
+									description:
+										'For internal links use path like "/about". For external links use full URL like "https://example.com"',
 								},
 							],
 						},

@@ -31,7 +31,12 @@ export const homeZ = z.object({
 				.array(
 					z.discriminatedUnion('_type', [
 						z.object({ _type: z.literal('textContent'), text: z.string().nullable() }),
-						z.object({ _type: z.literal('buttonContent'), label: z.string(), isExternal: z.boolean().optional(), url: z.string() }),
+						z.object({
+							_type: z.literal('buttonContent'),
+							label: z.string(),
+							isExternal: z.boolean().optional(),
+							url: z.string(),
+						}),
 					]),
 				)
 				.nullable()

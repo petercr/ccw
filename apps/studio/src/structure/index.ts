@@ -11,11 +11,7 @@ export const structure: StructureResolver = (S) =>
 		.title('Content')
 		.items([
 			// Singleton, home page curation
-			S.listItem()
-				.icon(Home)
-				.id('home')
-				.title('HomePage')
-				.child(defaultDocumentViews(S, sanityTypeLiterals.home)),
+			S.listItem().icon(Home).id('home').title('HomePage').child(defaultDocumentViews(S, sanityTypeLiterals.home)),
 			// Singleton, site-wide settings
 			S.listItem()
 				.icon(Settings)
@@ -34,9 +30,7 @@ export const structure: StructureResolver = (S) =>
 			S.documentTypeListItem('testimonial').title('Testimonials').icon(Quote),
 			S.documentTypeListItem('workProject').title('Our Work').icon(Briefcase),
 			S.divider(),
-			S.documentTypeListItem('person')
-				.title('Persons')
-				.icon(Users), //Plural
+			S.documentTypeListItem('person').title('Persons').icon(Users), //Plural
 		]);
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, { schemaType, documentId }) => {

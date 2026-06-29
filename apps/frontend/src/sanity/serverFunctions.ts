@@ -1,5 +1,6 @@
 import { client } from '@/sanity/client.ts';
 import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
+import { getSession } from '@/sessions.server';
 import { categoriesZ, categoryZ } from '@/types/category.ts';
 import { homeZ } from '@/types/home.ts';
 import { postsZ, postZ } from '@/types/post.ts';
@@ -10,6 +11,29 @@ import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/
 import { sanityTypeLiterals } from '@santan/shared/types';
 import { createServerFn } from '@tanstack/react-start';
 import groq from 'groq';
+
+async function getPreviewAwareFetchConfig(request: Request | undefined) {
+	const previewSession = request ? await getSession(request) : {};
+	const isPreview = previewSession.projectId === client.config().projectId;
+
+	return {
+		isPreview,
+		clientConfig: isPreview
+			? ({
+					stega: { enabled: true, studioUrl: STUDIO_BASEPATH },
+					resultSourceMap: 'withKeyArraySelector',
+				} as const)
+			: ({
+					stega: { enabled: false, studioUrl: STUDIO_BASEPATH },
+					resultSourceMap: false,
+				} as const),
+		options: {
+			filterResponse: false,
+			perspective: (isPreview ? 'drafts' : 'published') as ClientPerspective,
+			...(isPreview && process.env.SANITY_READ_TOKEN ? { token: process.env.SANITY_READ_TOKEN } : {}),
+		} satisfies UnfilteredResponseQueryOptions,
+	};
+}
 
 // Define queries inline to avoid circular imports
 const WORK_PROJECTS_QUERY_INTERNAL = groq`*[_type == "workProject"] | order(_createdAt desc) {
@@ -133,14 +157,11 @@ const DOCUMENT_QUERY_INTERNAL = groq`*[fullSlug == $fullSlug][0]{
 // Server function to fetch home data
 export const fetchHomeData = createServerFn({
 	method: 'GET',
-}).handler(async () => {
-	const options: UnfilteredResponseQueryOptions = {
-		filterResponse: false,
-		perspective: 'published' as ClientPerspective,
-	};
+}).handler(async ({ context }) => {
+	const { clientConfig, options } = await getPreviewAwareFetchConfig(context.request);
 
 	const res = await client
-		.withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
+		.withConfig(clientConfig)
 		.fetch(HOME_QUERY_INTERNAL, { lastPublishedAt: null, lastId: null }, options);
 
 	if (!res.result) {
@@ -176,63 +197,55 @@ export const fetchHomeData = createServerFn({
 export const fetchDocument = createServerFn({
 	method: 'GET',
 })
-	.inputValidator((data: { fullSlug: string }) => data)
-	.handler(async ({ data }) => {
-	const options: UnfilteredResponseQueryOptions = {
-		filterResponse: false,
-		perspective: 'published' as ClientPerspective,
-	};
+	.validator((data: { fullSlug: string }) => data)
+	.handler(async ({ data, context }) => {
+		const { clientConfig, options } = await getPreviewAwareFetchConfig(context.request);
 
-	const res = await client
-		.withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
-		.fetch(DOCUMENT_QUERY_INTERNAL, { fullSlug: data.fullSlug }, options);
+		const res = await client
+			.withConfig(clientConfig)
+			.fetch(DOCUMENT_QUERY_INTERNAL, { fullSlug: data.fullSlug }, options);
 
-	if (!res.result) {
-		return {
-			data: null,
-			sourceMap: undefined,
-		};
-	}
-
-	switch (res.result._type) {
-		case sanityTypeLiterals.post:
-			return {
-				data: postZ.parse(res.result),
-				sourceMap: res.resultSourceMap,
-			};
-		case sanityTypeLiterals.category:
-			try {
-				return {
-					data: categoryZ.parse(res.result),
-					sourceMap: res.resultSourceMap,
-				};
-			} catch (e) {
-				console.log(e);
-				return {
-					data: null,
-					sourceMap: undefined,
-				};
-			}
-		default:
+		if (!res.result) {
 			return {
 				data: null,
 				sourceMap: undefined,
 			};
-	}
-});
+		}
+
+		switch (res.result._type) {
+			case sanityTypeLiterals.post:
+				return {
+					data: postZ.parse(res.result),
+					sourceMap: res.resultSourceMap,
+				};
+			case sanityTypeLiterals.category:
+				try {
+					return {
+						data: categoryZ.parse(res.result),
+						sourceMap: res.resultSourceMap,
+					};
+				} catch (e) {
+					console.log(e);
+					return {
+						data: null,
+						sourceMap: undefined,
+					};
+				}
+			default:
+				return {
+					data: null,
+					sourceMap: undefined,
+				};
+		}
+	});
 
 // Server function to fetch work projects
 export const fetchWorkProjects = createServerFn({
 	method: 'GET',
-}).handler(async () => {
-	const options: UnfilteredResponseQueryOptions = {
-		filterResponse: false,
-		perspective: 'published' as ClientPerspective,
-	};
+}).handler(async ({ context }) => {
+	const { clientConfig, options } = await getPreviewAwareFetchConfig(context.request);
 
-	const res = await client
-		.withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
-		.fetch(WORK_PROJECTS_QUERY_INTERNAL, {}, options);
+	const res = await client.withConfig(clientConfig).fetch(WORK_PROJECTS_QUERY_INTERNAL, {}, options);
 
 	return {
 		data: workProjectsZ.parse(res.result),
@@ -243,15 +256,10 @@ export const fetchWorkProjects = createServerFn({
 // Server function to fetch testimonials
 export const fetchTestimonials = createServerFn({
 	method: 'GET',
-}).handler(async () => {
-	const options: UnfilteredResponseQueryOptions = {
-		filterResponse: false,
-		perspective: 'published' as ClientPerspective,
-	};
+}).handler(async ({ context }) => {
+	const { clientConfig, options } = await getPreviewAwareFetchConfig(context.request);
 
-	const res = await client
-		.withConfig({ stega: { enabled: true, studioUrl: STUDIO_BASEPATH }, resultSourceMap: 'withKeyArraySelector' })
-		.fetch(TESTIMONIALS_QUERY_INTERNAL, {}, options);
+	const res = await client.withConfig(clientConfig).fetch(TESTIMONIALS_QUERY_INTERNAL, {}, options);
 
 	return {
 		data: testimonialsZ.parse(res.result),

@@ -32,28 +32,13 @@ export function Footer() {
 				</div>
 				<nav className={linkGroup} aria-label="Social">
 					<div className={groupTitle}>Social</div>
-					<a
-						className={footerLink}
-						href={linkedin ?? 'https://linkedin.com'}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
+					<a className={footerLink} href={linkedin ?? 'https://linkedin.com'} target="_blank" rel="noopener noreferrer">
 						LinkedIn
 					</a>
-					<a
-						className={footerLink}
-						href={github ?? 'https://github.com'}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
+					<a className={footerLink} href={github ?? 'https://github.com'} target="_blank" rel="noopener noreferrer">
 						GitHub
 					</a>
-					<a
-						className={footerLink}
-						href={twitter ?? 'https://x.com'}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
+					<a className={footerLink} href={twitter ?? 'https://x.com'} target="_blank" rel="noopener noreferrer">
 						X
 					</a>
 				</nav>
@@ -66,7 +51,12 @@ export function Footer() {
 				</div>
 				<div className={smallMeta}>
 					<span className={metaItem}>
-						<a className={footerLink} href="https://github.com/petercr/ccw/issues" target="_blank" rel="noopener noreferrer">
+						<a
+							className={footerLink}
+							href="https://github.com/petercr/ccw/issues"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							Issues
 						</a>
 					</span>

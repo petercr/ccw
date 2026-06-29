@@ -22,19 +22,19 @@
 		"sanity"
 	],
 	"dependencies": {
-		"@sanity/vision": "^5.11.0",
-		"lucide-react": "^0.577.0",
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4",
-		"sanity": "^5.11.0",
-		"sanity-plugin-documents-pane": "^3.0.2",
-		"styled-components": "^6.3.11"
+		"@sanity/vision": "^6.2.0",
+		"lucide-react": "^1.22.0",
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"sanity": "^6.2.0",
+		"sanity-plugin-documents-pane": "^4.1.5",
+		"styled-components": "^6.4.3"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^20.4.2",
-		"@commitlint/config-conventional": "^20.4.2",
-		"@types/react": "^19.2.14",
+		"@commitlint/cli": "^21.1.0",
+		"@commitlint/config-conventional": "^21.1.0",
+		"@types/react": "^19.2.17",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.9.3"
+		"typescript": "^6.0.3"
 	}
 }

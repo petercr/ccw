@@ -129,7 +129,8 @@ export const buttonLink = style({
 	border: '1px solid #000000',
 	borderRadius: '20px',
 	boxShadow: '-3px 4px 3px rgba(0, 0, 0, 0.53)',
-	transition: 'transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, border-color 0.35s ease, color 0.35s ease',
+	transition:
+		'transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, border-color 0.35s ease, color 0.35s ease',
 	':hover': {
 		transform: 'translateY(-2px)',
 		boxShadow: '-3px 6px 6px rgba(0, 0, 0, 0.53)',
