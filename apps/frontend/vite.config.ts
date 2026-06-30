@@ -15,12 +15,12 @@ export default ({ mode }: ConfigEnv) => {
 		plugins: [
 			devtools(),
 			nitroV2Plugin({
-			// Use 'node-server' for local/CI runs (e.g. e2e tests), 'vercel' for
-			// production deployment. Vercel rebuilds from source on deploy so the
-			// preset used here doesn't affect what gets shipped.
-			preset: (process.env.NITRO_PRESET as 'vercel' | 'node-server') ?? 'vercel',
-			compatibilityDate: '2026-02-21',
-		}),
+				// Use 'node-server' for local/CI runs (e.g. e2e tests), 'vercel' for
+				// production deployment. Vercel rebuilds from source on deploy so the
+				// preset used here doesn't affect what gets shipped.
+				preset: (process.env.NITRO_PRESET as 'vercel' | 'node-server') ?? 'vercel',
+				compatibilityDate: '2026-02-21',
+			}),
 			// Required for vanilla-extract's internal vite-node to resolve @/ path aliases
 			viteTsConfigPaths({
 				projects: ['./tsconfig.json'],

@@ -1,60 +1,58 @@
-import { BackToHome } from "@/components/BackToHome/BackToHome.tsx";
-import { SocialLinks } from "@/components/SocialLinks/SocialLinks.tsx";
-import { Route } from "@/routes/testimonials.tsx";
-import { dataset, projectId } from "@/sanity/projectDetails.ts";
-import type { Testimonial } from "@/types/testimonial.ts";
-import { createImageUrlBuilder } from "@sanity/image-url";
+import { BackToHome } from '@/components/BackToHome/BackToHome.tsx';
+import { SocialLinks } from '@/components/SocialLinks/SocialLinks.tsx';
+import { Route } from '@/routes/testimonials.tsx';
+import { dataset, projectId } from '@/sanity/projectDetails.ts';
+import type { Testimonial } from '@/types/testimonial.ts';
+import { createImageUrlBuilder } from '@sanity/image-url';
 import {
-  avatarBg,
-  avatarImage,
-  card,
-  cardBody,
-  cardGrid,
-  cardName,
-  cardOrganization,
-  container,
-  headerPill,
-  headerTitle,
-} from "./Testimonials.css.ts";
+	avatarBg,
+	avatarImage,
+	card,
+	cardBody,
+	cardGrid,
+	cardName,
+	cardOrganization,
+	container,
+	headerPill,
+	headerTitle,
+} from './Testimonials.css.ts';
 
 export const TestimonialsPage = () => {
-  const { initial } = Route.useLoaderData();
-  const testimonials = initial.data;
+	const { initial } = Route.useLoaderData();
+	const testimonials = initial.data;
 
-  return (
-    <article className={container}>
-      <header className={headerPill}>
-        <h1 className={headerTitle}>Testimonials</h1>
-      </header>
-      <div className={cardGrid}>
-        {testimonials.map((testimonial: Testimonial) => (
-          <div key={testimonial._id} className={card}>
-            {testimonial.mainImage ? (
-              <div className={avatarBg}>
-                <img
-                  className={avatarImage}
-                  src={createImageUrlBuilder({ projectId, dataset })
-                    .image(testimonial.mainImage)
-                    .width(200)
-                    .height(200)
-                    .fit("crop")
-                    .auto("format")
-                    .url()}
-                  alt={testimonial.name}
-                  loading="lazy"
-                />
-              </div>
-            ) : null}
-            <h2 className={cardName}>{testimonial.name}</h2>
-            {testimonial.organization ? (
-              <h3 className={cardOrganization}>{testimonial.organization}</h3>
-            ) : null}
-            <p className={cardBody}>{testimonial.body}</p>
-          </div>
-        ))}
-      </div>
-      <SocialLinks />
-      <BackToHome />
-    </article>
-  );
+	return (
+		<article className={container}>
+			<header className={headerPill}>
+				<h1 className={headerTitle}>Testimonials</h1>
+			</header>
+			<div className={cardGrid}>
+				{testimonials.map((testimonial: Testimonial) => (
+					<div key={testimonial._id} className={card}>
+						{testimonial.mainImage ? (
+							<div className={avatarBg}>
+								<img
+									className={avatarImage}
+									src={createImageUrlBuilder({ projectId, dataset })
+										.image(testimonial.mainImage)
+										.width(200)
+										.height(200)
+										.fit('crop')
+										.auto('format')
+										.url()}
+									alt={testimonial.name}
+									loading="lazy"
+								/>
+							</div>
+						) : null}
+						<h2 className={cardName}>{testimonial.name}</h2>
+						{testimonial.organization ? <h3 className={cardOrganization}>{testimonial.organization}</h3> : null}
+						<p className={cardBody}>{testimonial.body}</p>
+					</div>
+				))}
+			</div>
+			<SocialLinks />
+			<BackToHome />
+		</article>
+	);
 };
