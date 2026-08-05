@@ -1,12 +1,14 @@
 import { insertContactSubmission } from '@/db/client.ts';
 import { type ContactFormInput, type ContactResponse, contactFormSchema } from '@/server/contact/schema.ts';
+import { syncContactSubmissionToSanity } from '@/server/contact/syncContactSubmissionToSanity.ts';
 import { sendContactReplyEmail } from '@/server/email/zohoSmtp.ts';
 
 /**
- * Validates input, stores the submission in Neon, and sends a Zoho auto-reply.
+ * Validates input, stores the submission in Neon, mirrors it to Sanity Studio,
+ * and sends a Zoho auto-reply.
  *
- * Email failures after a successful DB write are logged but do not fail the request —
- * the user should not be told the submission failed when it was already stored.
+ * Email and Sanity failures after a successful DB write are logged but do not fail
+ * the request — the user should not be told the submission failed when it was already stored.
  */
 export async function handleContactSubmission(raw: unknown): Promise<ContactResponse> {
 	const parsed = contactFormSchema.safeParse(raw);
@@ -28,6 +30,7 @@ export async function handleContactSubmission(raw: unknown): Promise<ContactResp
 	const data: ContactFormInput = parsed.data;
 
 	let submissionId: string;
+	let submittedAt: string;
 	try {
 		const row = await insertContactSubmission({
 			firstName: data.firstName,
@@ -37,6 +40,7 @@ export async function handleContactSubmission(raw: unknown): Promise<ContactResp
 			additionalInfo: data.additionalInfo ?? '',
 		});
 		submissionId = row.id;
+		submittedAt = row.created_at;
 		console.info('[contact] Stored submission', {
 			id: submissionId,
 			email: data.email,
@@ -47,6 +51,31 @@ export async function handleContactSubmission(raw: unknown): Promise<ContactResp
 			success: false,
 			error: 'Unable to save your message. Please try again later.',
 		};
+	}
+
+	try {
+		const sanityResult = await syncContactSubmissionToSanity({
+			neonId: submissionId,
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email,
+			reasonForMessage: data.reasonForMessage,
+			additionalInfo: data.additionalInfo,
+			submittedAt,
+		});
+		if (sanityResult) {
+			console.info('[contact] Synced submission to Sanity', {
+				neonId: submissionId,
+				sanityId: sanityResult.id,
+			});
+		}
+	} catch (error) {
+		// Submission is already saved in Neon — log and still return success
+		console.error('[contact] Failed to sync submission to Sanity', {
+			id: submissionId,
+			email: data.email,
+			error,
+		});
 	}
 
 	try {

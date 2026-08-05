@@ -136,6 +136,25 @@ export type SiteSettings = {
   };
 };
 
+export type ContactSubmission = {
+  _id: string;
+  _type: "contactSubmission";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  reasonForMessage?: string;
+  additionalInfo?: string;
+  submittedAt?: string;
+  neonId?: string;
+  responseStatus?: string;
+  responseCategory?: string;
+  internalNotes?: string;
+  lastContactedAt?: string;
+};
+
 export type WorkProject = {
   _id: string;
   _type: "workProject";
@@ -437,6 +456,7 @@ export type AllSanitySchemaTypes =
   | ImageCarousel
   | Accordion
   | SiteSettings
+  | ContactSubmission
   | WorkProject
   | SanityImageCrop
   | SanityImageHotspot

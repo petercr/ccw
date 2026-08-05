@@ -19,6 +19,8 @@ const serverEnvSchema = z.object({
 	SANITY_API_VERSION: z.string().optional(), // Allow fallback
 	SANITY_STUDIO_URL: z.string().optional(),
 	SANITY_READ_TOKEN: z.string().optional(),
+	/** Server-only write token for creating contactSubmission docs (never expose to client). */
+	SANITY_WRITE_TOKEN: z.string().optional(),
 	SANITY_SESSION_SECRET: z.string().optional(),
 	NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 });
@@ -29,6 +31,7 @@ export type Env = {
 	SANITY_API_VERSION: string;
 	SANITY_STUDIO_URL?: string;
 	SANITY_READ_TOKEN?: string;
+	SANITY_WRITE_TOKEN?: string;
 	SANITY_SESSION_SECRET: string;
 	NODE_ENV: 'development' | 'production' | 'test';
 };
@@ -51,6 +54,7 @@ function validateEnv(): Env {
 				SANITY_API_VERSION: apiVersion || '2025-12-04',
 				SANITY_STUDIO_URL: studioUrl,
 				SANITY_READ_TOKEN: serverVars.SANITY_READ_TOKEN,
+				SANITY_WRITE_TOKEN: serverVars.SANITY_WRITE_TOKEN,
 				SANITY_SESSION_SECRET: serverVars.SANITY_SESSION_SECRET || '',
 				NODE_ENV: serverVars.NODE_ENV,
 			};
@@ -75,6 +79,7 @@ function validateEnv(): Env {
 			SANITY_API_VERSION: apiVersion || '2025-12-04',
 			SANITY_STUDIO_URL: clientVars.VITE_SANITY_STUDIO_URL,
 			SANITY_READ_TOKEN: undefined,
+			SANITY_WRITE_TOKEN: undefined,
 			SANITY_SESSION_SECRET: '', // Not available on client
 			NODE_ENV: (import.meta.env.MODE || 'production') as 'development' | 'production' | 'test',
 		};
@@ -90,6 +95,7 @@ function validateEnv(): Env {
 				SANITY_API_VERSION: '2025-12-04',
 				SANITY_STUDIO_URL: undefined,
 				SANITY_READ_TOKEN: undefined,
+				SANITY_WRITE_TOKEN: undefined,
 				SANITY_SESSION_SECRET: '',
 				NODE_ENV: 'production',
 			};
