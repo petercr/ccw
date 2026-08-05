@@ -16,6 +16,7 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPreviewRouteImport } from './routes/api.preview'
 import { Route as ApiDraftTokenRouteImport } from './routes/api.draft-token'
+import { Route as ApiContactRouteImport } from './routes/api.contact'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -52,6 +53,11 @@ const ApiDraftTokenRoute = ApiDraftTokenRouteImport.update({
   path: '/api/draft-token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiContactRoute = ApiContactRouteImport.update({
+  id: '/api/contact',
+  path: '/api/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/our-work': typeof OurWorkRoute
   '/testimonials': typeof TestimonialsRoute
+  '/api/contact': typeof ApiContactRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/our-work': typeof OurWorkRoute
   '/testimonials': typeof TestimonialsRoute
+  '/api/contact': typeof ApiContactRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/our-work': typeof OurWorkRoute
   '/testimonials': typeof TestimonialsRoute
+  '/api/contact': typeof ApiContactRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
   '/api/preview': typeof ApiPreviewRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/our-work'
     | '/testimonials'
+    | '/api/contact'
     | '/api/draft-token'
     | '/api/preview'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/our-work'
     | '/testimonials'
+    | '/api/contact'
     | '/api/draft-token'
     | '/api/preview'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/our-work'
     | '/testimonials'
+    | '/api/contact'
     | '/api/draft-token'
     | '/api/preview'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   OurWorkRoute: typeof OurWorkRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  ApiContactRoute: typeof ApiContactRoute
   ApiDraftTokenRoute: typeof ApiDraftTokenRoute
   ApiPreviewRoute: typeof ApiPreviewRoute
 }
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDraftTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/contact': {
+      id: '/api/contact'
+      path: '/api/contact'
+      fullPath: '/api/contact'
+      preLoaderRoute: typeof ApiContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   OurWorkRoute: OurWorkRoute,
   TestimonialsRoute: TestimonialsRoute,
+  ApiContactRoute: ApiContactRoute,
   ApiDraftTokenRoute: ApiDraftTokenRoute,
   ApiPreviewRoute: ApiPreviewRoute,
 }

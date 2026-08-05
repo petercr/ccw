@@ -90,6 +90,10 @@ VITE_SANITY_PROJECT_ID=your_project_id
 VITE_SANITY_DATASET=production
 VITE_SANITY_API_VERSION=2024-01-01
 SESSION_SECRET=generate_a_random_secret_here
+# Contact form (see docs/CONTACT_FORM.md)
+DATABASE_URL=your_neon_connection_string
+ZOHO_SMTP_USER=you@yourdomain.com
+ZOHO_SMTP_PASS=your_zoho_app_password
 ```
 
 **Studio:**

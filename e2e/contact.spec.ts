@@ -17,6 +17,7 @@ test.describe('Contact page', () => {
 	test('displays all form fields', async ({ page }) => {
 		await expect(page.getByLabel('First Name')).toBeVisible();
 		await expect(page.getByLabel('Last Name')).toBeVisible();
+		await expect(page.getByLabel('Email')).toBeVisible();
 		await expect(page.getByLabel('Reason For Message')).toBeVisible();
 		await expect(page.getByLabel('Additional Info')).toBeVisible();
 	});
@@ -25,6 +26,7 @@ test.describe('Contact page', () => {
 		await page.getByRole('button', { name: 'Submit' }).click();
 		await expect(page.getByText('First name is required')).toBeVisible();
 		await expect(page.getByText('Last name is required')).toBeVisible();
+		await expect(page.getByText('Email is required')).toBeVisible();
 		await expect(page.getByText('Reason for message is required')).toBeVisible();
 	});
 
@@ -39,10 +41,17 @@ test.describe('Contact page', () => {
 	test('shows success message after a successful submission', async ({ page }) => {
 		test.slow();
 
-		await page.route('https://api.web3forms.com/submit', (route) => route.fulfill({ json: { success: true } }));
+		await page.route('**/api/contact', (route) =>
+			route.fulfill({
+				status: 200,
+				contentType: 'application/json',
+				json: { success: true, id: 'test-submission-id' },
+			}),
+		);
 
 		await page.getByLabel('First Name').fill('Jane');
 		await page.getByLabel('Last Name').fill('Doe');
+		await page.getByLabel('Email').fill('jane@example.com');
 		await page.getByLabel('Reason For Message').fill('Hello');
 		await page.getByRole('button', { name: 'Submit' }).click();
 
@@ -52,14 +61,21 @@ test.describe('Contact page', () => {
 	test('shows error message when the submission fails', async ({ page }) => {
 		test.slow();
 
-		await page.route('https://api.web3forms.com/submit', (route) => route.fulfill({ json: { success: false } }));
+		await page.route('**/api/contact', (route) =>
+			route.fulfill({
+				status: 500,
+				contentType: 'application/json',
+				json: { success: false, error: 'Unable to save your message. Please try again later.' },
+			}),
+		);
 
 		await page.getByLabel('First Name').fill('Jane');
 		await page.getByLabel('Last Name').fill('Doe');
+		await page.getByLabel('Email').fill('jane@example.com');
 		await page.getByLabel('Reason For Message').fill('Hello');
 		await page.getByRole('button', { name: 'Submit' }).click();
 
-		await expect(page.getByText(/Something went wrong/i)).toBeVisible();
+		await expect(page.getByText(/Unable to save your message|Something went wrong/i)).toBeVisible();
 	});
 
 	test('shows BackToHome and SocialLinks components', async ({ page }) => {

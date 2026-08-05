@@ -10,6 +10,7 @@ Welcome to the Santan Monorepo documentation!
 ## 🏗️ Architecture & Features
 
 - **[FULLSLUG_SYSTEM.md](FULLSLUG_SYSTEM.md)** - FullSlug system for hierarchical content URLs
+- **[CONTACT_FORM.md](CONTACT_FORM.md)** - Contact form with Neon DB storage and Zoho SMTP auto-replies
 
 ## 📦 Package Documentation
 

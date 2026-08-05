@@ -17,7 +17,7 @@ export const securityMiddleware = createMiddleware().server(({ next }) => {
 		"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
 		"img-src 'self' data: https://cdn.sanity.io blob:",
 		"font-src 'self' data: https://fonts.gstatic.com",
-		"connect-src 'self' https://*.sanity.io wss://*.sanity.io ws://localhost:* https://api.web3forms.com",
+		"connect-src 'self' https://*.sanity.io wss://*.sanity.io ws://localhost:*",
 		"worker-src 'self' blob:", // Allow web workers from blob URLs
 		`frame-ancestors 'self' ${studioOrigin}`, // Allow Sanity Studio to embed the app
 		"base-uri 'self'",
