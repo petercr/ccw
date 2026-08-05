@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BackToHome } from '@/components/BackToHome/BackToHome.tsx';
 import { SocialLinks } from '@/components/SocialLinks/SocialLinks.tsx';
+import type { ContactResponse } from '@/server/contact/schema.ts';
 import {
 	auditCard,
 	auditContent,
@@ -22,13 +23,12 @@ import {
 	successMessage,
 } from './Contact.css.ts';
 
-const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? '';
-
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 interface FormData {
 	firstName: string;
 	lastName: string;
+	email: string;
 	reasonForMessage: string;
 	additionalInfo: string;
 }
@@ -36,21 +36,26 @@ interface FormData {
 interface FormErrors {
 	firstName?: string;
 	lastName?: string;
+	email?: string;
 	reasonForMessage?: string;
 }
 
 const initialFormData: FormData = {
 	firstName: '',
 	lastName: '',
+	email: '',
 	reasonForMessage: '',
 	additionalInfo: '',
 };
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const ContactPage = () => {
 	const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
 	const [formData, setFormData] = useState<FormData>(initialFormData);
 	const [errors, setErrors] = useState<FormErrors>({});
 	const [touched, setTouched] = useState<Record<string, boolean>>({});
+	const [serverError, setServerError] = useState<string | null>(null);
 
 	const validateField = (name: keyof FormData, value: string): string | undefined => {
 		if (name === 'firstName' && value.trim().length === 0) {
@@ -58,6 +63,14 @@ export const ContactPage = () => {
 		}
 		if (name === 'lastName' && value.trim().length === 0) {
 			return 'Last name is required';
+		}
+		if (name === 'email') {
+			if (value.trim().length === 0) {
+				return 'Email is required';
+			}
+			if (!EMAIL_RE.test(value.trim())) {
+				return 'A valid email is required';
+			}
 		}
 		if (name === 'reasonForMessage' && value.trim().length === 0) {
 			return 'Reason for message is required';
@@ -81,45 +94,63 @@ export const ContactPage = () => {
 
 	const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setServerError(null);
 
 		const newErrors: FormErrors = {
 			firstName: validateField('firstName', formData.firstName),
 			lastName: validateField('lastName', formData.lastName),
+			email: validateField('email', formData.email),
 			reasonForMessage: validateField('reasonForMessage', formData.reasonForMessage),
 		};
 		setErrors(newErrors);
-		setTouched({ firstName: true, lastName: true, reasonForMessage: true });
+		setTouched({ firstName: true, lastName: true, email: true, reasonForMessage: true });
 
-		if (newErrors.firstName || newErrors.lastName || newErrors.reasonForMessage) {
+		if (newErrors.firstName || newErrors.lastName || newErrors.email || newErrors.reasonForMessage) {
 			return;
 		}
 
 		setSubmitStatus('submitting');
 		try {
-			const response = await fetch('https://api.web3forms.com/submit', {
+			const response = await fetch('/api/contact', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json',
 				},
 				body: JSON.stringify({
-					access_key: WEB3FORMS_ACCESS_KEY,
-					name: `${formData.firstName} ${formData.lastName}`,
-					subject: formData.reasonForMessage,
-					message: formData.additionalInfo,
+					firstName: formData.firstName.trim(),
+					lastName: formData.lastName.trim(),
+					email: formData.email.trim(),
+					reasonForMessage: formData.reasonForMessage.trim(),
+					additionalInfo: formData.additionalInfo.trim(),
 				}),
 			});
-			const data = await response.json();
+
+			let data: ContactResponse;
+			try {
+				data = (await response.json()) as ContactResponse;
+			} catch {
+				setSubmitStatus('error');
+				setServerError('Something went wrong. Please try again.');
+				return;
+			}
+
 			if (data.success) {
 				setSubmitStatus('success');
 				setFormData(initialFormData);
 				setTouched({});
 				setErrors({});
-			} else {
-				setSubmitStatus('error');
+				return;
 			}
+
+			if (data.fieldErrors) {
+				setErrors((prev) => ({ ...prev, ...data.fieldErrors }));
+			}
+			setSubmitStatus('error');
+			setServerError(data.error || 'Something went wrong. Please try again.');
 		} catch {
 			setSubmitStatus('error');
+			setServerError('Something went wrong. Please try again.');
 		}
 	};
 
@@ -143,7 +174,7 @@ export const ContactPage = () => {
 				{submitStatus === 'success' ? (
 					<p className={successMessage}>Thanks! Your message has been sent. We'll be in touch soon.</p>
 				) : (
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSubmit} noValidate>
 						<div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
 							<div className={fieldGroup}>
 								<label htmlFor="firstName" className={fieldLabel}>
@@ -157,6 +188,7 @@ export const ContactPage = () => {
 									onBlur={() => handleBlur('firstName')}
 									onChange={(e) => handleChange('firstName', e.target.value)}
 									placeholder="First name"
+									autoComplete="given-name"
 								/>
 								{touched.firstName && errors.firstName && <span className={fieldError}>{errors.firstName}</span>}
 							</div>
@@ -173,8 +205,27 @@ export const ContactPage = () => {
 									onBlur={() => handleBlur('lastName')}
 									onChange={(e) => handleChange('lastName', e.target.value)}
 									placeholder="Last name"
+									autoComplete="family-name"
 								/>
 								{touched.lastName && errors.lastName && <span className={fieldError}>{errors.lastName}</span>}
+							</div>
+
+							<div className={fieldGroup}>
+								<label htmlFor="email" className={fieldLabel}>
+									Email
+								</label>
+								<input
+									id="email"
+									name="email"
+									type="email"
+									className={fieldInput}
+									value={formData.email}
+									onBlur={() => handleBlur('email')}
+									onChange={(e) => handleChange('email', e.target.value)}
+									placeholder="you@example.com"
+									autoComplete="email"
+								/>
+								{touched.email && errors.email && <span className={fieldError}>{errors.email}</span>}
 							</div>
 
 							<div className={fieldGroup}>
@@ -209,7 +260,9 @@ export const ContactPage = () => {
 								/>
 							</div>
 
-							{submitStatus === 'error' && <p className={errorMessage}>Something went wrong. Please try again.</p>}
+							{(submitStatus === 'error' || serverError) && (
+								<p className={errorMessage}>{serverError ?? 'Something went wrong. Please try again.'}</p>
+							)}
 
 							<button type="submit" className={submitButton} disabled={submitStatus === 'submitting'}>
 								{submitStatus === 'submitting' ? 'Sending...' : 'Submit'}

@@ -14,6 +14,12 @@ jobs:
       VITE_SANITY_DATASET: ${{ vars.VITE_SANITY_DATASET }}
       VITE_SANITY_API_VERSION: ${{ vars.VITE_SANITY_API_VERSION }}
       NITRO_PRESET: node-server
+      # Contact form (Neon + Zoho SMTP) — required by the e2e production server
+      # Host defaults to smtp.zoho.com:465 in app code when unset.
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      ZOHO_SMTP_USER: ${{ secrets.ZOHO_SMTP_USER }}
+      ZOHO_SMTP_PASS: ${{ secrets.ZOHO_SMTP_PASS }}
+      ZOHO_SMTP_FROM: ${{ secrets.ZOHO_SMTP_FROM }}
 
     steps:
       - uses: actions/checkout@v5

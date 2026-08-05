@@ -114,6 +114,10 @@ VITE_SANITY_DATASET=production
 VITE_SANITY_API_VERSION=2024-01-01
 SESSION_SECRET=
 SANITY_READ_TOKEN=     # Required for preview mode
+DATABASE_URL=          # Neon Postgres (contact form)
+ZOHO_SMTP_USER=        # Zoho Mail SMTP for auto-replies
+ZOHO_SMTP_PASS=
+ZOHO_SMTP_FROM=        # Optional; defaults to ZOHO_SMTP_USER
 ```
 
 **Studio** (`apps/studio/.env.local`):
