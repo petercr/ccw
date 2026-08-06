@@ -114,6 +114,7 @@ VITE_SANITY_DATASET=production
 VITE_SANITY_API_VERSION=2024-01-01
 SESSION_SECRET=
 SANITY_READ_TOKEN=     # Required for preview mode
+SANITY_WRITE_TOKEN=    # Server-only; create contactSubmission docs on form submit
 DATABASE_URL=          # Neon Postgres (contact form)
 ZOHO_SMTP_USER=        # Zoho Mail SMTP for auto-replies
 ZOHO_SMTP_PASS=

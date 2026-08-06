@@ -1,4 +1,5 @@
 import { category } from './category';
+import { contactSubmission } from './contactSubmission';
 import { home } from './home';
 import { person } from './person';
 import { post } from './post';
@@ -6,4 +7,13 @@ import { siteSettings } from './siteSettings';
 import { testimonial } from './testimonial';
 import { workProject } from './workProject';
 
-export const documentTypes = [home, post, category, person, testimonial, workProject, siteSettings];
+export const documentTypes = [
+	home,
+	post,
+	category,
+	person,
+	testimonial,
+	workProject,
+	siteSettings,
+	contactSubmission,
+];

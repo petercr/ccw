@@ -10,6 +10,7 @@ export enum sanityTypeLiterals {
 	imageCarousel = 'imageCarousel',
 	accordion = 'accordion',
 	siteSettings = 'siteSettings',
+	contactSubmission = 'contactSubmission',
 	workProject = 'workProject',
 	sanity_imageCrop = 'sanity.imageCrop',
 	sanity_imageHotspot = 'sanity.imageHotspot',
