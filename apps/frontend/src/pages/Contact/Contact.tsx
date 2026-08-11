@@ -1,7 +1,8 @@
+import { useForm } from '@tanstack/react-form';
 import { useState } from 'react';
 import { BackToHome } from '@/components/BackToHome/BackToHome.tsx';
 import { SocialLinks } from '@/components/SocialLinks/SocialLinks.tsx';
-import type { ContactResponse } from '@/server/contact/schema.ts';
+import { type ContactFormInput, type ContactResponse, contactFormSchema } from '@/server/contact/schema.ts';
 import {
 	auditCard,
 	auditContent,
@@ -25,22 +26,7 @@ import {
 
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
 
-interface FormData {
-	firstName: string;
-	lastName: string;
-	email: string;
-	reasonForMessage: string;
-	additionalInfo: string;
-}
-
-interface FormErrors {
-	firstName?: string;
-	lastName?: string;
-	email?: string;
-	reasonForMessage?: string;
-}
-
-const initialFormData: FormData = {
+const initialFormData: ContactFormInput = {
 	firstName: '',
 	lastName: '',
 	email: '',
@@ -48,110 +34,115 @@ const initialFormData: FormData = {
 	additionalInfo: '',
 };
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+type ContactFormErrors = Partial<Record<keyof ContactFormInput, string>>;
+
+function normalizeFormValues(value: ContactFormInput): ContactFormInput {
+	return {
+		firstName: value.firstName.trim(),
+		lastName: value.lastName.trim(),
+		email: value.email.trim(),
+		reasonForMessage: value.reasonForMessage.trim(),
+		additionalInfo: value.additionalInfo.trim(),
+	};
+}
+
+function validateContactForm(value: ContactFormInput): { fields: ContactFormErrors } | undefined {
+	const result = contactFormSchema.safeParse(normalizeFormValues(value));
+	if (result.success) {
+		return undefined;
+	}
+
+	const fields: ContactFormErrors = {};
+	for (const issue of result.error.issues) {
+		const field = issue.path[0];
+		if (typeof field === 'string' && field in initialFormData && !fields[field as keyof ContactFormInput]) {
+			fields[field as keyof ContactFormInput] = issue.message;
+		}
+	}
+	if (!value.email.trim()) {
+		fields.email = 'Email is required';
+	}
+
+	return { fields };
+}
+
+function getFieldError(errors: unknown[]): string | undefined {
+	for (const error of errors) {
+		if (typeof error === 'string') {
+			return error;
+		}
+		if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') {
+			return error.message;
+		}
+	}
+}
+
+function getServerFieldErrors(fieldErrors: Record<string, string> | undefined): ContactFormErrors {
+	const fields: ContactFormErrors = {};
+	for (const [field, error] of Object.entries(fieldErrors ?? {})) {
+		if (field in initialFormData) {
+			fields[field as keyof ContactFormInput] = error;
+		}
+	}
+	return fields;
+}
 
 export const ContactPage = () => {
 	const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
-	const [formData, setFormData] = useState<FormData>(initialFormData);
-	const [errors, setErrors] = useState<FormErrors>({});
-	const [touched, setTouched] = useState<Record<string, boolean>>({});
 	const [serverError, setServerError] = useState<string | null>(null);
 
-	const validateField = (name: keyof FormData, value: string): string | undefined => {
-		if (name === 'firstName' && value.trim().length === 0) {
-			return 'First name is required';
-		}
-		if (name === 'lastName' && value.trim().length === 0) {
-			return 'Last name is required';
-		}
-		if (name === 'email') {
-			if (value.trim().length === 0) {
-				return 'Email is required';
-			}
-			if (!EMAIL_RE.test(value.trim())) {
-				return 'A valid email is required';
-			}
-		}
-		if (name === 'reasonForMessage' && value.trim().length === 0) {
-			return 'Reason for message is required';
-		}
-		return undefined;
-	};
+	const form = useForm({
+		defaultValues: initialFormData,
+		validators: {
+			onChange: ({ value }) => validateContactForm(value),
+		},
+		onSubmit: async ({ value, formApi }) => {
+			setServerError(null);
+			setSubmitStatus('submitting');
 
-	const handleBlur = (name: keyof FormData) => {
-		setTouched((prev) => ({ ...prev, [name]: true }));
-		const error = validateField(name, formData[name]);
-		setErrors((prev) => ({ ...prev, [name]: error }));
-	};
-
-	const handleChange = (name: keyof FormData, value: string) => {
-		setFormData((prev) => ({ ...prev, [name]: value }));
-		if (touched[name]) {
-			const error = validateField(name, value);
-			setErrors((prev) => ({ ...prev, [name]: error }));
-		}
-	};
-
-	const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setServerError(null);
-
-		const newErrors: FormErrors = {
-			firstName: validateField('firstName', formData.firstName),
-			lastName: validateField('lastName', formData.lastName),
-			email: validateField('email', formData.email),
-			reasonForMessage: validateField('reasonForMessage', formData.reasonForMessage),
-		};
-		setErrors(newErrors);
-		setTouched({ firstName: true, lastName: true, email: true, reasonForMessage: true });
-
-		if (newErrors.firstName || newErrors.lastName || newErrors.email || newErrors.reasonForMessage) {
-			return;
-		}
-
-		setSubmitStatus('submitting');
-		try {
-			const response = await fetch('/api/contact', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-				},
-				body: JSON.stringify({
-					firstName: formData.firstName.trim(),
-					lastName: formData.lastName.trim(),
-					email: formData.email.trim(),
-					reasonForMessage: formData.reasonForMessage.trim(),
-					additionalInfo: formData.additionalInfo.trim(),
-				}),
-			});
-
-			let data: ContactResponse;
 			try {
-				data = (await response.json()) as ContactResponse;
+				const response = await fetch('/api/contact', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json',
+					},
+					body: JSON.stringify(normalizeFormValues(value)),
+				});
+
+				let data: ContactResponse;
+				try {
+					data = (await response.json()) as ContactResponse;
+				} catch {
+					setSubmitStatus('error');
+					setServerError('Something went wrong. Please try again.');
+					return;
+				}
+
+				if (data.success) {
+					setSubmitStatus('success');
+					formApi.reset();
+					return;
+				}
+
+				formApi.setErrorMap({
+					onChange: {
+						form: data.error,
+						fields: getServerFieldErrors(data.fieldErrors),
+					},
+				});
+				setSubmitStatus('error');
+				setServerError(data.error || 'Something went wrong. Please try again.');
 			} catch {
 				setSubmitStatus('error');
 				setServerError('Something went wrong. Please try again.');
-				return;
 			}
+		},
+	});
 
-			if (data.success) {
-				setSubmitStatus('success');
-				setFormData(initialFormData);
-				setTouched({});
-				setErrors({});
-				return;
-			}
-
-			if (data.fieldErrors) {
-				setErrors((prev) => ({ ...prev, ...data.fieldErrors }));
-			}
-			setSubmitStatus('error');
-			setServerError(data.error || 'Something went wrong. Please try again.');
-		} catch {
-			setSubmitStatus('error');
-			setServerError('Something went wrong. Please try again.');
-		}
+	const validateOnBlur = (handleBlur: () => void) => {
+		handleBlur();
+		void form.validate('change');
 	};
 
 	return (
@@ -174,99 +165,141 @@ export const ContactPage = () => {
 				{submitStatus === 'success' ? (
 					<p className={successMessage}>Thanks! Your message has been sent. We'll be in touch soon.</p>
 				) : (
-					<form onSubmit={handleSubmit} noValidate>
+					<form
+						onSubmit={(event) => {
+							event.preventDefault();
+							event.stopPropagation();
+							void form.handleSubmit();
+						}}
+						noValidate
+					>
 						<div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-							<div className={fieldGroup}>
-								<label htmlFor="firstName" className={fieldLabel}>
-									First Name
-								</label>
-								<input
-									id="firstName"
-									name="firstName"
-									className={fieldInput}
-									value={formData.firstName}
-									onBlur={() => handleBlur('firstName')}
-									onChange={(e) => handleChange('firstName', e.target.value)}
-									placeholder="First name"
-									autoComplete="given-name"
-								/>
-								{touched.firstName && errors.firstName && <span className={fieldError}>{errors.firstName}</span>}
-							</div>
+							<form.Field name="firstName">
+								{(field) => {
+									const error = getFieldError(field.state.meta.errors);
+									return (
+										<div className={fieldGroup}>
+											<label htmlFor="firstName" className={fieldLabel}>
+												First Name
+											</label>
+											<input
+												id="firstName"
+												name="firstName"
+												className={fieldInput}
+												value={field.state.value}
+												onBlur={() => validateOnBlur(field.handleBlur)}
+												onChange={(event) => field.handleChange(event.target.value)}
+												placeholder="First name"
+												autoComplete="given-name"
+											/>
+											{field.state.meta.isTouched && error && <span className={fieldError}>{error}</span>}
+										</div>
+									);
+								}}
+							</form.Field>
 
-							<div className={fieldGroup}>
-								<label htmlFor="lastName" className={fieldLabel}>
-									Last Name
-								</label>
-								<input
-									id="lastName"
-									name="lastName"
-									className={fieldInput}
-									value={formData.lastName}
-									onBlur={() => handleBlur('lastName')}
-									onChange={(e) => handleChange('lastName', e.target.value)}
-									placeholder="Last name"
-									autoComplete="family-name"
-								/>
-								{touched.lastName && errors.lastName && <span className={fieldError}>{errors.lastName}</span>}
-							</div>
+							<form.Field name="lastName">
+								{(field) => {
+									const error = getFieldError(field.state.meta.errors);
+									return (
+										<div className={fieldGroup}>
+											<label htmlFor="lastName" className={fieldLabel}>
+												Last Name
+											</label>
+											<input
+												id="lastName"
+												name="lastName"
+												className={fieldInput}
+												value={field.state.value}
+												onBlur={() => validateOnBlur(field.handleBlur)}
+												onChange={(event) => field.handleChange(event.target.value)}
+												placeholder="Last name"
+												autoComplete="family-name"
+											/>
+											{field.state.meta.isTouched && error && <span className={fieldError}>{error}</span>}
+										</div>
+									);
+								}}
+							</form.Field>
 
-							<div className={fieldGroup}>
-								<label htmlFor="email" className={fieldLabel}>
-									Email
-								</label>
-								<input
-									id="email"
-									name="email"
-									type="email"
-									className={fieldInput}
-									value={formData.email}
-									onBlur={() => handleBlur('email')}
-									onChange={(e) => handleChange('email', e.target.value)}
-									placeholder="you@example.com"
-									autoComplete="email"
-								/>
-								{touched.email && errors.email && <span className={fieldError}>{errors.email}</span>}
-							</div>
+							<form.Field name="email">
+								{(field) => {
+									const error = getFieldError(field.state.meta.errors);
+									return (
+										<div className={fieldGroup}>
+											<label htmlFor="email" className={fieldLabel}>
+												Email
+											</label>
+											<input
+												id="email"
+												name="email"
+												type="email"
+												className={fieldInput}
+												value={field.state.value}
+												onBlur={() => validateOnBlur(field.handleBlur)}
+												onChange={(event) => field.handleChange(event.target.value)}
+												placeholder="you@example.com"
+												autoComplete="email"
+											/>
+											{field.state.meta.isTouched && error && <span className={fieldError}>{error}</span>}
+										</div>
+									);
+								}}
+							</form.Field>
 
-							<div className={fieldGroup}>
-								<label htmlFor="reasonForMessage" className={fieldLabel}>
-									Reason For Message
-								</label>
-								<input
-									id="reasonForMessage"
-									name="reasonForMessage"
-									className={fieldInput}
-									value={formData.reasonForMessage}
-									onBlur={() => handleBlur('reasonForMessage')}
-									onChange={(e) => handleChange('reasonForMessage', e.target.value)}
-									placeholder="Reason for message"
-								/>
-								{touched.reasonForMessage && errors.reasonForMessage && (
-									<span className={fieldError}>{errors.reasonForMessage}</span>
+							<form.Field name="reasonForMessage">
+								{(field) => {
+									const error = getFieldError(field.state.meta.errors);
+									return (
+										<div className={fieldGroup}>
+											<label htmlFor="reasonForMessage" className={fieldLabel}>
+												Reason For Message
+											</label>
+											<input
+												id="reasonForMessage"
+												name="reasonForMessage"
+												className={fieldInput}
+												value={field.state.value}
+												onBlur={() => validateOnBlur(field.handleBlur)}
+												onChange={(event) => field.handleChange(event.target.value)}
+												placeholder="Reason for message"
+											/>
+											{field.state.meta.isTouched && error && <span className={fieldError}>{error}</span>}
+										</div>
+									);
+								}}
+							</form.Field>
+
+							<form.Field name="additionalInfo">
+								{(field) => (
+									<div className={fieldGroup}>
+										<label htmlFor="additionalInfo" className={fieldLabel}>
+											Additional Info
+										</label>
+										<textarea
+											id="additionalInfo"
+											name="additionalInfo"
+											className={fieldTextarea}
+											value={field.state.value}
+											onBlur={() => validateOnBlur(field.handleBlur)}
+											onChange={(event) => field.handleChange(event.target.value)}
+											placeholder="Additional info"
+										/>
+									</div>
 								)}
-							</div>
-
-							<div className={fieldGroup}>
-								<label htmlFor="additionalInfo" className={fieldLabel}>
-									Additional Info
-								</label>
-								<textarea
-									id="additionalInfo"
-									name="additionalInfo"
-									className={fieldTextarea}
-									value={formData.additionalInfo}
-									onChange={(e) => handleChange('additionalInfo', e.target.value)}
-									placeholder="Additional info"
-								/>
-							</div>
+							</form.Field>
 
 							{(submitStatus === 'error' || serverError) && (
 								<p className={errorMessage}>{serverError ?? 'Something went wrong. Please try again.'}</p>
 							)}
 
-							<button type="submit" className={submitButton} disabled={submitStatus === 'submitting'}>
-								{submitStatus === 'submitting' ? 'Sending...' : 'Submit'}
-							</button>
+							<form.Subscribe selector={(state) => state.isSubmitting}>
+								{(isSubmitting) => (
+									<button type="submit" className={submitButton} disabled={isSubmitting}>
+										{isSubmitting ? 'Sending...' : 'Submit'}
+									</button>
+								)}
+							</form.Subscribe>
 						</div>
 					</form>
 				)}

@@ -1,4 +1,5 @@
-import { BlockContentIcon, MobileDeviceIcon } from '@sanity/icons';
+import { BlockContentIcon } from '@sanity/icons/BlockContent';
+import { MobileDeviceIcon } from '@sanity/icons/MobileDevice';
 import { defineArrayMember, defineType } from 'sanity';
 
 /**
