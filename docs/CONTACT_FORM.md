@@ -8,7 +8,7 @@ The contact form at `/contact` stores submissions in a **Neon** Postgres databas
 Browser → POST /api/contact → validate (Zod)
                           → INSERT contact_submissions (Neon)          [required]
                           → create contactSubmission (Sanity)          [soft-fail]
-                          → send auto-reply (Zoho SMTP)                [soft-fail]
+                          → send auto-reply + BCC notification (Zoho SMTP) [soft-fail]
                           → JSON { success, id }
 ```
 
@@ -68,6 +68,7 @@ Set these in `apps/frontend/.env.local`, in Vercel project settings, and as **Gi
 | `ZOHO_SMTP_USER`  | Yes      | Zoho mailbox username                            |
 | `ZOHO_SMTP_PASS`  | Yes      | Zoho password or app-specific password           |
 | `ZOHO_SMTP_FROM`  | No       | From address (defaults to `ZOHO_SMTP_USER`)      |
+| `ZOHO_SMTP_BCC`   | No       | Notification BCC (defaults to `peter@capecod.world`) |
 
 ### Sanity write token
 

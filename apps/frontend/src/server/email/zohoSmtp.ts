@@ -13,6 +13,7 @@ function getSmtpConfig() {
 	const user = process.env.ZOHO_SMTP_USER;
 	const pass = process.env.ZOHO_SMTP_PASS;
 	const from = process.env.ZOHO_SMTP_FROM ?? user;
+	const bcc = process.env.ZOHO_SMTP_BCC ?? 'peter@capecod.world';
 
 	if (!user || !pass || !from) {
 		throw new Error('Zoho SMTP is not configured. Set ZOHO_SMTP_USER, ZOHO_SMTP_PASS, and optionally ZOHO_SMTP_FROM.');
@@ -24,6 +25,7 @@ function getSmtpConfig() {
 		secure: port === 465,
 		auth: { user, pass },
 		from,
+		bcc,
 	};
 }
 
@@ -63,6 +65,7 @@ export async function sendContactReplyEmail(payload: ReplyEmailPayload): Promise
 	const info = await transporter.sendMail({
 		from: config.from,
 		to: payload.to,
+		bcc: config.bcc,
 		subject,
 		text,
 		html,
@@ -71,6 +74,7 @@ export async function sendContactReplyEmail(payload: ReplyEmailPayload): Promise
 	console.info('[contact-email] Reply sent', {
 		messageId: info.messageId,
 		to: payload.to,
+		bcc: config.bcc,
 	});
 }
 
