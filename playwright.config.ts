@@ -19,9 +19,11 @@ export default defineConfig({
 		},
 	],
 	webServer: {
-		// Production Nitro server (avoids Vite cold-compilation on first visit).
-		// vp build with the node-server preset, then serve the output.
-		command: 'NITRO_PRESET=node-server npx vp build && node .output/server/index.mjs',
+		// Production Nitro server (not vp dev — avoids Vite cold-compile on first visit).
+		// CI already ran `vp build`; locally, build then serve if nothing is on :3000.
+		command: process.env.CI
+			? 'node .output/server/index.mjs'
+			: 'NITRO_PRESET=node-server npx vp build && node .output/server/index.mjs',
 		cwd: 'apps/frontend',
 		port: 3000,
 		env: {
