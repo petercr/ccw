@@ -1,19 +1,21 @@
 {
 	"name": "@santan/frontend",
 	"private": true,
-	"type": "module",
 	"license": "MIT",
+	"type": "module",
+	"sideEffects": [
+		"*.css.ts",
+		"**/*.css.ts"
+	],
 	"scripts": {
-		"dev": "vite dev --port 3000",
-		"build": "NODE_ENV=production vite build",
-		"serve": "vite preview",
+		"dev": "vp dev --port 3000",
+		"build": "NODE_ENV=production vp build",
+		"serve": "vp preview",
 		"start": "node .output/server/index.mjs",
-		"vitest": "vitest run",
-		"lint": "biome lint .",
-		"format": "biome format --write .",
+		"vitest": "vp test",
 		"type-check": "tsc --noEmit",
-		"check": "npm run type-check && biome check .",
-		"clean": "rm -rf .output dist .turbo",
+		"check": "vp check",
+		"clean": "rm -rf .output dist",
 		"setup:preview-secret": "node scripts/create-preview-secret.js",
 		"get:preview-secret": "node scripts/get-preview-secret.js",
 		"cleanup:preview-secrets": "node scripts/cleanup-preview-secrets.js",
@@ -71,8 +73,9 @@
 		"@vitejs/plugin-react": "^6.0.3",
 		"jsdom": "^29.1.1",
 		"typescript": "^7.0.1-rc",
-		"vite": "^8.1.5",
-		"vitest": "^4.1.10",
+		"vite": "npm:@voidzero-dev/vite-plus-core@0.2.9",
+		"vite-plus": "0.2.9",
+		"vitest": "4.1.10",
 		"web-vitals": "^5.3.0"
 	},
 	"optionalDependencies": {
@@ -85,9 +88,5 @@
 		"lightningcss-linux-x64-gnu": "^1.32.0",
 		"lightningcss-linux-x64-musl": "^1.32.0",
 		"lightningcss-win32-x64-msvc": "^1.32.0"
-	},
-	"sideEffects": [
-		"*.css.ts",
-		"**/*.css.ts"
-	]
+	}
 }

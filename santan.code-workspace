@@ -2,49 +2,46 @@
 	"folders": [
 		{
 			"name": "🏠 Root",
-			"path": "."
+			"path": ".",
 		},
 		{
 			"name": "🌐 Frontend",
-			"path": "apps/frontend"
+			"path": "apps/frontend",
 		},
 		{
 			"name": "🎨 Studio",
-			"path": "apps/studio"
+			"path": "apps/studio",
 		},
 		{
 			"name": "📦 Shared",
-			"path": "packages/shared"
-		}
+			"path": "packages/shared",
+		},
 	],
 	"settings": {
 		"typescript.tsdk": "node_modules/typescript/lib",
 		"typescript.enablePromptUseWorkspaceTsdk": true,
 		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.defaultFormatter": "oxc.oxc-vscode",
+		"oxc.fmt.configPath": "./vite.config.ts",
+		"oxc.fmt.disableNestedConfig": true,
 		"editor.codeActionsOnSave": {
-			"source.fixAll.eslint": "explicit"
+			"source.fixAll.oxc": "explicit",
 		},
 		"files.exclude": {
 			"**/node_modules": true,
 			"**/.turbo": true,
 			"**/dist": true,
-			"**/.output": true
+			"**/.output": true,
 		},
 		"search.exclude": {
 			"**/node_modules": true,
 			"**/.turbo": true,
 			"**/dist": true,
 			"**/.output": true,
-			"**/package-lock.json": true
-		}
+			"**/package-lock.json": true,
+		},
 	},
 	"extensions": {
-		"recommendations": [
-			"dbaeumer.vscode-eslint",
-			"esbenp.prettier-vscode",
-			"bradlc.vscode-tailwindcss",
-			"sanity-io.vscode-sanity"
-		]
-	}
+		"recommendations": ["VoidZero.vite-plus-extension-pack", "bradlc.vscode-tailwindcss", "sanity-io.vscode-sanity"],
+	},
 }

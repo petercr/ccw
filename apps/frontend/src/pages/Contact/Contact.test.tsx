@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import { ContactPage } from './Contact.tsx';
 
 vi.mock('@/components/BackToHome/BackToHome.tsx', () => ({
@@ -42,7 +42,9 @@ function fillValidForm() {
 	fireEvent.change(screen.getByLabelText('First Name'), { target: { value: 'Jane' } });
 	fireEvent.change(screen.getByLabelText('Last Name'), { target: { value: 'Doe' } });
 	fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'jane@example.com' } });
-	fireEvent.change(screen.getByLabelText('Reason For Message'), { target: { value: 'Website audit' } });
+	fireEvent.change(screen.getByLabelText('Reason For Message'), {
+		target: { value: 'Website audit' },
+	});
 }
 
 describe('ContactPage', () => {
@@ -110,7 +112,9 @@ describe('ContactPage', () => {
 
 		fillValidForm();
 		fireEvent.change(screen.getByLabelText('First Name'), { target: { value: ' Jane ' } });
-		fireEvent.change(screen.getByLabelText('Additional Info'), { target: { value: ' Please call me ' } });
+		fireEvent.change(screen.getByLabelText('Additional Info'), {
+			target: { value: ' Please call me ' },
+		});
 		fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
 		await waitFor(() => {

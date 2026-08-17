@@ -19,9 +19,9 @@ export default defineConfig({
 		},
 	],
 	webServer: {
-		// Use the pre-built production server (avoids Vite cold-compilation on first
-		// visit to each route). Build with NITRO_PRESET=node-server (see e2e-tests.yml).
-		command: 'npm run start',
+		// Production Nitro server (avoids Vite cold-compilation on first visit).
+		// vp build with the node-server preset, then serve the output.
+		command: 'NITRO_PRESET=node-server npx vp build && node .output/server/index.mjs',
 		cwd: 'apps/frontend',
 		port: 3000,
 		env: {

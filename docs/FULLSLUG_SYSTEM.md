@@ -7,17 +7,20 @@ This system automatically computes and maintains hierarchical URL paths (`fullSl
 ## How It Works
 
 ### 1. **Real-time Preview** (Custom Input Component)
+
 - While editing, the `FullSlugInput` component shows a preview of what the fullSlug will be
 - Updates automatically as you type or change the parent category
 - **Does NOT write to the document** (read-only display)
 
 ### 2. **Publish Action** (Actual Update)
+
 - When you click "Publish", the `fullSlugPublishAction` runs
 - Computes the fullSlug from the draft's slug and parent
 - Writes the fullSlug to the published document
 - Recursively updates all child documents
 
 ### 3. **Batch Processing** (Performance Optimization)
+
 - Uses Sanity transactions to update multiple documents at once
 - Processes children in parallel with concurrency limits
 - Caches computed values to avoid redundant calculations
@@ -29,7 +32,7 @@ This system automatically computes and maintains hierarchical URL paths (`fullSl
 ✅ **Batch Updates** - Efficiently updates all descendants in one transaction  
 ✅ **Error Resilience** - Graceful fallbacks when operations fail  
 ✅ **Development Logging** - Detailed logs in dev, clean production console  
-✅ **Type Safety** - Full TypeScript support with proper interfaces  
+✅ **Type Safety** - Full TypeScript support with proper interfaces
 
 ## Files Structure
 
@@ -57,20 +60,21 @@ Edit `src/utils/fullSlugConfig.ts` to customize:
 
 ```typescript
 export const FULL_SLUG_CONFIG = {
-  SUPPORTED_TYPES: ['category', 'post'],  // Document types with fullSlug
-  MAX_DEPTH: 5,                           // Maximum parent chain depth
-  DEBOUNCE_MS: 300,                       // Delay before recomputing preview
-  BATCH_CONCURRENCY: 3,                   // Parallel processing limit
-  RETRY: {
-    MAX_ATTEMPTS: 5,
-    DELAY_MS: 400,
-  },
+	SUPPORTED_TYPES: ['category', 'post'], // Document types with fullSlug
+	MAX_DEPTH: 5, // Maximum parent chain depth
+	DEBOUNCE_MS: 300, // Delay before recomputing preview
+	BATCH_CONCURRENCY: 3, // Parallel processing limit
+	RETRY: {
+		MAX_ATTEMPTS: 5,
+		DELAY_MS: 400,
+	},
 };
 ```
 
 ## Usage Examples
 
 ### Creating a New Document
+
 1. Create a new post/category
 2. Generate the slug (click "Generate" button)
 3. (Optional) Select a parent category
@@ -78,18 +82,21 @@ export const FULL_SLUG_CONFIG = {
 5. Click "Publish" - fullSlug is computed and saved
 
 ### Changing Parent Category
+
 1. Edit an existing document
 2. Change the parent field
 3. The fullSlug preview updates immediately
 4. Click "Publish" - the document and ALL its descendants are updated
 
 ### Root-Level Documents
+
 - If no parent is set, the fullSlug equals the slug
 - Example: slug `technology` → fullSlug `technology`
 
 ## Performance Metrics
 
 From your test run:
+
 - **Total time**: ~2.3 seconds for a document with 3-level parent chain
 - **Database queries**: 1 query for parent chain (not 3 separate queries)
 - **Batch updates**: All children updated in single transaction
@@ -98,7 +105,9 @@ From your test run:
 ## Debugging
 
 ### Development Mode
+
 Set `NODE_ENV=development` to enable detailed logging:
+
 ```
 [computeFullSlug] Computing for docId: ...
 [computeFullSlug] Using explicit slug and parent ref, skipping document fetch
@@ -107,6 +116,7 @@ Set `NODE_ENV=development` to enable detailed logging:
 ```
 
 ### Production Mode
+
 Only critical errors are logged - clean console for end users.
 
 ### Common Issues
@@ -126,6 +136,7 @@ Only critical errors are logged - clean console for end users.
 ## Performance Monitoring
 
 In development, check performance metrics:
+
 ```typescript
 import { fullSlugMonitor } from './utils/fullSlugMonitor';
 
@@ -143,6 +154,7 @@ fullSlugMonitor.logReport();
 Computes the full hierarchical slug for a document.
 
 **Parameters:**
+
 - `client` - Sanity client instance
 - `docId` - Document ID (published or draft)
 - `options.maxDepth` - Maximum parent chain depth (default: 4)
@@ -153,13 +165,14 @@ Computes the full hierarchical slug for a document.
 **Returns:** `Promise<string | null>` - The computed fullSlug or null
 
 **Example:**
+
 ```typescript
 const fullSlug = await computeFullSlugRecursive(
-  client,
-  '123abc',
-  { maxDepth: 5 },
-  'new-post-slug',
-  'parent-category-id'
+	client,
+	'123abc',
+	{ maxDepth: 5 },
+	'new-post-slug',
+	'parent-category-id',
 );
 // Returns: "parent/grandparent/new-post-slug"
 ```
@@ -169,6 +182,7 @@ const fullSlug = await computeFullSlugRecursive(
 Recursively updates fullSlug for all descendants of a document.
 
 **Parameters:**
+
 - `client` - Sanity client instance
 - `parentId` - Parent document ID
 - `cache` - Cache map for performance
@@ -188,13 +202,16 @@ Recursively updates fullSlug for all descendants of a document.
 ## Troubleshooting
 
 ### Enable Full Debug Mode
+
 ```typescript
 // In computeFullSlugRecursive.ts, temporarily force debug:
 const DEBUG = true; // Change from process.env.NODE_ENV === 'development'
 ```
 
 ### Check Sanity Content Lake
+
 Use Sanity Vision to inspect documents:
+
 ```groq
 *[_type in ["post", "category"] && defined(slug)]{
   _id,
@@ -205,6 +222,7 @@ Use Sanity Vision to inspect documents:
 ```
 
 ### Verify Parent Chain
+
 ```groq
 *[_id == "your-document-id"][0]{
   _id,
@@ -235,6 +253,7 @@ If you had a previous fullSlug implementation:
 ## Future Enhancements
 
 Possible improvements:
+
 - [ ] GraphQL API for external consumers
 - [ ] Webhook notifications when fullSlugs change
 - [ ] Automated migration script for bulk updates
@@ -244,6 +263,7 @@ Possible improvements:
 ## Support
 
 For issues or questions:
+
 1. Check the debug logs in development mode
 2. Review this documentation
 3. Inspect the browser console for errors

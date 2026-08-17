@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 
 const createIfNotExists = vi.fn();
 const createClient = vi.fn((_config?: unknown) => ({ createIfNotExists }));
@@ -41,9 +41,8 @@ describe('syncContactSubmissionToSanity', () => {
 		process.env.SANITY_WRITE_TOKEN = 'write-token';
 		createIfNotExists.mockResolvedValue({ _id: 'contactSubmission-abc-123' });
 
-		const { syncContactSubmissionToSanity, contactSubmissionDocumentId } = await import(
-			'../syncContactSubmissionToSanity.ts'
-		);
+		const { syncContactSubmissionToSanity, contactSubmissionDocumentId } =
+			await import('../syncContactSubmissionToSanity.ts');
 
 		const result = await syncContactSubmissionToSanity(input);
 

@@ -31,29 +31,33 @@ A modern blog application focused on pension and financial topics, built with Ta
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or pnpm
 - A Sanity project (see [Sanity.io](https://www.sanity.io/))
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd santan
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables:
+
 ```bash
 cp .env.example .env
 ```
 
 Edit `.env` and add your Sanity project credentials:
+
 ```env
 SANITY_PROJECT_ID=your-project-id
 SANITY_DATASET=production
@@ -66,6 +70,7 @@ SANITY_STUDIO_URL=http://localhost:3333
 ### Development
 
 Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -75,16 +80,19 @@ The app will be available at `http://localhost:3000`.
 ### Building for Production
 
 Build the application:
+
 ```bash
 npm run build
 ```
 
 Start the production server:
+
 ```bash
 npm start
 ```
 
 Preview the production build:
+
 ```bash
 npm run serve
 ```
@@ -117,16 +125,13 @@ src/
 
 ## Available Scripts
 
-- `npm run dev` - Start development server on port 3000
-- `npm run build` - Build for production
+- `vp dev` / `npm run dev` - Start development server on port 3000
+- `vp build` / `npm run build` - Build for production
 - `npm start` - Start production server
-- `npm run serve` - Preview production build
-- `npm test` - Run tests
-- `npm run lint` - Run ESLint
-- `npm run check:types` - Type check with TypeScript
-- `npm run check:lint` - Lint and fix issues
-- `npm run check` - Run type checking and linting
-- `npm run apply:format` - Format code with Prettier
+- `vp preview` / `npm run serve` - Preview production build
+- `vp test` / `npm run vitest` - Run Vitest unit tests
+- `vp check` / `npm run check` - Format, lint, and type-check
+- `vp run type-check` - Type check with TypeScript
 - `npm run clean` - Remove build output
 
 ### Preview Mode Scripts
@@ -141,6 +146,7 @@ src/
 ### Sanity CMS
 
 The project integrates with Sanity for content management:
+
 - Content is fetched using GROQ queries
 - Supports draft/preview mode with live updates
 - Visual editing enabled via `@sanity/visual-editing`
@@ -169,14 +175,14 @@ import { useStore } from '@tanstack/react-store';
 import { previewStore, setPreviewMode } from '@/stores/previewStore';
 
 function MyComponent() {
-  const { isPreview } = useStore(previewStore);
-  
-  // Update the preview state
-  const togglePreview = () => {
-    setPreviewMode(!isPreview);
-  };
-  
-  return <div>Preview mode: {isPreview ? 'ON' : 'OFF'}</div>;
+	const { isPreview } = useStore(previewStore);
+
+	// Update the preview state
+	const togglePreview = () => {
+		setPreviewMode(!isPreview);
+	};
+
+	return <div>Preview mode: {isPreview ? 'ON' : 'OFF'}</div>;
 }
 ```
 
@@ -190,13 +196,9 @@ const counterStore = new Store({ count: 0 });
 
 // Use in a component
 function Counter() {
-  const { count } = useStore(counterStore);
-  
-  return (
-    <button onClick={() => counterStore.setState((state) => ({ count: state.count + 1 }))}>
-      Count: {count}
-    </button>
-  );
+	const { count } = useStore(counterStore);
+
+	return <button onClick={() => counterStore.setState((state) => ({ count: state.count + 1 }))}>Count: {count}</button>;
 }
 ```
 
@@ -208,8 +210,8 @@ import { Store, Derived } from '@tanstack/store';
 const countStore = new Store({ count: 0 });
 
 const doubledStore = new Derived({
-  fn: () => countStore.state.count * 2,
-  deps: [countStore],
+	fn: () => countStore.state.count * 2,
+	deps: [countStore],
 });
 doubledStore.mount();
 ```
@@ -219,6 +221,7 @@ Learn more in the [TanStack Store documentation](https://tanstack.com/store/late
 ### Styling
 
 Two styling approaches are used:
+
 - **Tailwind CSS v4**: Utility-first CSS framework
 - **Vanilla Extract**: Type-safe CSS-in-TypeScript for component styles
 
@@ -226,20 +229,21 @@ Two styling approaches are used:
 
 Required environment variables (see `.env.example`):
 
-| Variable | Description |
-|----------|-------------|
-| `SANITY_PROJECT_ID` | Your Sanity project ID |
-| `SANITY_DATASET` | Dataset name (usually `production`) |
-| `SANITY_API_VERSION` | API version (e.g., `2024-01-01`) |
-| `SANITY_READ_TOKEN` | Read token for draft content (optional) |
-| `SANITY_SESSION_SECRET` | Secret for preview sessions (optional) |
-| `SANITY_STUDIO_URL` | URL to your Sanity Studio (optional) |
+| Variable                | Description                             |
+| ----------------------- | --------------------------------------- |
+| `SANITY_PROJECT_ID`     | Your Sanity project ID                  |
+| `SANITY_DATASET`        | Dataset name (usually `production`)     |
+| `SANITY_API_VERSION`    | API version (e.g., `2024-01-01`)        |
+| `SANITY_READ_TOKEN`     | Read token for draft content (optional) |
+| `SANITY_SESSION_SECRET` | Secret for preview sessions (optional)  |
+| `SANITY_STUDIO_URL`     | URL to your Sanity Studio (optional)    |
 
 ## Deployment
 
 The project uses Nitro v2 with Node.js server preset for deployment. The build output is in `.output/server/index.mjs`.
 
 To deploy:
+
 1. Build the project: `npm run build`
 2. Deploy the `.output` directory to your hosting provider
 3. Set environment variables on your hosting platform

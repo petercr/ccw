@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 import { globalLayout } from '../globalLayout';
 
 // Mocking the previewMode module to isolate the test from its implementation

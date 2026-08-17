@@ -1,9 +1,12 @@
 {
 	"name": "@santan/studio",
-	"private": true,
 	"version": "1.0.0",
-	"main": "package.json",
+	"private": true,
+	"keywords": [
+		"sanity"
+	],
 	"license": "MIT",
+	"main": "package.json",
 	"scripts": {
 		"dev": "sanity dev",
 		"start": "sanity start",
@@ -11,16 +14,11 @@
 		"deploy": "sanity deploy",
 		"generate-types": "sanity schema extract && sanity typegen generate && npm run extract-zod-literals",
 		"extract-zod-literals": "npx ts-node src/scripts/extractZodLiterals.ts",
-		"format": "biome format --write .",
-		"lint": "biome lint .",
 		"type-check": "tsc --noEmit",
-		"clean": "rm -rf dist .turbo",
+		"clean": "rm -rf dist",
 		"import-posts": "ts-node src/scripts/importPosts.ts",
 		"import-authors": "ts-node src/scripts/importAuthors.ts"
 	},
-	"keywords": [
-		"sanity"
-	],
 	"dependencies": {
 		"@sanity/vision": "^6.5.0",
 		"lucide-react": "^1.25.0",

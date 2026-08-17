@@ -93,9 +93,7 @@ export const structure: StructureResolver = (S) =>
 										.id('contactSubmissionsClosedList')
 										.title('Closed / spam')
 										.schemaType('contactSubmission')
-										.filter(
-											'_type == "contactSubmission" && responseStatus in ["closed", "spam"]',
-										)
+										.filter('_type == "contactSubmission" && responseStatus in ["closed", "spam"]')
 										.defaultOrdering([{ field: 'submittedAt', direction: 'desc' }])
 										.canHandleIntent(() => false),
 								),

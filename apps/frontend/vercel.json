@@ -1,5 +1,5 @@
 {
-	"buildCommand": "cd ../.. && npx turbo run build --filter=@santan/frontend...",
+	"buildCommand": "cd ../.. && vp run --filter @santan/shared --filter @santan/frontend build",
 	"outputDirectory": ".vercel/output",
 	"framework": null,
 	"git": {

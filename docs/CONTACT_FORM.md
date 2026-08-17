@@ -25,31 +25,31 @@ Neon remains the durable app store of record. Sanity is a **mirror** for non-tec
 
 Table `contact_submissions` (auto-created if missing):
 
-| Column               | Type        | Notes                          |
-|----------------------|-------------|--------------------------------|
+| Column               | Type        | Notes                           |
+| -------------------- | ----------- | ------------------------------- |
 | `id`                 | UUID        | Primary key (`gen_random_uuid`) |
-| `first_name`         | TEXT        | Required                       |
-| `last_name`          | TEXT        | Required                       |
-| `email`              | TEXT        | Required (reply recipient)     |
-| `reason_for_message` | TEXT        | Required                       |
-| `additional_info`    | TEXT        | Optional                       |
-| `created_at`         | TIMESTAMPTZ | Default `NOW()`                |
+| `first_name`         | TEXT        | Required                        |
+| `last_name`          | TEXT        | Required                        |
+| `email`              | TEXT        | Required (reply recipient)      |
+| `reason_for_message` | TEXT        | Required                        |
+| `additional_info`    | TEXT        | Optional                        |
+| `created_at`         | TIMESTAMPTZ | Default `NOW()`                 |
 
 ## Sanity schema (`contactSubmission`)
 
-| Field              | Type     | Notes |
-|--------------------|----------|--------|
-| `firstName`        | string   | Read-only (from form) |
-| `lastName`         | string   | Read-only |
-| `email`            | string   | Read-only |
-| `reasonForMessage` | string   | Read-only |
-| `additionalInfo`   | text     | Read-only |
-| `submittedAt`      | datetime | Read-only (from Neon `created_at`) |
-| `neonId`           | string   | Neon UUID; used for idempotency |
-| `responseStatus`   | string   | `new` \| `in_progress` \| `replied` \| `closed` \| `spam` |
+| Field              | Type     | Notes                                                                   |
+| ------------------ | -------- | ----------------------------------------------------------------------- |
+| `firstName`        | string   | Read-only (from form)                                                   |
+| `lastName`         | string   | Read-only                                                               |
+| `email`            | string   | Read-only                                                               |
+| `reasonForMessage` | string   | Read-only                                                               |
+| `additionalInfo`   | text     | Read-only                                                               |
+| `submittedAt`      | datetime | Read-only (from Neon `created_at`)                                      |
+| `neonId`           | string   | Neon UUID; used for idempotency                                         |
+| `responseStatus`   | string   | `new` \| `in_progress` \| `replied` \| `closed` \| `spam`               |
 | `responseCategory` | string   | Optional: `general`, `audit_request`, `partnership`, `support`, `other` |
-| `internalNotes`    | text     | Editor-only |
-| `lastContactedAt`  | datetime | Optional |
+| `internalNotes`    | text     | Editor-only                                                             |
+| `lastContactedAt`  | datetime | Optional                                                                |
 
 Document id is deterministic: `contactSubmission-{neonId}` via `createIfNotExists`, so retries do not duplicate docs.
 
@@ -59,16 +59,16 @@ Studio: **Contact submissions** desk section with filters (All / New / In progre
 
 Set these in `apps/frontend/.env.local`, in Vercel project settings, and as **GitHub Actions secrets** where e2e needs real backend (mocked e2e does not require write token):
 
-| Variable          | Required | Description                                      |
-|-------------------|----------|--------------------------------------------------|
-| `DATABASE_URL`    | Yes      | Neon connection string (pooled recommended)      |
-| `SANITY_WRITE_TOKEN` | Yes*  | Server-only Sanity token with create permission on `contactSubmission`. *Required to appear in Studio; form still succeeds without it (sync skipped + warning log). |
-| `ZOHO_SMTP_HOST`  | No       | Default `smtp.zoho.com`                          |
-| `ZOHO_SMTP_PORT`  | No       | Default `465` (SSL). Use `587` for STARTTLS    |
-| `ZOHO_SMTP_USER`  | Yes      | Zoho mailbox username                            |
-| `ZOHO_SMTP_PASS`  | Yes      | Zoho password or app-specific password           |
-| `ZOHO_SMTP_FROM`  | No       | From address (defaults to `ZOHO_SMTP_USER`)      |
-| `ZOHO_SMTP_BCC`   | No       | Notification BCC (defaults to `peter@capecod.world`) |
+| Variable             | Required | Description                                                                                                                                                         |
+| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`       | Yes      | Neon connection string (pooled recommended)                                                                                                                         |
+| `SANITY_WRITE_TOKEN` | Yes*     | Server-only Sanity token with create permission on `contactSubmission`. *Required to appear in Studio; form still succeeds without it (sync skipped + warning log). |
+| `ZOHO_SMTP_HOST`     | No       | Default `smtp.zoho.com`                                                                                                                                             |
+| `ZOHO_SMTP_PORT`     | No       | Default `465` (SSL). Use `587` for STARTTLS                                                                                                                         |
+| `ZOHO_SMTP_USER`     | Yes      | Zoho mailbox username                                                                                                                                               |
+| `ZOHO_SMTP_PASS`     | Yes      | Zoho password or app-specific password                                                                                                                              |
+| `ZOHO_SMTP_FROM`     | No       | From address (defaults to `ZOHO_SMTP_USER`)                                                                                                                         |
+| `ZOHO_SMTP_BCC`      | No       | Notification BCC (defaults to `peter@capecod.world`)                                                                                                                |
 
 ### Sanity write token
 
@@ -79,7 +79,7 @@ Set these in `apps/frontend/.env.local`, in Vercel project settings, and as **Gi
 
 ```bash
 cd apps/studio && npm run generate-types
-npm run build --workspace=@santan/shared
+vp run @santan/shared#build
 ```
 
 ### Neon setup
@@ -120,14 +120,14 @@ printf '%s' "$DATABASE_URL" | gh secret set DATABASE_URL
 
 ## Error handling
 
-| Failure                         | Behavior                                                                 |
-|---------------------------------|--------------------------------------------------------------------------|
-| Validation error                | `400` with `fieldErrors` map; nothing stored                             |
-| Database error                  | `500`; logged as `[contact] Failed to store submission`                  |
+| Failure                         | Behavior                                                                       |
+| ------------------------------- | ------------------------------------------------------------------------------ |
+| Validation error                | `400` with `fieldErrors` map; nothing stored                                   |
+| Database error                  | `500`; logged as `[contact] Failed to store submission`                        |
 | Sanity sync error after DB      | Still `200` success; logged as `[contact] Failed to sync submission to Sanity` |
-| Missing `SANITY_WRITE_TOKEN`    | Still `200` success; warning log; no Sanity doc                          |
-| Email error after successful DB | Still `200` success; logged as `[contact] Failed to send reply email`    |
-| Invalid JSON body               | `400`                                                                    |
+| Missing `SANITY_WRITE_TOKEN`    | Still `200` success; warning log; no Sanity doc                                |
+| Email error after successful DB | Still `200` success; logged as `[contact] Failed to send reply email`          |
+| Invalid JSON body               | `400`                                                                          |
 
 ## Local testing without real SMTP/DB/Sanity
 
