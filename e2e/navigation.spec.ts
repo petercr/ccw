@@ -30,18 +30,20 @@ test.describe('Navigation', () => {
 	});
 
 	const serviceLinks = [
-		{ name: 'Design', path: /\/design\/?$/ },
-		{ name: 'Development', path: /\/development\/?$/ },
-		{ name: 'Digital Content', path: /\/digital-content\/?$/ },
-		{ name: 'Deployment', path: /\/deployment\/?$/ },
-		{ name: 'AI Integration', path: /\/ai-integration\/?$/ },
+		{ name: 'Design', href: '/design' },
+		{ name: 'Development', href: '/development' },
+		{ name: 'Digital Content', href: '/digital-content' },
+		{ name: 'Deployment', href: '/deployment' },
+		{ name: 'AI Integration', href: '/ai-integration' },
 	] as const;
 
 	for (const link of serviceLinks) {
 		test(`should navigate from homepage to ${link.name}`, async ({ page }) => {
 			await page.goto('/');
-			await page.getByRole('main').getByRole('link', { name: link.name, exact: true }).click();
-			await expect(page).toHaveURL(link.path, { timeout: 15_000 });
+			const serviceLink = page.getByRole('main').locator(`a[href="${link.href}"]`, { hasText: link.name });
+			await expect(serviceLink).toBeVisible();
+			await serviceLink.click();
+			await expect(page).toHaveURL(new RegExp(`${link.href}/?$`), { timeout: 15_000 });
 			await expect(page.getByRole('heading', { name: link.name, level: 1 })).toBeVisible();
 		});
 	}
