@@ -40,6 +40,7 @@ test.describe('Navigation', () => {
 	for (const link of serviceLinks) {
 		test(`should navigate from homepage to ${link.name}`, async ({ page }) => {
 			await page.goto('/');
+			await page.waitForLoadState('networkidle');
 			const serviceLink = page.getByRole('main').locator(`a[href="${link.href}"]`, { hasText: link.name });
 			await expect(serviceLink).toBeVisible();
 			await Promise.all([
