@@ -25,17 +25,20 @@ Welcome to the Santan Monorepo documentation!
 ## Quick Links
 
 ### Getting Started
+
 1. [Prerequisites](../README.md#prerequisites)
 2. [Installation](../README.md#quick-start)
 3. [Development](../README.md#development)
 
 ### Common Tasks
+
 - [Run dev servers](../README.md#development)
 - [Generate Sanity types](../README.md#type-generation)
 - [Build for production](../README.md#production)
 - [Deploy](../README.md#deployment)
 
 ### Troubleshooting
+
 - [Port conflicts](../README.md#port-already-in-use)
 - [Sanity connection issues](../README.md#frontend-cant-connect-to-sanity)
 - [Type sync issues](../README.md#types-not-updating)
@@ -46,6 +49,7 @@ Welcome to the Santan Monorepo documentation!
 ## Contributing
 
 When adding new documentation:
+
 1. Add it to the appropriate section above
 2. Link to it from the main README if it's important
 3. Keep docs focused and maintainable
@@ -54,4 +58,3 @@ When adding new documentation:
 ---
 
 **Last Updated**: October 30, 2025
-

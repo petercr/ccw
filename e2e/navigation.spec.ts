@@ -28,4 +28,26 @@ test.describe('Navigation', () => {
 		await nav.getByRole('link', { name: /Home/i }).click();
 		await expect(page).toHaveURL(/^http:\/\/localhost:3000\/?$/, { timeout: 15_000 });
 	});
+
+	const serviceLinks = [
+		{ name: 'Design', href: '/design' },
+		{ name: 'Development', href: '/development' },
+		{ name: 'Digital Content', href: '/digital-content' },
+		{ name: 'Deployment', href: '/deployment' },
+		{ name: 'AI Integration', href: '/ai-integration' },
+	] as const;
+
+	for (const link of serviceLinks) {
+		test(`should navigate from homepage to ${link.name}`, async ({ page }) => {
+			await page.goto('/');
+			await page.waitForLoadState('networkidle');
+			const serviceLink = page.getByRole('main').locator(`a[href="${link.href}"]`, { hasText: link.name });
+			await expect(serviceLink).toBeVisible();
+			await Promise.all([
+				page.waitForURL((url) => url.pathname.replace(/\/$/, '') === link.href, { timeout: 15_000 }),
+				serviceLink.click(),
+			]);
+			await expect(page.getByRole('heading', { name: link.name, level: 1 })).toBeVisible();
+		});
+	}
 });

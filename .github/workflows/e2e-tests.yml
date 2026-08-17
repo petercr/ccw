@@ -32,8 +32,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build all packages
-        run: npm run build
+      - name: Build shared types
+        run: npx vp run --filter @santan/shared build
+
+      - name: Build frontend
+        run: npx vp -C apps/frontend build
 
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps

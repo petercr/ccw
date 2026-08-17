@@ -149,8 +149,7 @@ export const contactSubmission = defineType({
 						timeStyle: 'short',
 					})
 				: '';
-			const statusLabel =
-				RESPONSE_STATUS_OPTIONS.find((o) => o.value === status)?.title ?? status ?? 'new';
+			const statusLabel = RESPONSE_STATUS_OPTIONS.find((o) => o.value === status)?.title ?? status ?? 'new';
 			return {
 				title: `${name} · ${statusLabel}`,
 				subtitle: [email, reason, when].filter(Boolean).join(' · '),

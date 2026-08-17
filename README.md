@@ -2,12 +2,12 @@
 
 > Please Note this project is currently in development and still has some rough edges. Use at your own risk.
 
-A production-ready monorepo combining a TanStackReact frontend with Sanity Studio, powered by Turborepo.
+A production-ready monorepo combining a TanStack React frontend with Sanity Studio, powered by Vite+.
 
 This project is a custom fork of the original Santan Monorepo, [which can be found here](https://github.com/MagneH/SanTan).
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
-[![Turborepo](https://img.shields.io/badge/Turborepo-2.3-red)](https://turbo.build/repo)
+[![Vite+](https://img.shields.io/badge/Vite+-0.2-yellow)](https://viteplus.dev/guide/)
 [![Node.js](https://img.shields.io/badge/Node.js-≥24-green)](https://nodejs.org/)
 
 ---
@@ -31,7 +31,7 @@ This project is a custom fork of the original Santan Monorepo, [which can be fou
 This monorepo combines a React frontend and Sanity Studio into a single, optimized workspace with:
 
 ✅ **Shared type system** - Auto-generated Sanity types used across both apps  
-✅ **Turborepo caching** - Lightning-fast builds with intelligent caching  
+✅ **Vite+ task runner** - Workspace-aware `vp run` for build and dev  
 ✅ **Production-ready** - Properly configured for deployment  
 ✅ **Type-safe** - Full TypeScript support throughout  
 ✅ **Hot reloading** - Fast development experience
@@ -42,7 +42,7 @@ This monorepo combines a React frontend and Sanity Studio into a single, optimiz
 
 - React 19
 - TanStack Router & Query
-- Vite 7
+- Vite+ (Vite 8, Oxlint, Oxfmt, Vitest)
 - Sanity Client
 - Tailwind CSS
 
@@ -155,7 +155,7 @@ santan-monorepo/
 │       ├── dist/             # Compiled output (generated)
 │       └── package.json      # @santan/shared
 │
-├── turbo.json                 # Turborepo configuration
+├── vite.config.ts             # Vite+ lint, format, test, and task config
 ├── package.json               # Root package with workspaces
 ├── README.md                  # This file
 └── docs/
@@ -183,13 +183,13 @@ Starts all workspaces with hot reloading:
 
 ```bash
 # Frontend only
-npm run dev --workspace=@santan/frontend
+vp dev
 
 # Studio only
-npm run dev --workspace=@santan/studio
+vp run @santan/studio#dev
 
 # Shared package only (watch mode)
-npm run dev --workspace=@santan/shared
+vp run @santan/shared#dev
 ```
 
 ### Working with Shared Types
@@ -198,17 +198,12 @@ The `@santan/shared` package contains auto-generated Sanity types:
 
 ```typescript
 // Import in Frontend or Studio
-import {
-  Post,
-  Category,
-  Author,
-  sanityTypeLiterals,
-} from "@santan/shared/types";
+import { Post, Category, Author, sanityTypeLiterals } from '@santan/shared/types';
 
 // Type-safe document checking
 if (doc._type === sanityTypeLiterals.post) {
-  // TypeScript knows doc is Post type
-  console.log(doc.title, doc.slug);
+	// TypeScript knows doc is Post type
+	console.log(doc.title, doc.slug);
 }
 ```
 
@@ -293,14 +288,15 @@ The shared package automatically rebuilds (if dev mode is running), making types
 
 ### Root Commands
 
-| Command              | Description                        |
-| -------------------- | ---------------------------------- |
-| `npm run dev`        | Start all apps in development mode |
-| `npm run build`      | Build all apps for production      |
-| `npm run type-check` | Type check all packages            |
-| `npm run lint`       | Lint all packages                  |
-| `npm run format`     | Format code with Prettier          |
-| `npm run clean`      | Clean build artifacts              |
+| Command                             | Description                                   |
+| ----------------------------------- | --------------------------------------------- |
+| `vp run -r --parallel dev` / `npm run dev` | Start all apps in development mode     |
+| `vp run -r build` / `npm run build`        | Build all apps for production          |
+| `vp run -r type-check`                     | Type check all packages                |
+| `vp check`                          | Format, lint, and type-check (Oxfmt + Oxlint) |
+| `vp lint` / `npm run lint`          | Lint all packages with Oxlint                 |
+| `vp fmt --write` / `npm run format` | Format code with Oxfmt                        |
+| `npm run clean`                     | Clean build artifacts                         |
 
 ### Workspace Commands
 
@@ -308,12 +304,12 @@ Run commands in specific packages:
 
 ```bash
 # Pattern
-npm run <command> --workspace=@santan/<package>
+vp run @santan/<package>#<task>
 
 # Examples
-npm run dev --workspace=@santan/frontend
-npm run build --workspace=@santan/studio
-npm run type-check --workspace=@santan/shared
+vp dev
+vp run @santan/studio#dev
+vp run @santan/shared#type-check
 ```
 
 ---
@@ -394,12 +390,11 @@ npm install
 Ensure the shared package is built before other packages:
 
 ```bash
-cd packages/shared && npm run build
-cd ../..
-npm run build
+vp run @santan/shared#build
+vp run -r build
 ```
 
-Turborepo should handle this automatically with the `^build` dependency.
+`vp run -r build` already includes `@santan/shared`. For a frontend-only deploy, use `vp run --filter @santan/shared --filter @santan/frontend build`.
 
 ---
 
@@ -409,7 +404,7 @@ Turborepo should handle this automatically with the `^build` dependency.
 
 ✅ **Single clone** - Get frontend and studio together  
 ✅ **Shared types** - Auto-generated, always in sync  
-✅ **Fast builds** - Turborepo caches everything  
+✅ **Fast builds** - Vite+ task runner across workspaces  
 ✅ **Hot reloading** - Changes reflect immediately  
 ✅ **Type safety** - Full TypeScript support
 
@@ -431,7 +426,7 @@ Turborepo should handle this automatically with the `^build` dependency.
 
 ## Support & Resources
 
-- **Turborepo**: https://turbo.build/repo/docs
+- **Vite+**: https://viteplus.dev/guide
 - **Sanity**: https://www.sanity.io/docs
 - **TanStack Router**: https://tanstack.com/router
 - **Vite**: https://vitejs.dev
