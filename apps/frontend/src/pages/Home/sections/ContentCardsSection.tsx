@@ -1,4 +1,3 @@
-import { Route as FullSlugRoute } from '@/routes/$.tsx';
 import type { HomeDocument } from '@/types/home.ts';
 import { stegaClean } from '@sanity/client/stega';
 import { Link } from '@tanstack/react-router';
@@ -16,7 +15,11 @@ import {
 	simpleLink,
 } from './ContentCardsSection.css.ts';
 
-/** File routes get a typed `to`; everything else is the catch-all fullSlug path. */
+/**
+ * File routes use TanStack Link. Catch-all CMS slugs use a real <a href>
+ * so navigation is a document request — the production client router does
+ * not reliably leave `/` for `/$` splat targets (Playwright stays on home).
+ */
 function CmsLink({ url, className, children }: { url: string; className?: string; children: ReactNode }) {
 	const pathname = stegaClean(url).trim();
 	const path = pathname.startsWith('/') ? pathname : `/${pathname}`;
@@ -51,9 +54,9 @@ function CmsLink({ url, className, children }: { url: string; className?: string
 	}
 
 	return (
-		<Link to={FullSlugRoute.to} params={{ _splat: path.replace(/^\//, '') }} className={className}>
+		<a href={path} className={className}>
 			{children}
-		</Link>
+		</a>
 	);
 }
 

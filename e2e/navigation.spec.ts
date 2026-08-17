@@ -42,8 +42,10 @@ test.describe('Navigation', () => {
 			await page.goto('/');
 			const serviceLink = page.getByRole('main').locator(`a[href="${link.href}"]`, { hasText: link.name });
 			await expect(serviceLink).toBeVisible();
-			await serviceLink.click();
-			await expect(page).toHaveURL(new RegExp(`${link.href}/?$`), { timeout: 15_000 });
+			await Promise.all([
+				page.waitForURL((url) => url.pathname.replace(/\/$/, '') === link.href, { timeout: 15_000 }),
+				serviceLink.click(),
+			]);
 			await expect(page.getByRole('heading', { name: link.name, level: 1 })).toBeVisible();
 		});
 	}
