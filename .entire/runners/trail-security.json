@@ -1,0 +1,37 @@
+{
+  "id": "trail-security",
+  "display_name": "Security Review",
+  "enabled": true,
+  "scope": "trail",
+  "runtime": {
+    "kind": "prompt_runner",
+    "agent": "claude",
+    "timeout_ms": 300000,
+    "sandbox": {
+      "base_template": "claude",
+      "repo_token": "read"
+    }
+  },
+  "automation": {
+    "kind": "trail_prompt"
+  },
+  "prompt": {
+    "template": "You are a security risk evaluator. Analyze the changes on branch \"{{branch}}\" compared to \"{{base_branch}}\".\n\nRun `git diff origin/{{base_branch}}...HEAD` to see the changes, then score **security risk** from 0 to 100 (review adversarially; higher = more suspicious or insecure).\n\nOutput ONLY this JSON object as the very last line of your response:\n\n{\"value\": <number 0-100>, \"rationale\": \"<1-2 sentence explanation>\"}\n\nRepository context: This is an npm-workspaces monorepo with a TanStack Start frontend, Sanity Studio, and shared generated types. Content flows through GROQ server functions, loaders, routes, and page components. Posts/categories use computed fullSlug values. Preview uses server-side Sanity tokens and live visual editing. Contact submissions use Neon, Zoho SMTP, and Sanity synchronization. Check the relevant behavior and tests for the changed files; report evidence and uncertainty rather than assuming a command passed.\n\nCheck server-only Sanity tokens, session handling, contact input validation, database writes, SMTP behavior, and any secret exposure in client bundles or logs. Flag only concrete issues in the diff."
+  },
+  "select": {
+    "trigger_types": [
+      "api",
+      "push"
+    ]
+  },
+  "output": {
+    "adapter": "last_json_line",
+    "result_type": "trail_monitor",
+    "trail_monitor": {
+      "key": "security",
+      "label": "Security",
+      "value_type": "percent",
+      "polarity": "lower_is_better"
+    }
+  }
+}
