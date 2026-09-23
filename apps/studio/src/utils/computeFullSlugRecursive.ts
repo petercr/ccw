@@ -1,4 +1,4 @@
-import type { SanityClient } from '@sanity/client';
+import type { SanityClient } from 'sanity';
 
 interface DocumentWithSlug {
 	_id: string;
