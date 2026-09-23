@@ -1,9 +1,12 @@
 {
 	"name": "@santan/studio",
-	"private": true,
 	"version": "1.0.0",
-	"main": "package.json",
+	"private": true,
+	"keywords": [
+		"sanity"
+	],
 	"license": "MIT",
+	"main": "package.json",
 	"scripts": {
 		"dev": "sanity dev",
 		"start": "sanity start",
@@ -11,22 +14,17 @@
 		"deploy": "sanity deploy",
 		"generate-types": "sanity schema extract && sanity typegen generate && npm run extract-zod-literals",
 		"extract-zod-literals": "npx ts-node src/scripts/extractZodLiterals.ts",
-		"format": "biome format --write .",
-		"lint": "biome lint .",
 		"type-check": "tsc --noEmit",
-		"clean": "rm -rf dist .turbo",
+		"clean": "rm -rf dist",
 		"import-posts": "ts-node src/scripts/importPosts.ts",
 		"import-authors": "ts-node src/scripts/importAuthors.ts"
 	},
-	"keywords": [
-		"sanity"
-	],
 	"dependencies": {
-		"@sanity/vision": "^6.11.0",
+		"@sanity/vision": "^6.16.0",
 		"lucide-react": "^1.35.0",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
-		"sanity": "^6.11.0",
+		"sanity": "^6.16.0",
 		"sanity-plugin-documents-pane": "^4.1.19",
 		"styled-components": "^6.5.3"
 	},
@@ -35,6 +33,6 @@
 		"@commitlint/config-conventional": "^21.2.2",
 		"@types/react": "^19.2.18",
 		"ts-node": "^10.9.2",
-		"typescript": "^7.1.0-dev.20260828.1"
+		"typescript": "^7.0.2"
 	}
 }

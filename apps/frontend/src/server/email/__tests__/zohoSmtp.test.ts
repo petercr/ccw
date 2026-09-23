@@ -1,5 +1,5 @@
 /** @vitest-environment node */
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 
 const { sendMail } = vi.hoisted(() => {
 	const sendMail = vi.fn();

@@ -4,7 +4,7 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Monorepo Structure
 
-This is a **Turborepo + npm workspaces** monorepo with three packages:
+This is an **npm workspaces** monorepo using **Vite+** (`vp`) for the frontend toolchain and workspace tasks, with three packages:
 
 - `apps/frontend` — TanStack Start (React 19 + TypeScript) web app, served at port 3000
 - `apps/studio` — Sanity Studio v5, served at port 3333
@@ -12,41 +12,51 @@ This is a **Turborepo + npm workspaces** monorepo with three packages:
 
 ## Commands
 
+`vp <name>` runs a Vite+ built-in. `vp run <name>` (or `npm run <name>`) runs a `package.json` script or a `vite.config.ts` task. They are not the same: `vp dev` starts the frontend Vite server only, while `vp run dev` / `npm run dev` starts frontend + studio + shared watch. `vp test` is Vitest; `vp run test` / `npm test` is Playwright e2e.
+
 ### Development
+
 ```bash
-npm run dev                                    # Start all apps (frontend + studio + shared watch)
-npm run dev --workspace=@santan/frontend       # Frontend only
-npm run dev --workspace=@santan/studio         # Studio only
+vp run -r --parallel dev                       # Start all apps (frontend + studio + shared watch)
+vp dev                                         # Frontend Vite+ dev server (port 3000)
+vp run @santan/studio#dev                      # Studio only
 ```
 
 ### Building
+
 ```bash
-npm run build                                  # Build all packages
-npm run build --workspace=@santan/frontend     # Frontend only
+vp run -r build                                # Build all packages (shared first)
+vp run --filter @santan/shared --filter @santan/frontend build  # Frontend + shared
+vp build                                       # Frontend production build only (does not build shared)
 ```
 
 ### Linting, Formatting, Type Checking
+
 ```bash
-npm run lint          # Biome lint (all packages)
-npm run lint:fix      # Biome lint with auto-fix
-npm run format        # Biome format (all packages)
-npm run check         # Biome check (lint + format)
-npm run check:fix     # Biome check with auto-fix
-npm run type-check    # TypeScript type check (all packages)
+vp check              # Oxfmt + Oxlint + type-aware checks (preferred)
+vp check --fix        # Format and apply lint autofixes
+vp lint               # Oxlint only
+vp fmt --write        # Oxfmt only
+vp run -r type-check  # TypeScript type check (all packages)
 ```
 
 ### Testing (Frontend)
+
 ```bash
-cd apps/frontend && npm test                           # Run all tests
-cd apps/frontend && npx vitest run src/path/to/test.ts # Run a single test file
+vp test                                            # Vitest unit tests
+vp test src/path/to/test.ts                        # Run a single Vitest file
+npm test                                           # Playwright e2e
 ```
 
 ### Sanity Types
+
 After modifying Sanity schemas, regenerate TypeScript types:
+
 ```bash
 cd apps/studio && npm run generate-types
 ```
-This extracts the schema, generates types in `packages/shared/src/types/`, and must be followed by rebuilding shared: `npm run build --workspace=@santan/shared`.
+
+This extracts the schema, generates types in `packages/shared/src/types/`, and must be followed by rebuilding shared: `vp run @santan/shared#build`.
 
 ## Architecture
 
@@ -75,6 +85,7 @@ Loaders check for preview mode via `detectPreviewMode()`. In preview mode, the S
 ### Styling
 
 Two systems are used together:
+
 - **Vanilla Extract** (`.css.ts` files) — typed, scoped styles for components
 - **Tailwind CSS v4** — utility classes
 
@@ -93,6 +104,7 @@ Sanity query results are validated at runtime with **Zod** schemas defined in `a
 ### Sanity Studio
 
 Schema types are organized in `apps/studio/src/schemaTypes/`:
+
 - `fieldTypes/` — reusable field definitions
 - `blockTypes/` — portable text block types (accordion, image carousel, etc.)
 - `index.ts` — registers all schemas
@@ -108,6 +120,7 @@ The following agent skills are installed and should be used when relevant:
 ## Environment Variables
 
 **Frontend** (`apps/frontend/.env.local`):
+
 ```
 VITE_SANITY_PROJECT_ID=
 VITE_SANITY_DATASET=production
@@ -122,6 +135,7 @@ ZOHO_SMTP_FROM=        # Optional; defaults to ZOHO_SMTP_USER
 ```
 
 **Studio** (`apps/studio/.env.local`):
+
 ```
 SANITY_STUDIO_PROJECT_ID=
 SANITY_STUDIO_DATASET=production

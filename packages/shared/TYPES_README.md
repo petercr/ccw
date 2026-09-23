@@ -14,6 +14,7 @@ The Sanity types are automatically generated from the Studio schemas and shared 
 ### How It Works
 
 1. **Types are generated in the Studio package** by running:
+
    ```bash
    cd apps/studio
    npm run generate-types
@@ -32,12 +33,14 @@ The Sanity types are automatically generated from the Studio schemas and shared 
 ### Why This Is Better
 
 **Before (manual copying):**
+
 - ❌ Types duplicated in frontend and studio
 - ❌ Manual copy-paste needed after generation
 - ❌ Easy to forget to sync types
 - ❌ Version drift between packages
 
 **After (shared package):**
+
 - ✅ Single source of truth for types
 - ✅ Automatic sharing across packages
 - ✅ Always in sync
@@ -46,6 +49,7 @@ The Sanity types are automatically generated from the Studio schemas and shared 
 ### When to Regenerate Types
 
 Run `npm run generate-types` in the studio whenever you:
+
 - Add a new document type
 - Modify existing schemas
 - Change field definitions
@@ -65,17 +69,17 @@ const docType = sanityTypeLiterals.post; // 'post'
 
 // Type-safe document handling
 function handleDocument(doc: Post | Category | Author) {
-  switch (doc._type) {
-    case sanityTypeLiterals.post:
-      // TypeScript knows doc is Post
-      break;
-    case sanityTypeLiterals.category:
-      // TypeScript knows doc is Category
-      break;
-    case sanityTypeLiterals.author:
-      // TypeScript knows doc is Author
-      break;
-  }
+	switch (doc._type) {
+		case sanityTypeLiterals.post:
+			// TypeScript knows doc is Post
+			break;
+		case sanityTypeLiterals.category:
+			// TypeScript knows doc is Category
+			break;
+		case sanityTypeLiterals.author:
+			// TypeScript knows doc is Author
+			break;
+	}
 }
 ```
 
@@ -86,11 +90,10 @@ You can add custom shared types in `src/types/index.ts`:
 ```typescript
 // Example: Add a shared utility type
 export interface ApiResponse<T> {
-  data: T;
-  error?: string;
-  timestamp: string;
+	data: T;
+	error?: string;
+	timestamp: string;
 }
 ```
 
 These will be available alongside the generated Sanity types when importing from `@santan/shared/types`.
-

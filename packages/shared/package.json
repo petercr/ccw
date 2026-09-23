@@ -2,6 +2,9 @@
 	"name": "@santan/shared",
 	"version": "0.0.0",
 	"private": true,
+	"files": [
+		"dist"
+	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
@@ -16,22 +19,17 @@
 			"default": "./dist/types/index.js"
 		}
 	},
-	"files": [
-		"dist"
-	],
 	"scripts": {
 		"dev": "tsc --watch",
 		"build": "tsc",
 		"type-check": "tsc --noEmit",
-		"lint": "biome lint .",
-		"format": "biome format --write .",
-		"clean": "rm -rf dist .turbo"
-	},
-	"devDependencies": {
-		"@types/node": "^26.4.0",
-		"typescript": "^7.1.0-dev.20260828.1"
+		"clean": "rm -rf dist"
 	},
 	"dependencies": {
 		"zod": "^4.5.1"
+	},
+	"devDependencies": {
+		"@types/node": "^26.4.0",
+		"typescript": "^7.0.2"
 	}
 }

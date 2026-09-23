@@ -7,13 +7,4 @@ import { siteSettings } from './siteSettings';
 import { testimonial } from './testimonial';
 import { workProject } from './workProject';
 
-export const documentTypes = [
-	home,
-	post,
-	category,
-	person,
-	testimonial,
-	workProject,
-	siteSettings,
-	contactSubmission,
-];
+export const documentTypes = [home, post, category, person, testimonial, workProject, siteSettings, contactSubmission];

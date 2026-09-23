@@ -32,6 +32,7 @@ npm install
 ```
 
 This installs dependencies for:
+
 - Root workspace
 - Frontend app
 - Studio app
@@ -46,17 +47,19 @@ This installs dependencies for:
 ### Frontend Environment
 
 1. Copy the example file:
+
    ```bash
    cp apps/frontend/.env.example apps/frontend/.env.local
    ```
 
 2. Edit `apps/frontend/.env.local`:
+
    ```env
    # Sanity Configuration
    VITE_SANITY_PROJECT_ID=your_project_id_here
    VITE_SANITY_DATASET=production
    VITE_SANITY_API_VERSION=2024-01-01
-   
+
    # Session Secret (generate a random string)
    SESSION_SECRET=your_random_secret_here
    ```
@@ -69,11 +72,13 @@ This installs dependencies for:
 ### Studio Environment
 
 1. Copy the example file:
+
    ```bash
    cp apps/studio/.env.example apps/studio/.env.local
    ```
 
 2. Edit `apps/studio/.env.local`:
+
    ```env
    # Sanity Configuration
    SANITY_STUDIO_PROJECT_ID=your_project_id_here
@@ -95,12 +100,14 @@ cd ../..
 ```
 
 **What this does:**
+
 - Extracts your Sanity schema
 - Generates TypeScript types
 - Creates type literal enums
 - Outputs to `packages/shared/src/types/`
 
-**Expected output**: 
+**Expected output**:
+
 ```
 ✓ Extracted schema to schema.json
 ✓ Generated TypeScript types for X schema types
@@ -118,11 +125,13 @@ npm run dev
 ```
 
 **This starts:**
+
 - 🌐 **Frontend** at [http://localhost:3000](http://localhost:3000)
 - 🎨 **Studio** at [http://localhost:3333](http://localhost:3333)
 - 🔧 **Shared package** in watch mode (auto-recompiles)
 
 **You should see:**
+
 ```
 • Packages in scope: @santan/frontend, @santan/shared, @santan/studio
 • Running dev in 3 packages
@@ -133,21 +142,26 @@ npm run dev
 ## Step 6: Verify Everything Works
 
 ### Check Frontend
+
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 **Troubleshooting:**
+
 - If you see a 500 error, check the terminal for error messages
 - Ensure your `.env.local` files are configured correctly
 - Verify Sanity project ID matches your project
 
 ### Check Studio
+
 Open [http://localhost:3333](http://localhost:3333) in your browser.
 
 **You should see:**
+
 - Sanity Studio login screen
 - Your content types in the sidebar (after logging in)
 
 **Troubleshooting:**
+
 - If port 3333 is in use, Sanity will suggest another port
 - Check that your Sanity project ID is correct
 
@@ -158,57 +172,70 @@ Open [http://localhost:3333](http://localhost:3333) in your browser.
 ### Running Individual Apps
 
 **Frontend only:**
+
 ```bash
-npm run dev --workspace=@santan/frontend
+vp dev
 ```
 
 **Studio only:**
+
 ```bash
-npm run dev --workspace=@santan/studio
+vp run @santan/studio#dev
 ```
 
 **Shared package only (watch mode):**
+
 ```bash
-npm run dev --workspace=@santan/shared
+vp run @santan/shared#dev
 ```
 
 ### Building for Production
 
 Build all apps:
+
 ```bash
-npm run build
+vp run -r build
 ```
 
 Build individual apps:
+
 ```bash
-npm run build --workspace=@santan/frontend
-npm run build --workspace=@santan/studio
+vp run --filter @santan/shared --filter @santan/frontend build
+vp run @santan/studio#build
 ```
 
 ### Type Checking
 
 Check types across all packages:
+
 ```bash
-npm run type-check
+vp run -r type-check
 ```
 
 ### Linting
 
 Lint all code:
+
 ```bash
+vp lint
+# or
 npm run lint
 ```
 
 ### Formatting
 
-Format all code with Prettier:
+Format all code with Oxfmt:
+
 ```bash
+vp fmt --write
+# or
 npm run format
 ```
 
 ### Cleaning Build Artifacts
 
 Remove all build outputs:
+
 ```bash
 npm run clean
 ```
@@ -220,12 +247,14 @@ npm run clean
 ### Adding New Content Types
 
 1. **Create schema in Studio:**
+
    ```bash
    cd apps/studio
    # Edit files in src/schemaTypes/
    ```
 
 2. **Generate types:**
+
    ```bash
    npm run generate-types
    ```
@@ -288,6 +317,7 @@ santan-monorepo/
 **Error:** `EADDRINUSE: address already in use :::3000`
 
 **Solution:**
+
 ```bash
 # Kill process on port 3000
 lsof -ti:3000 | xargs kill -9
@@ -304,6 +334,7 @@ npm run dev
 **Error:** `Failed to fetch data from Sanity`
 
 **Checklist:**
+
 - ✅ Verify `VITE_SANITY_PROJECT_ID` in `.env.local`
 - ✅ Ensure dataset exists in your Sanity project
 - ✅ Check API version is valid (format: YYYY-MM-DD)
@@ -314,6 +345,7 @@ npm run dev
 **Error:** `Cannot find module '@santan/shared/types'`
 
 **Solution:**
+
 ```bash
 # Generate types
 cd apps/studio
@@ -333,6 +365,7 @@ npm run dev
 **Error:** `Cannot find module 'X'`
 
 **Solution:**
+
 ```bash
 # Clean and reinstall
 npm run clean
@@ -345,6 +378,7 @@ npm install
 **Issue:** IDE shows errors but code runs fine
 
 **Solution:**
+
 - Restart TypeScript server:
   - **VS Code:** `CMD+Shift+P` → "TypeScript: Restart TS Server"
   - **WebStorm:** Invalidate caches and restart
@@ -377,15 +411,17 @@ Now that you're set up:
 
 ## Support
 
-### Turborepo
-- Documentation: https://turbo.build/repo/docs
-- Issues: https://github.com/vercel/turbo/issues
+### Vite+
+
+- Documentation: https://viteplus.dev/guide/
 
 ### Sanity
+
 - Documentation: https://www.sanity.io/docs
 - Community: https://slack.sanity.io
 
 ### TanStack Router
+
 - Documentation: https://tanstack.com/router
 - GitHub: https://github.com/TanStack/router
 
@@ -404,11 +440,13 @@ Now that you're set up:
 ### 1. Copy Environment Files
 
 **Frontend:**
+
 ```bash
 cp apps/frontend/.env.example apps/frontend/.env.local
 ```
 
 Edit `apps/frontend/.env.local` and add your Sanity configuration:
+
 ```env
 VITE_SANITY_PROJECT_ID=your_actual_project_id
 VITE_SANITY_DATASET=production
@@ -417,11 +455,13 @@ SESSION_SECRET=generate_a_random_secret_here
 ```
 
 **Studio:**
+
 ```bash
 cp apps/studio/.env.example apps/studio/.env.local
 ```
 
 Edit `apps/studio/.env.local`:
+
 ```env
 SANITY_STUDIO_PROJECT_ID=your_actual_project_id
 SANITY_STUDIO_DATASET=production
@@ -430,6 +470,7 @@ SANITY_STUDIO_DATASET=production
 ### 2. Install Dependencies
 
 From the root of the monorepo:
+
 ```bash
 npm install
 ```
@@ -441,60 +482,71 @@ This will install dependencies for all apps and packages.
 ### Run Both Apps
 
 Start both the frontend and studio in development mode:
+
 ```bash
-npm run dev
+vp run -r --parallel dev
 ```
 
 This will start:
+
 - **Frontend** at http://localhost:3000
 - **Studio** at http://localhost:3333 (default Sanity port)
+- **Shared** TypeScript watch
 
 ### Run Individual Apps
 
 **Frontend only:**
+
 ```bash
-npm run dev --workspace=@santan/frontend
+vp dev
 ```
 
 **Studio only:**
+
 ```bash
-npm run dev --workspace=@santan/studio
+vp run @santan/studio#dev
 ```
 
 ## Building
 
 Build all apps for production:
+
 ```bash
-npm run build
+vp run -r build
 ```
 
 Build individual apps:
+
 ```bash
-npm run build --workspace=@santan/frontend
-npm run build --workspace=@santan/studio
+vp run --filter @santan/shared --filter @santan/frontend build
+vp run @santan/studio#build
 ```
 
 ## Other Commands
 
 ### Linting
+
 ```bash
-npm run lint                                  # Lint all apps
-npm run lint --workspace=@santan/frontend # Lint frontend only
+vp lint                                       # Lint the whole repo
+npm run lint                                  # Same, via package script
 ```
 
 ### Type Checking
+
 ```bash
-npm run type-check                                  # Type check all apps
-npm run type-check --workspace=@santan/frontend # Type check frontend only
+vp run -r type-check                          # Type check all packages
+vp run @santan/frontend#type-check            # Type check frontend only
 ```
 
 ### Formatting
+
 ```bash
-npm run format                                  # Format all apps
-npm run format --workspace=@santan/frontend # Format frontend only
+vp fmt --write                                # Format the whole repo
+npm run format                                # Same, via package script
 ```
 
 ### Cleaning
+
 ```bash
 npm run clean # Clean build artifacts from all apps
 ```
@@ -517,7 +569,7 @@ santan-monorepo/
 │   └── shared/             # Shared types and utilities
 │       ├── src/
 │       └── package.json
-├── turbo.json              # Turborepo configuration
+├── vite.config.ts          # Vite+ lint, format, test, and task config
 ├── package.json            # Root package.json with workspaces
 └── README.md
 ```
@@ -527,6 +579,7 @@ santan-monorepo/
 The `@santan/shared` package contains types and utilities shared between apps.
 
 To add shared types:
+
 1. Add them to `packages/shared/src/types/`
 2. Export them from `packages/shared/src/index.ts`
 3. Use them in your apps:
@@ -534,31 +587,37 @@ To add shared types:
    import { SanityDocument } from '@santan/shared';
    ```
 
-## Turborepo Benefits
+## Vite+ Task Runner
 
-- **Incremental builds**: Only rebuilds what changed
-- **Remote caching**: Share build cache across team (when configured)
-- **Parallel execution**: Runs tasks across packages in parallel
-- **Task dependencies**: Automatically runs dependent tasks in order
+- **Recursive runs**: `vp run -r build` runs a task in every workspace package
+- **Dependency order**: workspace `package.json` dependencies determine build order
+- **Parallel dev**: `vp run -r --parallel dev` starts independent long-running servers
+- **Filtered builds**: `vp run --filter @santan/shared --filter @santan/frontend build` builds the library and the app
 
 ## Troubleshooting
 
-### "Command not found: turbo"
-Run `npm install` from the root to install Turborepo.
+### "Command not found: vp"
+
+Install the Vite+ CLI (`curl -fsSL https://vite.plus | bash`) or use the local binary via `npx vp` after `vp install` / `npm install`.
 
 ### Frontend can't connect to Sanity
+
 Check your `.env.local` files and ensure:
+
 - `VITE_SANITY_PROJECT_ID` matches your Sanity project
 - `VITE_SANITY_DATASET` is correct (usually "production")
 
 ### Port already in use
+
 If port 3000 or 3333 is already in use, you can change them:
+
 - Frontend: Edit the `dev` script in `apps/frontend/package.json`
 - Studio: Sanity will automatically suggest another port
 
 ## Migration from Separate Repos
 
 If you're migrating from separate repositories:
+
 1. Your existing `.env.local` files should be copied to the respective app directories
 2. Git history is preserved in the copied directories
 3. You can keep the old repos as backup or archive them
@@ -573,7 +632,7 @@ If you're migrating from separate repositories:
 ## Support
 
 For issues specific to:
-- **Turborepo**: https://turbo.build/repo/docs
+
+- **Vite+**: https://viteplus.dev/guide
 - **Sanity**: https://www.sanity.io/docs
 - **TanStack Router**: https://tanstack.com/router
-

@@ -1,44 +1,45 @@
 {
 	"name": "santan-monorepo",
 	"private": true,
-	"packageManager": "npm@11.19.1",
 	"license": "MIT",
-	"scripts": {
-		"dev": "echo '🚀 Starting development servers...' && turbo run dev",
-		"dev:stream": "echo '📺 Starting development servers in stream mode...' && turbo run dev --ui=stream",
-		"dev:tui": "echo '🖥️  Starting development servers in TUI mode...' && turbo run dev --ui=tui",
-		"build": "echo '🏗️  Building all packages...' && turbo run build",
-		"lint": "echo '🔍 Linting code...' && biome lint .",
-		"lint:fix": "echo '🔧 Fixing lint issues...' && biome lint --write .",
-		"type-check": "echo '✅ Type checking...' && turbo run type-check",
-		"format": "echo '✨ Formatting code...' && biome format --write .",
-		"format:check": "echo '🔍 Checking formatting...' && biome format .",
-		"check": "echo '🔍 Running all checks...' && biome check .",
-		"check:fix": "echo '🔧 Fixing all issues...' && biome check --write .",
-		"clean": "echo '🧹 Cleaning build artifacts...' && turbo run clean",
-		"test": "playwright test",
-		"test:e2e": "playwright test --ui",
-		"test:e2e:report": "playwright show-report",
-		"vitest": "npm run vitest --workspace=@santan/frontend"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.5.11",
-		"@playwright/test": "^1.62.1",
-		"tsx": "^4.23.12",
-		"turbo": "^2.10.12"
-	},
 	"workspaces": [
 		"apps/*",
 		"packages/*"
 	],
+	"scripts": {
+		"dev": "vp run --parallel --filter './apps/**' --filter './packages/**' dev",
+		"build": "vp run --filter './apps/**' --filter './packages/**' build",
+		"lint": "vp lint",
+		"lint:fix": "vp lint --fix",
+		"type-check": "vp run --filter './apps/**' --filter './packages/**' type-check",
+		"format": "vp fmt --write",
+		"format:check": "vp fmt --check",
+		"check": "vp check",
+		"check:fix": "vp check --fix",
+		"clean": "vp run --filter './apps/**' --filter './packages/**' clean",
+		"test": "playwright test",
+		"test:e2e": "playwright test --ui",
+		"test:e2e:report": "playwright show-report",
+		"vitest": "vp -C apps/frontend test"
+	},
+	"dependencies": {
+		"@sanity/vision": "^6.16.0",
+		"diff": "^9.0.0",
+		"sanity": "^6.16.0"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.62.1",
+		"tsx": "^4.23.12",
+		"vite-plus": "0.2.9"
+	},
+	"overrides": {
+		"vite": "npm:@voidzero-dev/vite-plus-core@0.2.9",
+		"vitest": "4.1.10"
+	},
 	"engines": {
 		"node": ">=24"
 	},
-	"dependencies": {
-		"@sanity/vision": "^6.11.0",
-		"diff": "^9.0.0",
-		"sanity": "^6.11.0"
-	},
+	"packageManager": "npm@11.18.0",
 	"allowScripts": {
 		"@parcel/watcher@2.5.6": true,
 		"esbuild@0.28.1": true
