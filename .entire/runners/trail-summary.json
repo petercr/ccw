@@ -1,0 +1,33 @@
+{
+  "id": "trail-summary",
+  "display_name": "Trail Summary",
+  "enabled": true,
+  "scope": "trail",
+  "runtime": {
+    "kind": "prompt_runner",
+    "agent": "claude",
+    "model": "haiku",
+    "timeout_ms": 300000,
+    "sandbox": {
+      "base_template": "claude",
+      "repo_token": "read"
+    }
+  },
+  "automation": {
+    "kind": "trail_prompt"
+  },
+  "prompt": {
+    "template": "You summarize code changes for reviewers. Analyze branch \"{{branch}}\" compared to \"{{base_branch}}\".\n\nRun `git diff origin/{{base_branch}}...HEAD`, then write a short Problem -> Solution summary in Markdown. Start with the `**Problem:**` line and include a `**Solution:**` line. Return Markdown only.\n\nRepository context: This is an npm-workspaces monorepo with a TanStack Start frontend, Sanity Studio, and shared generated types. Content flows through GROQ server functions, loaders, routes, and page components. Posts/categories use computed fullSlug values. Preview uses server-side Sanity tokens and live visual editing. Contact submissions use Neon, Zoho SMTP, and Sanity synchronization. Check the relevant behavior and tests for the changed files; report evidence and uncertainty rather than assuming a command passed.\n\nDescribe the user-facing or developer-facing change accurately, including affected workspace(s) when useful. Do not claim validation that is not visible in the diff or trail."
+  },
+  "select": {
+    "trigger_types": [
+      "api",
+      "push"
+    ]
+  },
+  "output": {
+    "adapter": "markdown",
+    "result_type": "trail_summary",
+    "trail_field": "body"
+  }
+}
