@@ -73,7 +73,7 @@ export default ({ mode }: ConfigEnv) => {
 				// Use 'node-server' for local/CI e2e tests; Vercel builds with its preset.
 				preset: (process.env.NITRO_PRESET as 'vercel' | 'node-server') ?? 'vercel',
 				compatibilityDate: '2026-02-21',
-				vercel: { functions: { runtime: 'nodejs26.x' } },
+				vercel: { functions: { runtime: 'nodejs24.x' } },
 			}),
 			// Required for vanilla-extract's internal vite-node to resolve @/ path aliases
 			viteTsConfigPaths({
