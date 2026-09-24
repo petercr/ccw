@@ -31,7 +31,7 @@ A modern blog application focused on pension and financial topics, built with Ta
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 26 (run `nvm use` from the repository root)
 - npm or pnpm
 - A Sanity project (see [Sanity.io](https://www.sanity.io/))
 

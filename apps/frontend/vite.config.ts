@@ -36,9 +36,7 @@ function tanstackStartVitePlusDevMiddleware(): Plugin {
 					return;
 				}
 
-				viteDevServer.config.logger.info(
-					'vite+ dual-package workaround: installing TanStack Start SSR middleware',
-				);
+				viteDevServer.config.logger.info('vite+ dual-package workaround: installing TanStack Start SSR middleware');
 
 				viteDevServer.middlewares.use(async (req, res) => {
 					if (req.originalUrl) {
@@ -72,11 +70,10 @@ export default ({ mode }: ConfigEnv) => {
 		plugins: lazyPlugins(() => [
 			devtools(),
 			nitroV2Plugin({
-				// Use 'node-server' for local/CI runs (e.g. e2e tests), 'vercel' for
-				// production deployment. Vercel rebuilds from source on deploy so the
-				// preset used here doesn't affect what gets shipped.
+				// Use 'node-server' for local/CI e2e tests; Vercel builds with its preset.
 				preset: (process.env.NITRO_PRESET as 'vercel' | 'node-server') ?? 'vercel',
 				compatibilityDate: '2026-02-21',
+				vercel: { functions: { runtime: 'nodejs26.x' } },
 			}),
 			// Required for vanilla-extract's internal vite-node to resolve @/ path aliases
 			viteTsConfigPaths({
