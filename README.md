@@ -8,7 +8,7 @@ This project is a custom fork of the original Santan Monorepo, [which can be fou
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 [![Vite+](https://img.shields.io/badge/Vite+-0.2-yellow)](https://viteplus.dev/guide/)
-[![Node.js](https://img.shields.io/badge/Node.js-26-green)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-≥24-green)](https://nodejs.org/)
 
 ---
 
@@ -64,7 +64,7 @@ This monorepo combines a React frontend and Sanity Studio into a single, optimiz
 
 ### Prerequisites
 
-- **Node.js** 26 (`nvm use` reads `.nvmrc`)
+- **Node.js** ≥ 24
 - **npm** (comes with Node.js)
 - **Sanity account** with a configured project
 
@@ -72,7 +72,6 @@ This monorepo combines a React frontend and Sanity Studio into a single, optimiz
 
 ```bash
 cd /path/to/santan-monorepo
-nvm use
 npm install
 ```
 
