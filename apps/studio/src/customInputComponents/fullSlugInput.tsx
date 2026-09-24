@@ -15,7 +15,7 @@ export function FullSlugInput(props: StringInputProps<StringSchemaType>) {
 	const displayValue = computed ?? value ?? '';
 
 	return (
-		<Stack space={2}>
+		<Stack gap={2}>
 			<Text size={1} muted>
 				{error ? (
 					<span style={{ color: 'red' }}>⚠️ {error}</span>
