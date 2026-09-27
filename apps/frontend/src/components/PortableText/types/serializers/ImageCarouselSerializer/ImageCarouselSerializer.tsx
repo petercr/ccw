@@ -1,16 +1,19 @@
 import type { PortableTextTypeComponentProps } from '@portabletext/react';
-import urlBuilder from '@sanity/image-url';
-import { useEffect, useState } from 'react';
-import type { FC } from 'react';
-import Slider from 'react-slick';
+import { createImageUrlBuilder } from '@sanity/image-url';
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties, FC, KeyboardEvent } from 'react';
 import {
 	captionText,
 	container,
+	controls,
 	credits,
 	figcaption,
 	figure,
 	image,
-	sliderContainer,
+	indicator,
+	indicators,
+	navButton,
+	track,
 } from './ImageCarouselSerializer.css.ts';
 
 import { dataset, projectId } from '@/sanity/projectDetails';
@@ -20,82 +23,153 @@ import type { ImageCarouselBlock } from '@/types/sanitySchemas.ts';
 export const ImageCarouselSerializer: FC<PortableTextTypeComponentProps<ImageCarouselBlock>> = ({
 	value: { images, numberOfImagesToShow },
 }) => {
-	const SliderComponent = (Slider as any).default ?? Slider;
-	const [screenWidth, setScreenWidth] = useState<number>(0); // Start at 0 to indicate not mounted
-	const [mounted, setMounted] = useState(false);
+	const validImages = images?.filter(({ image: imageValue }) => imageValue?.asset) ?? [];
+	const trackRef = useRef<HTMLDivElement>(null);
+	const [position, setPosition] = useState(0);
+	const [visibleCount, setVisibleCount] = useState(1);
+	const imageCount = validImages.length;
+	const maxPosition = Math.max(0, imageCount - visibleCount);
+	const requestedCount = Math.min(imageCount || 1, 5, Math.max(1, Math.round(numberOfImagesToShow || 1)));
 
 	useEffect(() => {
-		// Set initial screen width on mount
-		setScreenWidth(window.innerWidth);
-		setMounted(true);
+		const element = trackRef.current;
+		if (!element || !imageCount) return;
 
-		const handleResize = () => {
-			setScreenWidth(window.innerWidth);
+		const updatePosition = () => {
+			const slide = element.firstElementChild as HTMLElement | null;
+			if (!slide) return;
+			const gap = Number.parseFloat(getComputedStyle(element).columnGap) || 0;
+			const step = slide.getBoundingClientRect().width + gap;
+			if (!step) return;
+			const count = Math.max(1, Math.min(imageCount, Math.round((element.clientWidth + gap) / step)));
+			setVisibleCount(count);
+			setPosition(Math.min(imageCount - count, Math.max(0, Math.round(element.scrollLeft / step))));
 		};
 
-		window.addEventListener('resize', handleResize);
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
+		const observer = new ResizeObserver(updatePosition);
+		observer.observe(element);
+		if (element.firstElementChild) observer.observe(element.firstElementChild);
+		element.addEventListener('scroll', updatePosition, { passive: true });
+		updatePosition();
+		return () => {
+			observer.disconnect();
+			element.removeEventListener('scroll', updatePosition);
+		};
+	}, [imageCount, requestedCount]);
 
-	if (!images?.length) {
-		return null;
-	}
+	if (!imageCount) return null;
 
-	// Don't render carousel until mounted on client to avoid SSR/client mismatch
-	// Server renders null, client renders the carousel after hydration
-	if (!mounted) {
-		return null;
-	}
-
-	// Calculate responsive image width: 90% of screen width but max 800px
-	const imageWidth = Math.min(screenWidth * 0.9, 800);
-
-	const settings = {
-		dots: true,
-		infinite: true,
-		speed: 500,
-		slidesToShow: numberOfImagesToShow,
-		slidesToScroll: 1,
-		initialSlide: 0,
-		centerMode: true,
+	const goTo = (nextPosition: number) => {
+		const element = trackRef.current;
+		const slide = element?.firstElementChild as HTMLElement | null;
+		if (!element || !slide) return;
+		const gap = Number.parseFloat(getComputedStyle(element).columnGap) || 0;
+		const next = Math.min(maxPosition, Math.max(0, nextPosition));
+		element.scrollTo({ left: next * (slide.getBoundingClientRect().width + gap) });
+		setPosition(next);
 	};
 
+	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+		if (event.target !== event.currentTarget) return;
+		switch (event.key) {
+			case 'ArrowLeft':
+				event.preventDefault();
+				goTo(position - 1);
+				break;
+			case 'ArrowRight':
+				event.preventDefault();
+				goTo(position + 1);
+				break;
+			case 'Home':
+				event.preventDefault();
+				goTo(0);
+				break;
+			case 'End':
+				event.preventDefault();
+				goTo(maxPosition);
+				break;
+		}
+	};
+
+	// The scrollable image group needs keyboard focus for arrow, Home, and End navigation.
+	/* oxlint-disable jsx-a11y/no-noninteractive-tabindex, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/prefer-tag-over-role */
 	return (
 		<div className={fullWidthSection}>
-			<div className={container}>
-				<div className={sliderContainer}>
-					<SliderComponent {...settings} lazyLoad="anticipated">
-						{images.map(({ image: imageValue, _key, altText, caption, credits: { name } }) => {
-							if (!imageValue?.asset) {
-								return null;
-							}
+			<section className={container} aria-roledescription="carousel" aria-label="Image carousel">
+				<div
+					ref={trackRef}
+					role="group"
+					className={track}
+					style={{ '--requested-count': requestedCount } as CSSProperties}
+					tabIndex={maxPosition > 0 ? 0 : undefined}
+					aria-label={maxPosition > 0 ? 'Images; use arrow keys to browse' : 'Images'}
+					onKeyDown={handleKeyDown}
+				>
+					{validImages.map(({ image: imageValue, _key, altText, caption, credits: { name } }, index) => {
+						const asset = imageValue?.asset;
+						if (!asset) return null;
+						const imageSrc = createImageUrlBuilder({ projectId, dataset })
+							.image(asset)
+							.width(800)
+							.fit('max')
+							.auto('format')
+							.url();
 
-							const { asset } = imageValue;
-							const imageSrc = urlBuilder({ projectId, dataset })
-								.image(asset)
-								.width(Math.round(imageWidth))
-								.fit('max')
-								.auto('format')
-								.url();
-
-							return (
-								<div key={_key}>
-									<figure className={figure}>
-										<img src={imageSrc} alt={altText || caption || ''} loading="lazy" className={image} />
-										{(caption || altText || name) && (
-											<figcaption className={figcaption}>
-												{caption && <div className={captionText}>{caption}</div>}
-												{altText && !caption && <div>{altText}</div>}
-												{name && <div className={credits}>Photo: {name}</div>}
-											</figcaption>
-										)}
-									</figure>
-								</div>
-							);
-						})}
-					</SliderComponent>
+						return (
+							<figure key={_key} className={figure} aria-label={`Image ${index + 1} of ${imageCount}`}>
+								<img
+									src={imageSrc}
+									alt={altText || caption || ''}
+									loading={index === 0 ? 'eager' : 'lazy'}
+									className={image}
+								/>
+								{(caption || altText || name) && (
+									<figcaption className={figcaption}>
+										{caption && <div className={captionText}>{caption}</div>}
+										{altText && !caption && <div>{altText}</div>}
+										{name && <div className={credits}>Photo: {name}</div>}
+									</figcaption>
+								)}
+							</figure>
+						);
+					})}
 				</div>
-			</div>
+				{maxPosition > 0 && (
+					<div className={controls}>
+						<button
+							type="button"
+							className={navButton}
+							onClick={() => goTo(position - 1)}
+							disabled={position === 0}
+							aria-label="Previous images"
+						>
+							<span aria-hidden="true">←</span>
+						</button>
+						<div className={indicators} aria-label="Carousel positions">
+							{Array.from({ length: maxPosition + 1 }, (_, index) => (
+								<button
+									key={index}
+									type="button"
+									className={indicator}
+									aria-label={`Show images ${index + 1} to ${Math.min(imageCount, index + visibleCount)} of ${imageCount}`}
+									aria-current={index === position ? 'true' : undefined}
+									onClick={() => goTo(index)}
+								/>
+							))}
+						</div>
+						<button
+							type="button"
+							className={navButton}
+							onClick={() => goTo(position + 1)}
+							disabled={position === maxPosition}
+							aria-label="Next images"
+						>
+							<span aria-hidden="true">→</span>
+						</button>
+					</div>
+				)}
+			</section>
 		</div>
 	);
+	/* oxlint-enable jsx-a11y/no-noninteractive-tabindex, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/prefer-tag-over-role */
 };
