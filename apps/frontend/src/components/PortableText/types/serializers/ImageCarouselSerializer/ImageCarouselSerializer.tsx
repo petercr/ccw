@@ -20,6 +20,11 @@ import { dataset, projectId } from '@/sanity/projectDetails';
 import { fullWidthSection } from '@/styles/shared/fullWidthSection.css.ts';
 import type { ImageCarouselBlock } from '@/types/sanitySchemas.ts';
 
+const imageWidths = [320, 480, 640, 800, 960, 1200, 1600, 2000, 2400];
+
+const slotSize = (count: number) =>
+	count === 1 ? '100vw' : `calc(${(100 / count).toFixed(2)}vw - ${((count - 1) / count).toFixed(2)}rem)`;
+
 export const ImageCarouselSerializer: FC<PortableTextTypeComponentProps<ImageCarouselBlock>> = ({
 	value: { images, numberOfImagesToShow },
 }) => {
@@ -30,6 +35,7 @@ export const ImageCarouselSerializer: FC<PortableTextTypeComponentProps<ImageCar
 	const imageCount = validImages.length;
 	const maxPosition = Math.max(0, imageCount - visibleCount);
 	const requestedCount = Math.min(imageCount || 1, 5, Math.max(1, Math.round(numberOfImagesToShow || 1)));
+	const imageSizes = `(max-width: 767px) 100vw, (max-width: 1199px) ${slotSize(Math.min(requestedCount, 2))}, ${slotSize(requestedCount)}`;
 
 	useEffect(() => {
 		const element = trackRef.current;
@@ -108,17 +114,16 @@ export const ImageCarouselSerializer: FC<PortableTextTypeComponentProps<ImageCar
 					{validImages.map(({ image: imageValue, _key, altText, caption, credits: { name } }, index) => {
 						const asset = imageValue?.asset;
 						if (!asset) return null;
-						const imageSrc = createImageUrlBuilder({ projectId, dataset })
-							.image(asset)
-							.width(800)
-							.fit('max')
-							.auto('format')
-							.url();
+						const builder = createImageUrlBuilder({ projectId, dataset }).image(asset).fit('max').auto('format');
+						const imageSrc = builder.width(800).url();
+						const imageSrcSet = imageWidths.map((width) => `${builder.width(width).url()} ${width}w`).join(', ');
 
 						return (
 							<figure key={_key} className={figure} aria-label={`Image ${index + 1} of ${imageCount}`}>
 								<img
 									src={imageSrc}
+									srcSet={imageSrcSet}
+									sizes={imageSizes}
 									alt={altText || caption || ''}
 									loading={index === 0 ? 'eager' : 'lazy'}
 									className={image}

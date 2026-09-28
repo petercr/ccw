@@ -73,8 +73,14 @@ describe('Sanity image carousel', () => {
 		expect(html).toContain('Caption Four');
 		expect(html).toContain('Alt One');
 		expect(html.replaceAll('<!-- -->', '')).toContain('Photo: Photographer');
-		expect(html).toContain('w=800');
-		expect((html.match(/<img /g) ?? []).length).toBe(4);
+		const rendered = new DOMParser().parseFromString(html, 'text/html');
+		const renderedImages = rendered.querySelectorAll('img');
+		expect(renderedImages).toHaveLength(4);
+		expect(renderedImages[0].getAttribute('srcset')).toContain('w=320');
+		expect(renderedImages[0].getAttribute('srcset')).toContain('w=2400');
+		expect(renderedImages[0].getAttribute('sizes')).toContain('(max-width: 767px) 100vw');
+		expect(renderedImages[0].getAttribute('sizes')).toContain('calc(50.00vw - 0.50rem)');
+		expect(renderedImages[0].getAttribute('sizes')).toContain('calc(33.33vw - 0.67rem)');
 	});
 
 	it('navigates with buttons, indicators, and the keyboard', async () => {
