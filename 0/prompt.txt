@@ -1,0 +1,5 @@
+ok so our entire branch is trying to be deployed by Vercel. it fails as expected we need to fix so it doesn't try to deploy
+
+---
+
+yeah just commit on main
