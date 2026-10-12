@@ -4,13 +4,19 @@ import { syncContactSubmissionToSanity } from '@/server/contact/syncContactSubmi
 import { sendContactReplyEmail } from '@/server/email/zohoSmtp.ts';
 
 /**
- * Validates input, stores the submission in Neon, mirrors it to Sanity Studio,
+ * Silently discards honeypot submissions, validates input, stores it in Neon, mirrors it to Sanity Studio,
  * and sends a Zoho auto-reply.
  *
  * Email and Sanity failures after a successful DB write are logged but do not fail
  * the request — the user should not be told the submission failed when it was already stored.
  */
 export async function handleContactSubmission(raw: unknown): Promise<ContactResponse> {
+	// Check before validation so bot-filled payloads never reach storage, email, or success logs.
+	if (typeof raw === 'object' && raw !== null && 'website' in raw && raw.website !== undefined && raw.website !== '') {
+		// Match the normal response shape without creating a submission or exposing the trap.
+		return { success: true, id: crypto.randomUUID() };
+	}
+
 	const parsed = contactFormSchema.safeParse(raw);
 	if (!parsed.success) {
 		const fieldErrors: Record<string, string> = {};

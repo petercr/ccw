@@ -36,6 +36,25 @@ describe('handleContactSubmission', () => {
 
 	const createdAt = '2026-04-01T12:00:00.000Z';
 
+	it.each(['https://spam.example', '   ', null, 123, ['spam'], { url: 'spam' }])(
+		'silently discards a filled honeypot (%j) without storing, syncing, or emailing',
+		async (website) => {
+			const result = await handleContactSubmission({ ...valid, website });
+			expect(result).toEqual({ success: true, id: expect.any(String) });
+			expect(insertMock).not.toHaveBeenCalled();
+			expect(sanityMock).not.toHaveBeenCalled();
+			expect(emailMock).not.toHaveBeenCalled();
+		},
+	);
+
+	it('silently discards honeypot submissions before validating the other fields', async () => {
+		const result = await handleContactSubmission({ website: 'https://spam.example' });
+		expect(result).toEqual({ success: true, id: expect.any(String) });
+		expect(insertMock).not.toHaveBeenCalled();
+		expect(sanityMock).not.toHaveBeenCalled();
+		expect(emailMock).not.toHaveBeenCalled();
+	});
+
 	it('returns field errors for invalid input without writing to DB', async () => {
 		const result = await handleContactSubmission({ firstName: '' });
 		expect(result.success).toBe(false);
@@ -47,7 +66,7 @@ describe('handleContactSubmission', () => {
 		expect(sanityMock).not.toHaveBeenCalled();
 	});
 
-	it('stores submission, syncs to Sanity, and sends email on success', async () => {
+	it.each([undefined, ''])('stores submission, syncs to Sanity, and sends email with honeypot %j', async (website) => {
 		insertMock.mockResolvedValue({
 			id: 'uuid-1',
 			first_name: 'Jane',
@@ -60,7 +79,7 @@ describe('handleContactSubmission', () => {
 		sanityMock.mockResolvedValue({ id: 'contactSubmission-uuid-1', created: true });
 		emailMock.mockResolvedValue(undefined);
 
-		const result = await handleContactSubmission(valid);
+		const result = await handleContactSubmission(website === undefined ? valid : { ...valid, website });
 
 		expect(result).toEqual({ success: true, id: 'uuid-1' });
 		expect(insertMock).toHaveBeenCalledWith({

@@ -7,6 +7,8 @@ export const contactFormSchema = z.object({
 	email: z.email('A valid email is required').max(254),
 	reasonForMessage: z.string().trim().min(1, 'Reason for message is required').max(500),
 	additionalInfo: z.string().trim().max(5000).optional().default(''),
+	// Honeypot: preserve the raw value, including whitespace.
+	website: z.string().optional().default(''),
 });
 
 export type ContactFormInput = z.infer<typeof contactFormSchema>;

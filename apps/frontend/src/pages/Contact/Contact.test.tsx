@@ -29,6 +29,7 @@ vi.mock('./Contact.css.ts', () => ({
 	formTitle: '',
 	headerPill: '',
 	headerTitle: '',
+	honeypot: '',
 	submitButton: '',
 	successMessage: '',
 }));
@@ -129,8 +130,33 @@ describe('ContactPage', () => {
 					email: 'jane@example.com',
 					reasonForMessage: 'Website audit',
 					additionalInfo: 'Please call me',
+					website: '',
 				}),
 			}),
 		);
+	});
+
+	it('submits the honeypot DOM value even when no change event fires', async () => {
+		const fetchMock = vi.fn().mockResolvedValue({
+			json: async () => ({ success: true, id: 'submission-1' }),
+		});
+		vi.stubGlobal('fetch', fetchMock);
+		const { container } = render(<ContactPage />);
+
+		fillValidForm();
+		const website = container.querySelector<HTMLInputElement>('input[name="website"]');
+		expect(website).not.toBeNull();
+		if (!website) throw new Error('Missing honeypot input');
+		expect(website.tabIndex).toBe(-1);
+		expect(website.autocomplete).toBe('off');
+		expect(website.closest('[aria-hidden="true"]')).not.toBeNull();
+		expect(screen.queryByRole('textbox', { name: /Website/ })).toBeNull();
+		website.value = '   ';
+		fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+		await waitFor(() => {
+			expect(screen.getByText("Thanks! Your message has been sent. We'll be in touch soon.")).toBeTruthy();
+		});
+		expect(JSON.parse(fetchMock.mock.calls[0][1].body).website).toBe('   ');
 	});
 });
