@@ -191,6 +191,15 @@ export const fieldGroup = style({
 	gap: 6,
 });
 
+export const honeypot = style({
+	position: 'absolute',
+	width: 1,
+	height: 1,
+	overflow: 'hidden',
+	clipPath: 'inset(50%)',
+	whiteSpace: 'nowrap',
+});
+
 export const fieldLabel = style({
 	color: '#000000',
 	fontFamily: 'DM Sans, sans-serif',

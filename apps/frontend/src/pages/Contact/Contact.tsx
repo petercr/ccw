@@ -20,6 +20,7 @@ import {
 	formTitle,
 	headerPill,
 	headerTitle,
+	honeypot,
 	submitButton,
 	successMessage,
 } from './Contact.css.ts';
@@ -32,6 +33,7 @@ const initialFormData: ContactFormInput = {
 	email: '',
 	reasonForMessage: '',
 	additionalInfo: '',
+	website: '',
 };
 
 type ContactFormErrors = Partial<Record<keyof ContactFormInput, string>>;
@@ -43,6 +45,7 @@ function normalizeFormValues(value: ContactFormInput): ContactFormInput {
 		email: value.email.trim(),
 		reasonForMessage: value.reasonForMessage.trim(),
 		additionalInfo: value.additionalInfo.trim(),
+		website: value.website,
 	};
 }
 
@@ -169,10 +172,17 @@ export const ContactPage = () => {
 						onSubmit={(event) => {
 							event.preventDefault();
 							event.stopPropagation();
+							// Read the DOM value too: bots and autofill may not fire React change events.
+							const website = new FormData(event.currentTarget).get('website');
+							form.setFieldValue('website', typeof website === 'string' ? website : '');
 							void form.handleSubmit();
 						}}
 						noValidate
 					>
+						<div className={honeypot} aria-hidden="true">
+							<label htmlFor="website">Website (leave blank)</label>
+							<input id="website" name="website" type="text" defaultValue="" tabIndex={-1} autoComplete="off" />
+						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
 							<form.Field name="firstName">
 								{(field) => {

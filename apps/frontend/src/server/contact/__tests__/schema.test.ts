@@ -15,6 +15,7 @@ describe('contactFormSchema', () => {
 		expect(result.success).toBe(true);
 		if (result.success) {
 			expect(result.data.email).toBe('jane@example.com');
+			expect(result.data.website).toBe('');
 		}
 	});
 
