@@ -20,12 +20,12 @@
 		"import-authors": "ts-node src/scripts/importAuthors.ts"
 	},
 	"dependencies": {
-		"@sanity/vision": "^6.17.0",
-		"lucide-react": "^1.52.0",
+		"@sanity/vision": "^6.18.0",
+		"lucide-react": "^1.55.0",
 		"react": "^19.3.0",
 		"react-dom": "^19.3.0",
-		"sanity": "^6.17.0",
-		"sanity-plugin-documents-pane": "^4.1.21",
+		"sanity": "^6.18.0",
+		"sanity-plugin-documents-pane": "^4.1.22",
 		"styled-components": "^6.5.3"
 	},
 	"devDependencies": {

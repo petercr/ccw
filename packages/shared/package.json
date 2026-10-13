@@ -26,10 +26,10 @@
 		"clean": "rm -rf dist"
 	},
 	"dependencies": {
-		"zod": "^4.6.5"
+		"zod": "^4.6.6"
 	},
 	"devDependencies": {
-		"@types/node": "^24.19.1",
+		"@types/node": "^24.19.2",
 		"typescript": "^7.0.2"
 	}
 }
