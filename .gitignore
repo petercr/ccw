@@ -49,3 +49,4 @@ blob-report/
 !.env.example
 !**/.env.example
 .env*
+.vitest/

@@ -6,9 +6,9 @@ export default defineConfig({
 		tsconfigPaths: true,
 	},
 	test: {
-		environment: 'jsdom',
-		include: ['apps/frontend/src/**/*.test.{ts,tsx}'],
-		exclude: ['e2e/**', '**/node_modules/**'],
+		// Run tests through the frontend project so `vp test` from the root loads the same
+		// plugins (e.g. Vanilla Extract for `.css.ts` files) as `vp -C apps/frontend test`.
+		projects: ['./apps/frontend'],
 	},
 	fmt: {
 		useTabs: true,
