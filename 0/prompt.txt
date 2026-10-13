@@ -1,0 +1,9 @@
+pr merged
+
+---
+
+look into the vite-plus and vitest upgrade
+
+---
+
+apply this on a branch and see if we can make a work around for the failing plugin
