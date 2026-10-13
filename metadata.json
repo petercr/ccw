@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.10.7-nightly.202609190623.ae303f31d",
+  "checkpoint_id": "01M4S9XSJE6EHW5GXN5KTCVS4Y",
+  "strategy": "manual-commit",
+  "branch": "chore/npm-dependency-update-2026-10",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "apps/frontend/package.json",
+    "apps/studio/package.json",
+    "package-lock.json",
+    "package.json",
+    "packages/shared/package.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 50,
+    "cache_creation_tokens": 51519,
+    "cache_read_tokens": 1533228,
+    "output_tokens": 17620,
+    "api_call_count": 25
+  }
+}

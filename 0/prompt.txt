@@ -1,0 +1,13 @@
+check for npm updates
+
+---
+
+apply the in-range updates except for zod. check that package firdt with socket.dev to see if its good
+
+---
+
+use sfw binary cli to check the pavkage with version
+
+---
+
+apply zod 4.6.6 too
