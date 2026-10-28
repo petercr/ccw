@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.11.6-nightly.202610170622.9254299eb",
+  "checkpoint_id": "01M600GCW01DF2ZJRXFXFPAYWV",
+  "strategy": "manual-commit",
+  "branch": "feat/contact-owner-notification",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/.env.example",
+    "apps/frontend/src/server/contact/__tests__/handleContactSubmission.test.ts",
+    "apps/frontend/src/server/contact/handleContactSubmission.ts",
+    "apps/frontend/src/server/email/__tests__/zohoSmtp.test.ts",
+    "apps/frontend/src/server/email/zohoSmtp.ts",
+    "docs/CONTACT_FORM.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 60,
+    "cache_creation_tokens": 55933,
+    "cache_read_tokens": 1845078,
+    "output_tokens": 18776,
+    "api_call_count": 26
+  }
+}

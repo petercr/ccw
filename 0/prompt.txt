@@ -1,0 +1,17 @@
+ok we have this set up to log form submissions into the sanity cms. which is good, but we also need some way of lettgin me know that someone has submitted a form so i dont have to check manually
+
+---
+
+you can try test@capecod.world lets see if that works
+
+---
+
+was was email already set up in thei proejcts
+
+---
+
+ok they are all set now
+
+---
+
+ok it worked branch and pr
