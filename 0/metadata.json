@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.11.6-nightly.202610170622.9254299eb",
+  "checkpoint_id": "01M61KH429J2Y04NHPDFNR9G8Z",
+  "session_id": "ae43ac16-7cfa-4449-a171-47375a08163d",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-28T15:54:48.873085566Z",
+  "branch": "feat/local-seo-copy",
+  "checkpoints_count": 2,
+  "save_step_count": 2,
+  "files_touched": [
+    "apps/frontend/public/robots.txt",
+    "apps/frontend/src/components/CTA/CTA.css.ts",
+    "apps/frontend/src/components/CTA/CTA.tsx",
+    "apps/frontend/src/components/Footer/Footer.tsx",
+    "apps/frontend/src/components/GlobalLayout/GlobalLayout.tsx",
+    "apps/frontend/src/components/Header/Header.tsx",
+    "apps/frontend/src/loaders/__tests__/document.test.ts",
+    "apps/frontend/src/loaders/document.ts",
+    "apps/frontend/src/pages/Category/meta.ts",
+    "apps/frontend/src/pages/Contact/Contact.tsx",
+    "apps/frontend/src/pages/Contact/meta.ts",
+    "apps/frontend/src/pages/Home/meta.ts",
+    "apps/frontend/src/pages/Home/sections/ArchitectureSection.tsx",
+    "apps/frontend/src/pages/Home/sections/DevExpSection.tsx",
+    "apps/frontend/src/pages/Home/sections/HighlightsSection.tsx",
+    "apps/frontend/src/pages/Post/Post.tsx",
+    "apps/frontend/src/pages/Post/meta.ts",
+    "apps/frontend/src/pages/Testimonials/meta.ts",
+    "apps/frontend/src/pages/WorkProjects/meta.ts",
+    "apps/frontend/src/routeTree.gen.ts",
+    "apps/frontend/src/routes/$.tsx",
+    "apps/frontend/src/routes/__root.tsx",
+    "apps/frontend/src/routes/sitemap[.]xml.ts",
+    "docs/SITE_COPY_PLAN.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-5-5",
+  "turn_id": "e6b436b7f6e3",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 870,
+    "cache_creation_tokens": 112774,
+    "cache_read_tokens": 3020321,
+    "output_tokens": 26838,
+    "api_call_count": 30
+  },
+  "session_metrics": {
+    "turn_count": 2
+  }
+}

@@ -1,0 +1,9 @@
+ok this is a web agency site. we need to look over the site and its copy and see what we can do to help it bring in more new customers via the website. now it brings in almost none. try to factor in location and residents preferences as well as seo into updating the copy
+
+---
+
+ok i like it so far, but lets leave the "Bringing Your Ideas To The World" subheader. also "/fun-things" was just a test page. i will make it as draft. while good times is local to cape cod, the pine island food pantry in located in florida
+
+---
+
+ok lets make a branch and commit changes. then well start on this work
