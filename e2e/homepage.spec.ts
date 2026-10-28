@@ -7,7 +7,8 @@ test.describe('Homepage', () => {
 
 	test('should load and display the hero section', async ({ page }) => {
 		await expect(page.getByRole('heading', { name: /Cape Cod World/i })).toBeVisible();
-		await expect(page.getByText(/Bringing Your Ideas To The World/i)).toBeVisible();
+		// The Sanity subtitle may contain multiple spaces between words, so allow any whitespace.
+		await expect(page.getByText(/Bringing Your\s+Ideas\s+To\s+The\s+World/i)).toBeVisible();
 	});
 
 	test('should display the "What We Do" section with services', async ({ page }) => {
