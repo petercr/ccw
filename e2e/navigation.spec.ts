@@ -30,11 +30,11 @@ test.describe('Navigation', () => {
 	});
 
 	const serviceLinks = [
-		{ name: 'Design', href: '/design' },
-		{ name: 'Development', href: '/development' },
-		{ name: 'Digital Content', href: '/digital-content' },
-		{ name: 'Deployment', href: '/deployment' },
-		{ name: 'AI Integration', href: '/ai-integration' },
+		{ name: 'Web Design', href: '/design', heading: 'Web Design for Cape Cod Businesses' },
+		{ name: 'Development', href: '/development', heading: 'Web & App Development on Cape Cod' },
+		{ name: 'Content & SEO', href: '/digital-content', heading: 'Website Content & Local SEO for Cape Cod' },
+		{ name: 'AI Integration', href: '/ai-integration', heading: 'Practical AI for Cape Cod Small Businesses' },
+		{ name: 'Hosting & Deployment', href: '/deployment', heading: 'Website Hosting & Maintenance on Cape Cod' },
 	] as const;
 
 	for (const link of serviceLinks) {
@@ -47,7 +47,7 @@ test.describe('Navigation', () => {
 				page.waitForURL((url) => url.pathname.replace(/\/$/, '') === link.href, { timeout: 15_000 }),
 				serviceLink.click(),
 			]);
-			await expect(page.getByRole('heading', { name: link.name, level: 1 })).toBeVisible();
+			await expect(page.getByRole('heading', { name: link.heading, level: 1 })).toBeVisible();
 		});
 	}
 });
