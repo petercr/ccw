@@ -14,7 +14,8 @@ interface MyRouterContext {
 	isPreview?: boolean; // Preview state from root loader
 }
 
-const localBusinessJsonLd = buildLocalBusinessJsonLd(import.meta.env.VITE_SITE_URL || process.env.VITE_SITE_URL);
+// Only import.meta.env here: this module is evaluated in the browser too, where process is undefined.
+const localBusinessJsonLd = buildLocalBusinessJsonLd(import.meta.env.VITE_SITE_URL);
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	head: () => {
