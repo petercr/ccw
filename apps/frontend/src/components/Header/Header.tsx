@@ -138,7 +138,7 @@ export default function Header() {
 			>
 				<div className={mobilePanelHeader}>
 					<Link to="/" className={brand} onClick={() => setOpen(false)}>
-						SanTan
+						Cape Cod World
 					</Link>
 					<button type="button" className={closeButton} aria-label="Close menu" onClick={() => setOpen(false)}>
 						<X size={20} />

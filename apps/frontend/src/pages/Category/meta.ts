@@ -15,8 +15,10 @@ export const categoryMeta = (document: CategoryDocument, relativeUrl?: string) =
 	return {
 		meta: [
 			...seo({
-				title: document.title || 'TanStack Start Starter',
-				description: document.seo?.description || 'A starter template for TanStack Router, React, and Sanity.io',
+				title: `${document.title || 'Cape Cod World'} | Cape Cod World`,
+				description:
+					document.seo?.description ||
+					'Web design, development, content and AI integration for small businesses on Cape Cod, Massachusetts.',
 				image: src,
 				relativeUrl: relativeUrl,
 				keywords: document.seo?.keywords,

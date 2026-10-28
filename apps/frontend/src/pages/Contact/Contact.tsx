@@ -157,13 +157,17 @@ export const ContactPage = () => {
 			<aside className={auditCard} aria-label="Free website audit">
 				<div className={auditContent}>
 					<span className={auditKicker}>Free website audit</span>
-					<p className={auditText}>Find the quick wins hiding on your site.</p>
-					<p className={auditSubtext}>Contact us today for a complimentary review and practical next steps.</p>
+					<p className={auditText}>Not sure what your website is costing you? Let&apos;s find out.</p>
+					<p className={auditSubtext}>
+						Send a note and get a free, plain-English review of your current site: what works, what is losing you
+						customers, and what to fix first. Based on Cape Cod, serving the Cape, the Islands and the South Shore.
+						Replies within one business day.
+					</p>
 				</div>
 			</aside>
 
 			<div className={formCard}>
-				<h2 className={formTitle}>Contact Form</h2>
+				<h2 className={formTitle}>Tell us about your business</h2>
 
 				{submitStatus === 'success' ? (
 					<p className={successMessage}>Thanks! Your message has been sent. We'll be in touch soon.</p>

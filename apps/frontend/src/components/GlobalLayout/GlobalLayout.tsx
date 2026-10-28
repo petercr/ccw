@@ -213,8 +213,6 @@ export const GlobalLayout = () => {
 	return (
 		<html lang="en">
 			<head>
-				<title>SanTan Starter</title>
-				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				{/* Router-managed head (injects global stylesheet, meta, etc.) */}
 				<HeadContent />
 				<FavIcons />

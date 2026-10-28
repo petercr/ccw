@@ -1,4 +1,5 @@
 import { useSiteSettings } from '@/hooks/useSiteSettings.ts';
+import { Link } from '@tanstack/react-router';
 import {
 	bottomRow,
 	brandBlock,
@@ -25,11 +26,41 @@ export function Footer() {
 				<div className={brandBlock}>
 					<div className={brandName}>Cape Cod World</div>
 					<p className={brandTagline}>
-						Bringing your ideas to the world. We help small businesses and individuals build a strong online presence
-						with modern, fast, and beautiful websites.
+						Web design, development, content and AI integration for small businesses on Cape Cod. Based here year-round
+						and serving the Cape, the Islands and the South Shore.
 					</p>
-					<p className={brandTagline}>© 2016–{year} Cape Cod World</p>
+					<p className={brandTagline}>© 2016–{year} Cape Cod World · Cape Cod, Massachusetts</p>
 				</div>
+				<nav className={linkGroup} aria-label="Services">
+					<div className={groupTitle}>Services</div>
+					<a className={footerLink} href="/design">
+						Web Design
+					</a>
+					<a className={footerLink} href="/development">
+						Development
+					</a>
+					<a className={footerLink} href="/digital-content">
+						Content &amp; SEO
+					</a>
+					<a className={footerLink} href="/ai-integration">
+						AI Integration
+					</a>
+					<a className={footerLink} href="/deployment">
+						Hosting &amp; Deployment
+					</a>
+				</nav>
+				<nav className={linkGroup} aria-label="Company">
+					<div className={groupTitle}>Company</div>
+					<Link className={footerLink} to="/our-work">
+						Our Work
+					</Link>
+					<Link className={footerLink} to="/testimonials">
+						Testimonials
+					</Link>
+					<Link className={footerLink} to="/contact">
+						Free Website Review
+					</Link>
+				</nav>
 				<nav className={linkGroup} aria-label="Social">
 					<div className={groupTitle}>Social</div>
 					<a className={footerLink} href={linkedin ?? 'https://linkedin.com'} target="_blank" rel="noopener noreferrer">
@@ -46,24 +77,14 @@ export function Footer() {
 			<div className={bottomRow}>
 				<div className={smallMeta}>
 					<span className={metaItem}>
-						Made with <span className={heart}>♥</span> using TanStack & Sanity
+						Made with <span className={heart}>♥</span> on Cape Cod
 					</span>
 				</div>
 				<div className={smallMeta}>
 					<span className={metaItem}>
-						<a
-							className={footerLink}
-							href="https://github.com/petercr/ccw/issues"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Issues
-						</a>
-					</span>
-					<span className={metaItem}>
-						<a className={footerLink} href="/contact">
+						<Link className={footerLink} to="/contact">
 							Contact
-						</a>
+						</Link>
 					</span>
 				</div>
 			</div>
