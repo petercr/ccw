@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.11.6-nightly.202610170622.9254299eb",
+  "checkpoint_id": "01M623SYAKG1KBC0ZZ4PY11XG5",
+  "strategy": "manual-commit",
+  "branch": "feat/local-seo-copy",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/src/lib/__tests__/localBusinessJsonLd.test.ts",
+    "apps/frontend/src/lib/__tests__/sitemap.test.ts",
+    "apps/frontend/src/lib/localBusinessJsonLd.ts",
+    "apps/frontend/src/lib/sitemap.ts",
+    "apps/frontend/src/routes/__root.tsx",
+    "apps/frontend/src/routes/sitemap[.]xml.ts",
+    "e2e/category.spec.ts",
+    "e2e/homepage.spec.ts",
+    "e2e/navigation.spec.ts",
+    "e2e/seo.spec.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 940,
+    "cache_creation_tokens": 196210,
+    "cache_read_tokens": 6393242,
+    "output_tokens": 23063,
+    "api_call_count": 35
+  }
+}
