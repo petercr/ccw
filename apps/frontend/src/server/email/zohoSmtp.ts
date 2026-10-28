@@ -7,13 +7,31 @@ export interface ReplyEmailPayload {
 	reasonForMessage: string;
 }
 
+export interface NotificationEmailPayload {
+	submissionId: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	reasonForMessage: string;
+	additionalInfo?: string | null;
+	submittedAt: string;
+	/** Sanity document id, when the submission was mirrored to Studio. */
+	sanityDocumentId?: string;
+}
+
+const DEFAULT_NOTIFY_TO = 'peter@capecod.world';
+const DEFAULT_STUDIO_URL = 'https://capecodworld.sanity.studio';
+/** Must match `basePath` in apps/studio/sanity.config.ts. */
+const STUDIO_BASE_PATH = '/sand-dune';
+
 function getSmtpConfig() {
 	const host = process.env.ZOHO_SMTP_HOST ?? 'smtp.zoho.com';
 	const port = Number(process.env.ZOHO_SMTP_PORT ?? '465');
 	const user = process.env.ZOHO_SMTP_USER;
 	const pass = process.env.ZOHO_SMTP_PASS;
 	const from = process.env.ZOHO_SMTP_FROM ?? user;
-	const bcc = process.env.ZOHO_SMTP_BCC ?? 'peter@capecod.world';
+	// ZOHO_SMTP_BCC is the legacy name from when owners were BCC'd on the auto-reply.
+	const notifyTo = process.env.CONTACT_NOTIFY_TO ?? process.env.ZOHO_SMTP_BCC ?? DEFAULT_NOTIFY_TO;
 
 	if (!user || !pass || !from) {
 		throw new Error('Zoho SMTP is not configured. Set ZOHO_SMTP_USER, ZOHO_SMTP_PASS, and optionally ZOHO_SMTP_FROM.');
@@ -25,8 +43,17 @@ function getSmtpConfig() {
 		secure: port === 465,
 		auth: { user, pass },
 		from,
-		bcc,
+		notifyTo,
 	};
+}
+
+function createTransporter(config: ReturnType<typeof getSmtpConfig>) {
+	return nodemailer.createTransport({
+		host: config.host,
+		port: config.port,
+		secure: config.secure,
+		auth: config.auth,
+	});
 }
 
 /**
@@ -34,13 +61,7 @@ function getSmtpConfig() {
  */
 export async function sendContactReplyEmail(payload: ReplyEmailPayload): Promise<void> {
 	const config = getSmtpConfig();
-
-	const transporter = nodemailer.createTransport({
-		host: config.host,
-		port: config.port,
-		secure: config.secure,
-		auth: config.auth,
-	});
+	const transporter = createTransporter(config);
 
 	const displayName = [payload.firstName, payload.lastName].filter(Boolean).join(' ').trim();
 	const subject = 'Thanks for contacting Cape Cod World — we received your message';
@@ -65,7 +86,6 @@ export async function sendContactReplyEmail(payload: ReplyEmailPayload): Promise
 	const info = await transporter.sendMail({
 		from: config.from,
 		to: payload.to,
-		bcc: config.bcc,
 		subject,
 		text,
 		html,
@@ -74,8 +94,72 @@ export async function sendContactReplyEmail(payload: ReplyEmailPayload): Promise
 	console.info('[contact-email] Reply sent', {
 		messageId: info.messageId,
 		to: payload.to,
-		bcc: config.bcc,
 	});
+}
+
+/**
+ * Notifies the site owner (CONTACT_NOTIFY_TO) of a new contact form submission via Zoho SMTP.
+ * Reply-To is the submitter, so replying from the inbox goes straight to them.
+ */
+export async function sendContactNotificationEmail(payload: NotificationEmailPayload): Promise<void> {
+	const config = getSmtpConfig();
+	const transporter = createTransporter(config);
+
+	const displayName = [payload.firstName, payload.lastName].filter(Boolean).join(' ').trim();
+	const subject = `New contact form submission: ${displayName} — ${payload.reasonForMessage}`.replace(/\s+/g, ' ');
+	const studioLink = payload.sanityDocumentId ? getStudioEditUrl(payload.sanityDocumentId) : undefined;
+	const additionalInfo = payload.additionalInfo?.trim() || '(none)';
+
+	const text = [
+		'New contact form submission on capecod.world',
+		'',
+		`Name: ${displayName}`,
+		`Email: ${payload.email}`,
+		`Reason: ${payload.reasonForMessage}`,
+		`Submitted: ${payload.submittedAt}`,
+		'',
+		'Message:',
+		additionalInfo,
+		'',
+		studioLink ? `Open in Studio: ${studioLink}` : `Submission id: ${payload.submissionId}`,
+	].join('\n');
+
+	const html = `
+		<p><strong>New contact form submission on capecod.world</strong></p>
+		<p>
+			<strong>Name:</strong> ${escapeHtml(displayName)}<br>
+			<strong>Email:</strong> <a href="mailto:${escapeHtml(payload.email)}">${escapeHtml(payload.email)}</a><br>
+			<strong>Reason:</strong> ${escapeHtml(payload.reasonForMessage)}<br>
+			<strong>Submitted:</strong> ${escapeHtml(payload.submittedAt)}
+		</p>
+		<p><strong>Message:</strong></p>
+		<p style="white-space: pre-wrap">${escapeHtml(additionalInfo)}</p>
+		<p>${
+			studioLink
+				? `<a href="${escapeHtml(studioLink)}">Open in Sanity Studio</a>`
+				: `Submission id: ${escapeHtml(payload.submissionId)}`
+		}</p>
+	`.trim();
+
+	const info = await transporter.sendMail({
+		from: config.from,
+		to: config.notifyTo,
+		replyTo: payload.email,
+		subject,
+		text,
+		html,
+	});
+
+	console.info('[contact-email] Notification sent', {
+		messageId: info.messageId,
+		to: config.notifyTo,
+		submissionId: payload.submissionId,
+	});
+}
+
+function getStudioEditUrl(documentId: string): string {
+	const studioUrl = (process.env.SANITY_STUDIO_URL || DEFAULT_STUDIO_URL).replace(/\/+$/, '');
+	return `${studioUrl}${STUDIO_BASE_PATH}/intent/edit/id=${encodeURIComponent(documentId)};type=contactSubmission`;
 }
 
 function escapeHtml(value: string): string {

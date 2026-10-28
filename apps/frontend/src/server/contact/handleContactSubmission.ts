@@ -1,11 +1,11 @@
 import { insertContactSubmission } from '@/db/client.ts';
 import { type ContactFormInput, type ContactResponse, contactFormSchema } from '@/server/contact/schema.ts';
 import { syncContactSubmissionToSanity } from '@/server/contact/syncContactSubmissionToSanity.ts';
-import { sendContactReplyEmail } from '@/server/email/zohoSmtp.ts';
+import { sendContactNotificationEmail, sendContactReplyEmail } from '@/server/email/zohoSmtp.ts';
 
 /**
  * Silently discards honeypot submissions, validates input, stores it in Neon, mirrors it to Sanity Studio,
- * and sends a Zoho auto-reply.
+ * notifies the site owner, and sends a Zoho auto-reply.
  *
  * Email and Sanity failures after a successful DB write are logged but do not fail
  * the request — the user should not be told the submission failed when it was already stored.
@@ -59,6 +59,7 @@ export async function handleContactSubmission(raw: unknown): Promise<ContactResp
 		};
 	}
 
+	let sanityDocumentId: string | undefined;
 	try {
 		const sanityResult = await syncContactSubmissionToSanity({
 			neonId: submissionId,
@@ -70,6 +71,7 @@ export async function handleContactSubmission(raw: unknown): Promise<ContactResp
 			submittedAt,
 		});
 		if (sanityResult) {
+			sanityDocumentId = sanityResult.id;
 			console.info('[contact] Synced submission to Sanity', {
 				neonId: submissionId,
 				sanityId: sanityResult.id,
@@ -78,6 +80,26 @@ export async function handleContactSubmission(raw: unknown): Promise<ContactResp
 	} catch (error) {
 		// Submission is already saved in Neon — log and still return success
 		console.error('[contact] Failed to sync submission to Sanity', {
+			id: submissionId,
+			email: data.email,
+			error,
+		});
+	}
+
+	try {
+		await sendContactNotificationEmail({
+			submissionId,
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email,
+			reasonForMessage: data.reasonForMessage,
+			additionalInfo: data.additionalInfo,
+			submittedAt,
+			sanityDocumentId,
+		});
+	} catch (error) {
+		// Submission is already saved — log and still return success
+		console.error('[contact] Failed to send owner notification email', {
 			id: submissionId,
 			email: data.email,
 			error,
