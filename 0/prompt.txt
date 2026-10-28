@@ -1,0 +1,13 @@
+just set them to draft i will publish later. start with service page
+
+---
+
+ok logged into sanity via cli. i think im in the right account so double check that
+
+---
+
+lets commit and pr at this point with what we have then keep going
+
+---
+
+e2e ci tests failed

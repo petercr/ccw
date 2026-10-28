@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.11.6-nightly.202610170622.9254299eb",
+  "checkpoint_id": "01M61VMJ51S2HRJEY9PX3S9NA2",
+  "session_id": "ae43ac16-7cfa-4449-a171-47375a08163d",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-28T18:16:28.572724738Z",
+  "branch": "feat/local-seo-copy",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "e2e/homepage.spec.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-5-5",
+  "turn_id": "fff26f25344e",
+  "checkpoint_transcript_start": 520,
+  "transcript_lines_at_start": 520,
+  "compact_transcript_start": 37,
+  "token_usage": {
+    "input_tokens": 520,
+    "cache_creation_tokens": 143850,
+    "cache_read_tokens": 3014894,
+    "output_tokens": 16696,
+    "api_call_count": 20
+  },
+  "session_metrics": {
+    "turn_count": 6
+  }
+}
