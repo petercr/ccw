@@ -1,6 +1,6 @@
 # Contact Form (Neon + Zoho SMTP + Sanity)
 
-The contact form at `/contact` stores submissions in a **Neon** Postgres database, mirrors them into **Sanity Studio** for editorial follow-up, and sends an automated reply via **Zoho Mail SMTP**.
+The contact form at `/contact` stores submissions in a **Neon** Postgres database, mirrors them into **Sanity Studio** for editorial follow-up, emails the site owner a notification, and sends an automated reply via **Zoho Mail SMTP**.
 
 ## Architecture
 
@@ -8,7 +8,8 @@ The contact form at `/contact` stores submissions in a **Neon** Postgres databas
 Browser → POST /api/contact → validate (Zod)
                           → INSERT contact_submissions (Neon)          [required]
                           → create contactSubmission (Sanity)          [soft-fail]
-                          → send auto-reply + BCC notification (Zoho SMTP) [soft-fail]
+                          → send owner notification (Zoho SMTP)       [soft-fail]
+                          → send auto-reply to submitter (Zoho SMTP)   [soft-fail]
                           → JSON { success, id }
 ```
 
@@ -68,7 +69,12 @@ Set these in `apps/frontend/.env.local`, in Vercel project settings, and as **Gi
 | `ZOHO_SMTP_USER`     | Yes      | Zoho mailbox username                                                                                                                                               |
 | `ZOHO_SMTP_PASS`     | Yes      | Zoho password or app-specific password                                                                                                                              |
 | `ZOHO_SMTP_FROM`     | No       | From address (defaults to `ZOHO_SMTP_USER`)                                                                                                                         |
-| `ZOHO_SMTP_BCC`      | No       | Notification BCC (defaults to `peter@capecod.world`)                                                                                                                |
+| `CONTACT_NOTIFY_TO`  | No       | Owner notification recipient (defaults to `peter@capecod.world`; falls back to legacy `ZOHO_SMTP_BCC`)                                                              |
+| `SANITY_STUDIO_URL`  | No       | Base URL for the "Open in Sanity Studio" link in notifications (defaults to `https://capecodworld.sanity.studio`)                                                   |
+
+### Owner notification email
+
+Each stored submission sends a separate email to `CONTACT_NOTIFY_TO` with the name, email, reason, full message, and an **Open in Sanity Studio** link (when the Sanity sync succeeded). `Reply-To` is the submitter, so hitting Reply in your inbox answers them directly. It is sent independently of the auto-reply, so one failing does not block the other.
 
 ### Sanity write token
 
@@ -120,14 +126,15 @@ printf '%s' "$DATABASE_URL" | gh secret set DATABASE_URL
 
 ## Error handling
 
-| Failure                         | Behavior                                                                       |
-| ------------------------------- | ------------------------------------------------------------------------------ |
-| Validation error                | `400` with `fieldErrors` map; nothing stored                                   |
-| Database error                  | `500`; logged as `[contact] Failed to store submission`                        |
-| Sanity sync error after DB      | Still `200` success; logged as `[contact] Failed to sync submission to Sanity` |
-| Missing `SANITY_WRITE_TOKEN`    | Still `200` success; warning log; no Sanity doc                                |
-| Email error after successful DB | Still `200` success; logged as `[contact] Failed to send reply email`          |
-| Invalid JSON body               | `400`                                                                          |
+| Failure                         | Behavior                                                                           |
+| ------------------------------- | ---------------------------------------------------------------------------------- |
+| Validation error                | `400` with `fieldErrors` map; nothing stored                                       |
+| Database error                  | `500`; logged as `[contact] Failed to store submission`                            |
+| Sanity sync error after DB      | Still `200` success; logged as `[contact] Failed to sync submission to Sanity`     |
+| Missing `SANITY_WRITE_TOKEN`    | Still `200` success; warning log; no Sanity doc                                    |
+| Notification email error        | Still `200` success; logged as `[contact] Failed to send owner notification email` |
+| Email error after successful DB | Still `200` success; logged as `[contact] Failed to send reply email`              |
+| Invalid JSON body               | `400`                                                                              |
 
 ## Local testing without real SMTP/DB/Sanity
 

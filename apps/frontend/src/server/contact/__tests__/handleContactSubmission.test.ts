@@ -6,6 +6,7 @@ vi.mock('@/db/client.ts', () => ({
 
 vi.mock('@/server/email/zohoSmtp.ts', () => ({
 	sendContactReplyEmail: vi.fn(),
+	sendContactNotificationEmail: vi.fn(),
 }));
 
 vi.mock('@/server/contact/syncContactSubmissionToSanity.ts', () => ({
@@ -14,11 +15,12 @@ vi.mock('@/server/contact/syncContactSubmissionToSanity.ts', () => ({
 
 import { insertContactSubmission } from '@/db/client.ts';
 import { syncContactSubmissionToSanity } from '@/server/contact/syncContactSubmissionToSanity.ts';
-import { sendContactReplyEmail } from '@/server/email/zohoSmtp.ts';
+import { sendContactNotificationEmail, sendContactReplyEmail } from '@/server/email/zohoSmtp.ts';
 import { handleContactSubmission } from '../handleContactSubmission.ts';
 
 const insertMock = vi.mocked(insertContactSubmission);
 const emailMock = vi.mocked(sendContactReplyEmail);
+const notifyMock = vi.mocked(sendContactNotificationEmail);
 const sanityMock = vi.mocked(syncContactSubmissionToSanity);
 
 describe('handleContactSubmission', () => {
@@ -44,6 +46,7 @@ describe('handleContactSubmission', () => {
 			expect(insertMock).not.toHaveBeenCalled();
 			expect(sanityMock).not.toHaveBeenCalled();
 			expect(emailMock).not.toHaveBeenCalled();
+			expect(notifyMock).not.toHaveBeenCalled();
 		},
 	);
 
@@ -53,6 +56,7 @@ describe('handleContactSubmission', () => {
 		expect(insertMock).not.toHaveBeenCalled();
 		expect(sanityMock).not.toHaveBeenCalled();
 		expect(emailMock).not.toHaveBeenCalled();
+		expect(notifyMock).not.toHaveBeenCalled();
 	});
 
 	it('returns field errors for invalid input without writing to DB', async () => {
@@ -98,12 +102,43 @@ describe('handleContactSubmission', () => {
 			additionalInfo: 'Please review my site',
 			submittedAt: createdAt,
 		});
+		expect(notifyMock).toHaveBeenCalledWith({
+			submissionId: 'uuid-1',
+			firstName: 'Jane',
+			lastName: 'Doe',
+			email: 'jane@example.com',
+			reasonForMessage: 'Website audit',
+			additionalInfo: 'Please review my site',
+			submittedAt: createdAt,
+			sanityDocumentId: 'contactSubmission-uuid-1',
+		});
 		expect(emailMock).toHaveBeenCalledWith({
 			to: 'jane@example.com',
 			firstName: 'Jane',
 			lastName: 'Doe',
 			reasonForMessage: 'Website audit',
 		});
+	});
+
+	it('still succeeds and auto-replies when the owner notification fails', async () => {
+		insertMock.mockResolvedValue({
+			id: 'uuid-4',
+			first_name: 'Jane',
+			last_name: 'Doe',
+			email: 'jane@example.com',
+			reason_for_message: 'Website audit',
+			additional_info: null,
+			created_at: createdAt,
+		});
+		sanityMock.mockResolvedValue({ id: 'contactSubmission-uuid-4', created: true });
+		notifyMock.mockRejectedValue(new Error('smtp down'));
+		emailMock.mockResolvedValue(undefined);
+
+		const result = await handleContactSubmission(valid);
+
+		expect(result).toEqual({ success: true, id: 'uuid-4' });
+		expect(notifyMock).toHaveBeenCalled();
+		expect(emailMock).toHaveBeenCalled();
 	});
 
 	it('returns error when DB insert fails', async () => {
@@ -117,6 +152,7 @@ describe('handleContactSubmission', () => {
 		}
 		expect(sanityMock).not.toHaveBeenCalled();
 		expect(emailMock).not.toHaveBeenCalled();
+		expect(notifyMock).not.toHaveBeenCalled();
 	});
 
 	it('still succeeds when email fails after DB write', async () => {
@@ -157,5 +193,6 @@ describe('handleContactSubmission', () => {
 		expect(result).toEqual({ success: true, id: 'uuid-3' });
 		expect(sanityMock).toHaveBeenCalled();
 		expect(emailMock).toHaveBeenCalled();
+		expect(notifyMock).toHaveBeenCalledWith(expect.objectContaining({ sanityDocumentId: undefined }));
 	});
 });
