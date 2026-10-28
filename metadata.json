@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.11.6-nightly.202610170622.9254299eb",
+  "checkpoint_id": "01M6241N5ZG1GC2375RD5SZS8P",
+  "strategy": "manual-commit",
+  "branch": "feat/local-seo-copy",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "apps/frontend/src/routes/__root.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 128,
+    "cache_creation_tokens": 4440,
+    "cache_read_tokens": 874074,
+    "output_tokens": 2691,
+    "api_call_count": 4
+  }
+}
