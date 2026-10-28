@@ -21,6 +21,8 @@ export interface NotificationEmailPayload {
 
 const DEFAULT_NOTIFY_TO = 'peter@capecod.world';
 const DEFAULT_STUDIO_URL = 'https://capecodworld.sanity.studio';
+/** Must match `basePath` in apps/studio/sanity.config.ts. */
+const STUDIO_BASE_PATH = '/sand-dune';
 
 function getSmtpConfig() {
 	const host = process.env.ZOHO_SMTP_HOST ?? 'smtp.zoho.com';
@@ -157,7 +159,7 @@ export async function sendContactNotificationEmail(payload: NotificationEmailPay
 
 function getStudioEditUrl(documentId: string): string {
 	const studioUrl = (process.env.SANITY_STUDIO_URL || DEFAULT_STUDIO_URL).replace(/\/+$/, '');
-	return `${studioUrl}/intent/edit/id=${encodeURIComponent(documentId)};type=contactSubmission`;
+	return `${studioUrl}${STUDIO_BASE_PATH}/intent/edit/id=${encodeURIComponent(documentId)};type=contactSubmission`;
 }
 
 function escapeHtml(value: string): string {

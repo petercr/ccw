@@ -103,7 +103,7 @@ describe('sendContactNotificationEmail', () => {
 		expect(text).toContain('Please review <my> site');
 		expect(html).toContain('Please review &lt;my&gt; site');
 		expect(text).toContain(
-			'https://capecodworld.sanity.studio/intent/edit/id=contactSubmission-uuid-1;type=contactSubmission',
+			'https://capecodworld.sanity.studio/sand-dune/intent/edit/id=contactSubmission-uuid-1;type=contactSubmission',
 		);
 	});
 
@@ -113,7 +113,7 @@ describe('sendContactNotificationEmail', () => {
 		await sendContactNotificationEmail(payload);
 
 		expect(sendMail.mock.calls[0][0].text).toContain(
-			'http://localhost:3333/intent/edit/id=contactSubmission-uuid-1;type=contactSubmission',
+			'http://localhost:3333/sand-dune/intent/edit/id=contactSubmission-uuid-1;type=contactSubmission',
 		);
 	});
 

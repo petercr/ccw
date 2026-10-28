@@ -100,9 +100,13 @@ export async function insertContactSubmission(input: ContactSubmissionInput): Pr
 			created_at
 	`;
 
-	const row = rows[0] as ContactSubmissionRow | undefined;
+	// Neon parses TIMESTAMPTZ into a Date; normalize so callers get the ISO string the type promises.
+	const row = rows[0] as (Omit<ContactSubmissionRow, 'created_at'> & { created_at: Date | string }) | undefined;
 	if (!row) {
 		throw new Error('Failed to insert contact submission: no row returned');
 	}
-	return row;
+	return {
+		...row,
+		created_at: row.created_at instanceof Date ? row.created_at.toISOString() : row.created_at,
+	};
 }
