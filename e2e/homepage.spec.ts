@@ -7,7 +7,8 @@ test.describe('Homepage', () => {
 
 	test('should load and display the hero section', async ({ page }) => {
 		await expect(page.getByRole('heading', { name: /Cape Cod World/i })).toBeVisible();
-		await expect(page.getByText(/Bringing Your Ideas To The World/i)).toBeVisible();
+		// The Sanity subtitle may contain multiple spaces between words, so allow any whitespace.
+		await expect(page.getByText(/Bringing Your\s+Ideas\s+To\s+The\s+World/i)).toBeVisible();
 	});
 
 	test('should display the "What We Do" section with services', async ({ page }) => {
@@ -21,11 +22,10 @@ test.describe('Homepage', () => {
 			.getByText(/AI Integration/i)
 			.first()
 			.scrollIntoViewIfNeeded();
-		await expect(page.getByText(/Design/i).first()).toBeVisible();
-		await expect(page.getByText(/Development/i).first()).toBeVisible();
-		await expect(page.getByText(/Digital Content/i).first()).toBeVisible();
-		await expect(page.getByText(/Deployment/i).first()).toBeVisible();
-		await expect(page.getByText(/AI Integration/i).first()).toBeVisible();
+		const main = page.getByRole('main');
+		for (const label of ['Web Design', 'Development', 'Content & SEO', 'AI Integration', 'Hosting & Deployment']) {
+			await expect(main.getByRole('link', { name: label, exact: true })).toBeVisible();
+		}
 	});
 
 	test('should display navigation links', async ({ page }) => {

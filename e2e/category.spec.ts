@@ -4,28 +4,28 @@ import { expect, test } from './fixture';
 const CATEGORY_PAGES = [
 	{
 		path: '/design',
-		title: 'Design',
-		body: /It all starts with a great look/i,
+		title: 'Web Design for Cape Cod Businesses',
+		body: /Your website is your first hello/i,
 	},
 	{
 		path: '/development',
-		title: 'Development',
+		title: 'Web & App Development on Cape Cod',
 		body: /idea on a napkin/i,
 	},
 	{
 		path: '/digital-content',
-		title: 'Digital Content',
+		title: 'Website Content & Local SEO for Cape Cod',
 		body: /Content that sounds like you/i,
 	},
 	{
 		path: '/deployment',
-		title: 'Deployment',
-		body: /staging.+live/i,
+		title: 'Website Hosting & Maintenance on Cape Cod',
+		body: /staging to live/i,
 	},
 	{
 		path: '/ai-integration',
-		title: 'AI Integration',
-		body: /Don.t miss the AI wave/i,
+		title: 'Practical AI for Cape Cod Small Businesses',
+		body: /AI is not just for big tech/i,
 	},
 ] as const;
 

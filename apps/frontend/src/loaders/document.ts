@@ -3,6 +3,7 @@ import { STUDIO_BASEPATH } from '@/sanity/constants.ts';
 import { DOCUMENT_QUERY, documentQuery } from '@/sanity/queries/documentQuery.ts';
 import type { ClientPerspective, UnfilteredResponseQueryOptions } from '@sanity/client';
 import type { QueryClient } from '@tanstack/react-query';
+import { notFound } from '@tanstack/react-router';
 
 export const documentLoader = async ({
 	context,
@@ -24,6 +25,11 @@ export const documentLoader = async ({
 	} as UnfilteredResponseQueryOptions;
 
 	const initial = await context.queryClient.ensureQueryData(documentQuery(params._splat, options));
+
+	// Unknown slug: respond with a real 404 so search engines do not index soft-404 pages.
+	if (!initial || initial.data === null || initial.data === undefined) {
+		throw notFound();
+	}
 
 	// Return options without stega to avoid type incompatibility
 	const returnOptions = {

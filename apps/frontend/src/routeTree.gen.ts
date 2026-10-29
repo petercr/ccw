@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as OurWorkRouteImport } from './routes/our-work'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as ApiContactRouteImport } from './routes/api.contact'
 import { Route as ApiDraftTokenRouteImport } from './routes/api.draft-token'
@@ -36,6 +37,11 @@ const ContactRoute = ContactRouteImport.update({
 const OurWorkRoute = OurWorkRouteImport.update({
   id: '/our-work',
   path: '/our-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/$': typeof SplatRoute
   '/contact': typeof ContactRoute
   '/our-work': typeof OurWorkRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
   '/api/contact': typeof ApiContactRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/$': typeof SplatRoute
   '/contact': typeof ContactRoute
   '/our-work': typeof OurWorkRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
   '/api/contact': typeof ApiContactRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/$': typeof SplatRoute
   '/contact': typeof ContactRoute
   '/our-work': typeof OurWorkRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
   '/api/contact': typeof ApiContactRoute
   '/api/draft-token': typeof ApiDraftTokenRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/contact'
     | '/our-work'
+    | '/sitemap.xml'
     | '/testimonials'
     | '/api/contact'
     | '/api/draft-token'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/contact'
     | '/our-work'
+    | '/sitemap.xml'
     | '/testimonials'
     | '/api/contact'
     | '/api/draft-token'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/contact'
     | '/our-work'
+    | '/sitemap.xml'
     | '/testimonials'
     | '/api/contact'
     | '/api/draft-token'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   SplatRoute: typeof SplatRoute
   ContactRoute: typeof ContactRoute
   OurWorkRoute: typeof OurWorkRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimonialsRoute: typeof TestimonialsRoute
   ApiContactRoute: typeof ApiContactRoute
   ApiDraftTokenRoute: typeof ApiDraftTokenRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/our-work'
       fullPath: '/our-work'
       preLoaderRoute: typeof OurWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/testimonials': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   SplatRoute: SplatRoute,
   ContactRoute: ContactRoute,
   OurWorkRoute: OurWorkRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimonialsRoute: TestimonialsRoute,
   ApiContactRoute: ApiContactRoute,
   ApiDraftTokenRoute: ApiDraftTokenRoute,

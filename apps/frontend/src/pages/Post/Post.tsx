@@ -59,8 +59,8 @@ export const PostPage = ({ data, encodeDataAttribute }: PageProps<PostDocument>)
 	const mainImageUrl = mainImageRef ? sanityImageSrcBuilder({ id: mainImageRef, width: 1200 }) : undefined;
 	const authorName = author?.name || undefined;
 
-	const siteName = 'SanTan Starter';
-	const publisherLogo = '/tanstack-word-logo-white.svg';
+	const siteName = 'Cape Cod World';
+	const publisherLogo = '/web-app-manifest-512x512-v2.png';
 	const categoriesList = (data as any).categories?.map((c: any) => c?.title).filter(Boolean) || [];
 	const keywords = data.seo?.keywords || categoriesList;
 	const canonicalUrl = fullSlug ? `/${fullSlug}` : '/';
